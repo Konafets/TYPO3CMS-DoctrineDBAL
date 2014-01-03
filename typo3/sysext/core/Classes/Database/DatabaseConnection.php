@@ -165,7 +165,7 @@ class DatabaseConnection {
 	/**
 	 * @todo Define visibility
 	 */
-	public $default_charset = 'utf8';
+	public $defaultCharset = 'utf8';
 
 	/**
 	 * @var array<PostProcessQueryHookInterface>
@@ -1503,7 +1503,7 @@ class DatabaseConnection {
 	 * @return void
 	 */
 	public function setDatabaseCharset($charset = 'utf8') {
-		$this->default_charset = $charset;
+		$this->defaultCharset = $charset;
 	}
 
 	/**
@@ -1512,7 +1512,7 @@ class DatabaseConnection {
 	 * @return mixed
 	 */
 	public function getDatabaseCharset() {
-		return $this->default_charset;
+		return $this->defaultCharset;
 	}
 
 	/**
@@ -1746,6 +1746,18 @@ class DatabaseConnection {
 	 */
 	public function setDatabaseHandle($handle) {
 		$this->link = $handle;
+	}
+
+	/**
+	 * Set the database driver for Doctrine
+	 *
+	 * @param string $driver
+	 *
+	 * @return $this
+	 * @api
+	 */
+	public function setDatabaseDriver($driver = 'pdo_mysql') {
+
 	}
 
 	/**
