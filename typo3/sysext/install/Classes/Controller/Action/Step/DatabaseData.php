@@ -88,7 +88,7 @@ class DatabaseData extends AbstractStepAction {
 	 */
 	public function needsExecution() {
 		$result = FALSE;
-		$existingTables = $this->getDatabase()->admin_get_tables();
+		$existingTables = $this->getDatabase()->adminGetTables();
 		if (count($existingTables) === 0) {
 			$result = TRUE;
 		}
@@ -141,7 +141,7 @@ class DatabaseData extends AbstractStepAction {
 			$insertStatements = $schemaMigrationService->getTableInsertStatements($statements, $table);
 			foreach ($insertStatements as $insertQuery) {
 				$insertQuery = rtrim($insertQuery, ';');
-				$database->admin_query($insertQuery);
+				$database->adminQuery($insertQuery);
 			}
 		}
 	}

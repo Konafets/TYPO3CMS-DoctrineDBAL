@@ -118,7 +118,7 @@ class CleanUp extends Action\AbstractAction {
 			),
 		);
 		$database = $this->getDatabase();
-		$allTables = array_keys($database->admin_get_tables());
+		$allTables = array_keys($database->adminGetTables());
 		$tables = array();
 		foreach ($tableCandidates as $candidate) {
 			if (in_array($candidate['name'], $allTables)) {

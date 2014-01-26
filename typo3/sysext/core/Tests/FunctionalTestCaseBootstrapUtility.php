@@ -427,8 +427,8 @@ class FunctionalTestCaseBootstrapUtility {
 		}
 
 		// Drop database in case a previous test had a fatal and did not clean up properly
-		$database->admin_query('DROP DATABASE IF EXISTS `' . $this->databaseName . '`');
-		$createDatabaseResult = $database->admin_query('CREATE DATABASE `' . $this->databaseName . '`');
+		$database->adminQuery('DROP DATABASE IF EXISTS `' . $this->databaseName . '`');
+		$createDatabaseResult = $database->adminQuery('CREATE DATABASE `' . $this->databaseName . '`');
 		if (!$createDatabaseResult) {
 			$user = $GLOBALS['TYPO3_CONF_VARS']['DB']['username'];
 			$host = $GLOBALS['TYPO3_CONF_VARS']['DB']['host'];
@@ -476,7 +476,7 @@ class FunctionalTestCaseBootstrapUtility {
 				$insertQuery = rtrim($insertQuery, ';');
 				/** @var \TYPO3\CMS\Core\Database\DatabaseConnection $database */
 				$database = $GLOBALS['TYPO3_DB'];
-				$database->admin_query($insertQuery);
+				$database->adminQuery($insertQuery);
 			}
 		}
 	}
@@ -490,7 +490,7 @@ class FunctionalTestCaseBootstrapUtility {
 	protected function tearDownTestDatabase() {
 		/** @var \TYPO3\CMS\Core\Database\DatabaseConnection $database */
 		$database = $GLOBALS['TYPO3_DB'];
-		$result = $database->admin_query('DROP DATABASE `' . $this->databaseName . '`');
+		$result = $database->adminQuery('DROP DATABASE `' . $this->databaseName . '`');
 		if (!$result) {
 			throw new Exception(
 				'Dropping test database ' . $this->databaseName . ' failed',
