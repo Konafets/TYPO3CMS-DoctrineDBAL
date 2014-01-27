@@ -497,6 +497,9 @@ class FunctionalTestCaseBootstrapUtility {
 				1376583188
 			);
 		}
+		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
+			$database->getDatabaseHandle()->close();
+		}
 	}
 
 	/**
