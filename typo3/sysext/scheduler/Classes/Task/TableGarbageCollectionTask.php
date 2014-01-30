@@ -87,6 +87,7 @@ class TableGarbageCollectionTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask 
 			$dateLimit = $GLOBALS['EXEC_TIME'];
 			// If expire field value is 0, do not delete
 			// Expire field = 0 means no expiration
+			// TODO: Find a Doctrine alike way to create this where
 			$where = $field . ' <= \'' . $dateLimit . '\' AND ' . $field . ' > \'0\'';
 		} elseif (!empty($configuration['dateField'])) {
 			if (!$this->allTables) {
@@ -97,6 +98,7 @@ class TableGarbageCollectionTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask 
 				}
 				$deleteTimestamp = strtotime('-' . $configuration['expirePeriod'] . 'days');
 			}
+			// TODO: Find a Doctrine alike way to create this where
 			$where = $configuration['dateField'] . ' < ' . $deleteTimestamp;
 		} else {
 			throw new \RuntimeException('TYPO3\\CMS\\Scheduler\\Task\\TableGarbageCollectionTask misconfiguration: Either expireField or dateField must be defined for table ' . $table, 1308355268);
