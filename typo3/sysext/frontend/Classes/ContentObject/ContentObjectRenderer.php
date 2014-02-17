@@ -7117,7 +7117,16 @@ class ContentObjectRenderer {
 		if ($doExec) {
 			return $GLOBALS['TYPO3_DB']->executeInsertQuery($table, $insertFields);
 		} else {
-			return $GLOBALS['TYPO3_DB']->INSERTquery($table, $insertFields);
+			$query = $GLOBALS['TYPO3_DB']->createInsertQuery();
+			$columns = array();
+			$values = array();
+
+			foreach ($insertFields as $column => $value) {
+				$columns = $GLOBALS['TYPO3_DB']->quoteColumn($column);
+				$values = $GLOBALS['TYPO3_DB']->quote($value);
+			}
+
+			return $query->insertInto($table)->set($columns, $values)->getSql();
 		}
 	}
 
