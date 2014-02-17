@@ -274,7 +274,7 @@ class TceformsUpdateWizard extends AbstractUpdate {
 				if (isset($linkField)) {
 					$fields['link'] = trim($linkContents[$i]);
 				}
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_file_reference', $fields);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_file_reference', $fields);
 				$queries[] = str_replace(LF, ' ', $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery);
 				++$i;
 			}

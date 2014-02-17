@@ -232,7 +232,7 @@ class ImportantActions extends Action\AbstractAction implements Action\ActionInt
 					'tstamp' => $GLOBALS['EXEC_TIME'],
 					'crdate' => $GLOBALS['EXEC_TIME']
 				);
-				$database->exec_INSERTquery('be_users', $adminUserFields);
+				$database->executeInsertQuery('be_users', $adminUserFields);
 				/** @var $message \TYPO3\CMS\Install\Status\StatusInterface */
 				$message = $this->objectManager->get('TYPO3\\CMS\\Install\\Status\\OkStatus');
 				$message->setTitle('Administrator created');

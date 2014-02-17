@@ -432,7 +432,7 @@ class FrontendUserAuthentication extends \TYPO3\CMS\Core\Authentication\Abstract
 					'tstamp' => $GLOBALS['EXEC_TIME']
 				);
 				$this->sessionDataTimestamp = $GLOBALS['EXEC_TIME'];
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('fe_session_data', $insertFields);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('fe_session_data', $insertFields);
 				// Now set the cookie (= fix the session)
 				$this->setSessionCookie();
 			} else {

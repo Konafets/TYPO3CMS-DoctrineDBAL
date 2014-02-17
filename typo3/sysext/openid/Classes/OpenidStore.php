@@ -161,7 +161,7 @@ class OpenidStore extends \Auth_OpenID_OpenIDStore {
 				'server_url' => $serverUrl,
 				'tstamp' => $timestamp
 			);
-			$this->databaseConnection->exec_INSERTquery(self::NONCE_TABLE_NAME, $values);
+			$this->databaseConnection->executeInsertQuery(self::NONCE_TABLE_NAME, $values);
 			$affectedRows = $this->databaseConnection->sql_affected_rows();
 			$result = $affectedRows > 0;
 		}
@@ -227,7 +227,7 @@ class OpenidStore extends \Auth_OpenID_OpenIDStore {
 		);
 		// In the next query we can get race conditions. sha1_hash prevents many
 		// asociations from being stored for one server
-		$this->databaseConnection->exec_INSERTquery(self::ASSOCIATION_TABLE_NAME, $values);
+		$this->databaseConnection->executeInsertQuery(self::ASSOCIATION_TABLE_NAME, $values);
 	}
 
 	/**

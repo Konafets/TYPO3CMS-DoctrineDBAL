@@ -3073,7 +3073,7 @@ class BackendUtility {
 					'username' => $GLOBALS['BE_USER']->user['username'],
 					'record_pid' => $pid
 				);
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_lockedrecords', $fields_values);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_lockedrecords', $fields_values);
 			} else {
 				$GLOBALS['TYPO3_DB']->exec_DELETEquery('sys_lockedrecords', 'userid=' . (int)$user_id);
 			}
