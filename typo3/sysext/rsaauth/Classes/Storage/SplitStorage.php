@@ -97,7 +97,7 @@ class SplitStorage extends \TYPO3\CMS\Rsaauth\Storage\AbstractStorage {
 			// Notice: we may not use TCEmain below to insert key part into the
 			// table because TCEmain requires a valid BE user!
 			$time = $GLOBALS['EXEC_TIME'];
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_rsaauth_keys', array(
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('tx_rsaauth_keys', array(
 				'pid' => 0,
 				'crdate' => $time,
 				'key_value' => $keyPart2

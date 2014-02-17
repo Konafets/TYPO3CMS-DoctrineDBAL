@@ -118,7 +118,7 @@ class MetaDataRepository implements SingletonInterface {
 			'cruser_id' => TYPO3_MODE == 'BE' ? $GLOBALS['BE_USER']->user['uid'] : 0
 		);
 		$emptyRecord = array_merge($emptyRecord, $additionalFields);
-		$this->getDatabase()->exec_INSERTquery($this->tableName, $emptyRecord);
+		$this->getDatabase()->executeInsertQuery($this->tableName, $emptyRecord);
 		$record = $emptyRecord;
 		$record['uid'] = $this->getDatabase()->sql_insert_id();
 

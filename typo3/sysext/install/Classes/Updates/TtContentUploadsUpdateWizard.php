@@ -147,7 +147,7 @@ class TtContentUploadsUpdateWizard extends AbstractUpdate {
 	protected function migrateRecord(array $record) {
 		$collections = array();
 		if (trim($record['select_key'])) {
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_file_collection', array(
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_file_collection', array(
 				'pid' => $record['pid'],
 				'title' => $record['select_key'],
 				'storage' => $this->storage->getUid(),
@@ -182,7 +182,7 @@ class TtContentUploadsUpdateWizard extends AbstractUpdate {
 				if (isset($titleText[$i])) {
 					$dataArray['alternative'] = $titleText[$i];
 				}
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_file_reference', $dataArray);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_file_reference', $dataArray);
 				unlink(PATH_site . 'uploads/media/' . $file);
 			}
 			$i++;

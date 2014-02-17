@@ -241,7 +241,7 @@ class PreviewHook implements \TYPO3\CMS\Core\SingletonInterface {
 				'BEUSER_uid' => $backendUserUid
 			))
 		);
-		$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_preview', $fieldData);
+		$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_preview', $fieldData);
 		return $fieldData['keyword'];
 	}
 

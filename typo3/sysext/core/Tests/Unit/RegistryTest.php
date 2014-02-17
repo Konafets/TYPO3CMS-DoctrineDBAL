@@ -135,11 +135,19 @@ class RegistryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function setReallySavesTheGivenValueToTheDatabase() {
-		$GLOBALS['TYPO3_DB']->expects($this->once())->method('exec_INSERTquery')->with('sys_registry', array(
-			'entry_namespace' => 'tx_phpunit',
-			'entry_key' => 'someKey',
-			'entry_value' => serialize('someValue')
-		));
+		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
+			$GLOBALS['TYPO3_DB']->expects($this->once())->method('executeInsertQuery')->with('sys_registry', array(
+							'entry_namespace' => 'tx_phpunit',
+							'entry_key' => 'someKey',
+							'entry_value' => serialize('someValue')
+						));
+		} else {
+			$GLOBALS['TYPO3_DB']->expects($this->once())->method('exec_INSERTquery')->with('sys_registry', array(
+				'entry_namespace' => 'tx_phpunit',
+				'entry_key' => 'someKey',
+				'entry_value' => serialize('someValue')
+			));
+		}
 		$this->registry->set('tx_phpunit', 'someKey', 'someValue');
 	}
 

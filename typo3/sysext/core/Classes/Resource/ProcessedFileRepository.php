@@ -120,7 +120,7 @@ class ProcessedFileRepository extends AbstractRepository {
 			$insertFields = $processedFile->toArray();
 			$insertFields['crdate'] = $insertFields['tstamp'] = time();
 			$insertFields = $this->cleanUnavailableColumns($insertFields);
-			$this->databaseConnection->exec_INSERTquery($this->table, $insertFields);
+			$this->databaseConnection->executeInsertQuery($this->table, $insertFields);
 			$uid = $this->databaseConnection->sql_insert_id();
 			$processedFile->updateProperties(array('uid' => $uid));
 		}

@@ -474,7 +474,7 @@ class ShortcutToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemHookI
 					'description' => $shortcutName,
 					'sorting' => $GLOBALS['EXEC_TIME']
 				);
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_be_shortcuts', $fieldValues);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_be_shortcuts', $fieldValues);
 				if ($GLOBALS['TYPO3_DB']->sql_affected_rows() == 1) {
 					$shortcutCreated = 'success';
 				}

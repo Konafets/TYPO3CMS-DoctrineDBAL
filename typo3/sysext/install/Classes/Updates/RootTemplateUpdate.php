@@ -69,7 +69,7 @@ class RootTemplateUpdate extends AbstractUpdate implements InstallerProcessInter
 		$now = time();
 		$result = FALSE;
 
-		$status = $GLOBALS['TYPO3_DB']->exec_INSERTquery(
+		$status = $GLOBALS['TYPO3_DB']->executeInsertQuery(
 			'pages',
 			array(
 				'pid' => 0,
@@ -85,7 +85,7 @@ class RootTemplateUpdate extends AbstractUpdate implements InstallerProcessInter
 		if ($status) {
 			$pageId = $GLOBALS['TYPO3_DB']->sql_insert_id();
 
-			$status = $GLOBALS['TYPO3_DB']->exec_INSERTquery(
+			$status = $GLOBALS['TYPO3_DB']->executeInsertQuery(
 				'sys_template',
 				array(
 					'pid' => $pageId,

@@ -126,7 +126,7 @@ class ReferenceIndex {
 					} else {
 						// If new, add it:
 						if (!$testOnly) {
-							$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_refindex', $relations[$k]);
+							$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_refindex', $relations[$k]);
 						}
 						$result['addedNodes']++;
 						$relations[$k]['_ACTION'] = 'ADDED';

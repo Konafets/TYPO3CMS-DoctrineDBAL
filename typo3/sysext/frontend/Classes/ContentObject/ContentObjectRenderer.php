@@ -7160,7 +7160,7 @@ class ContentObjectRenderer {
 			}
 		}
 		if ($doExec) {
-			return $GLOBALS['TYPO3_DB']->exec_INSERTquery($table, $insertFields);
+			return $GLOBALS['TYPO3_DB']->executeInsertQuery($table, $insertFields);
 		} else {
 			return $GLOBALS['TYPO3_DB']->INSERTquery($table, $insertFields);
 		}
@@ -7444,7 +7444,7 @@ class ContentObjectRenderer {
 					$theList[] = $addId;
 				}
 			}
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('cache_treelist', array(
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('cache_treelist', array(
 				'md5hash' => $requestHash,
 				'pid' => $id,
 				'treelist' => implode(',', $theList),

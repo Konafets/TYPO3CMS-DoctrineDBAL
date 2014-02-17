@@ -75,7 +75,7 @@ class DatabaseData extends Action\AbstractAction implements StepInterface {
 			'tstamp' => $GLOBALS['EXEC_TIME'],
 			'crdate' => $GLOBALS['EXEC_TIME']
 		);
-		$this->getDatabase()->exec_INSERTquery('be_users', $adminUserFields);
+		$this->getDatabase()->executeInsertQuery('be_users', $adminUserFields);
 
 		// Set password as install tool password
 		$configurationManager->setLocalConfigurationValueByPath('BE/installToolPassword', $hashedPassword);
