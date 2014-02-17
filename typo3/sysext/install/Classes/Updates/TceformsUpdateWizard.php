@@ -369,7 +369,8 @@ class TceformsUpdateWizard extends AbstractUpdate {
 				if (isset($linkField)) {
 					$fields['link'] = trim($linkContents[$i]);
 				}
-				$this->database->exec_INSERTquery('sys_file_reference', $fields);
+
+				$this->database->executeInsertQuery('sys_file_reference', $fields);
 				$queries[] = str_replace(LF, ' ', $this->database->debug_lastBuiltQuery);
 				++$i;
 			}

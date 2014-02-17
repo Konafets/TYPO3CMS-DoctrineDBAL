@@ -4849,7 +4849,7 @@ Connection: close
 					'type' => 2,
 					'params' => $inUrl
 				);
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('cache_md5params', $insertFields);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('cache_md5params', $insertFields);
 			}
 			$inUrl = ($index_script_url ? $index_script_url : self::getIndpEnv('TYPO3_REQUEST_DIR') . 'index.php') . '?RDCT=' . $md5;
 		}

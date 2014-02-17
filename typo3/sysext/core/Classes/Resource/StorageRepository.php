@@ -233,7 +233,7 @@ class StorageRepository extends AbstractRepository {
 			'is_writable' => 1,
 			'is_default' => $default ? 1 : 0
 		);
-		$this->db->exec_INSERTquery('sys_file_storage', $field_values);
+		$this->db->executeInsertQuery('sys_file_storage', $field_values);
 		return (int)$this->db->sql_insert_id();
 	}
 

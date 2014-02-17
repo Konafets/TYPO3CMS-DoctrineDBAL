@@ -1311,7 +1311,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 			// Number of hits on the search.
 			'tstamp' => $GLOBALS['EXEC_TIME']
 		);
-		$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_stat_search', $insertFields);
+		$GLOBALS['TYPO3_DB']->executeInsertQuery('index_stat_search', $insertFields);
 		$newId = $GLOBALS['TYPO3_DB']->sql_insert_id();
 		if ($newId) {
 			foreach ($sWArr as $val) {
@@ -1322,7 +1322,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 					// Time stamp
 					'pageid' => $GLOBALS['TSFE']->id
 				);
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_stat_word', $insertFields);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('index_stat_word', $insertFields);
 			}
 		}
 	}

@@ -615,7 +615,7 @@ class RelationHandler {
 						$insertFields['tablenames'] = $tablename;
 						$insertFields = $this->completeOppositeUsageValues($tablename, $insertFields);
 					}
-					$GLOBALS['TYPO3_DB']->exec_INSERTquery($MM_tableName, $insertFields);
+					$GLOBALS['TYPO3_DB']->executeInsertQuery($MM_tableName, $insertFields);
 					if ($this->MM_is_foreign) {
 						$this->updateRefIndex($val['table'], $val['id']);
 					}

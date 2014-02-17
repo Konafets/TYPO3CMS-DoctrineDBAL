@@ -693,7 +693,7 @@ class SearchController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			// Time stamp
 			'tstamp' => $GLOBALS['EXEC_TIME']
 		);
-		$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_stat_search', $insertFields);
+		$GLOBALS['TYPO3_DB']->executeInsertQuery('index_stat_search', $insertFields);
 		$newId = $GLOBALS['TYPO3_DB']->sql_insert_id();
 		if ($newId) {
 			foreach ($searchWords as $val) {
@@ -705,7 +705,7 @@ class SearchController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 					// search page id for indexed search stats
 					'pageid' => $GLOBALS['TSFE']->id
 				);
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_stat_word', $insertFields);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('index_stat_word', $insertFields);
 			}
 		}
 	}

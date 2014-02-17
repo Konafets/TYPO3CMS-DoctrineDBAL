@@ -205,7 +205,7 @@ class LinkAnalyzer {
 							$record['link_type'] = $key;
 							$record['url'] = $url;
 							$record['url_response'] = serialize($response);
-							$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_linkvalidator_link', $record);
+							$GLOBALS['TYPO3_DB']->executeInsertQuery('tx_linkvalidator_link', $record);
 						} elseif (\TYPO3\CMS\Core\Utility\GeneralUtility::_GP('showalllinks')) {
 							$response = array();
 							$response['valid'] = TRUE;
@@ -213,7 +213,7 @@ class LinkAnalyzer {
 							$record['url'] = $url;
 							$record['link_type'] = $key;
 							$record['url_response'] = serialize($response);
-							$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_linkvalidator_link', $record);
+							$GLOBALS['TYPO3_DB']->executeInsertQuery('tx_linkvalidator_link', $record);
 						}
 					}
 				}

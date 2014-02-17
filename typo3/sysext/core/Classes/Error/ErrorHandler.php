@@ -189,7 +189,7 @@ class ErrorHandler implements \TYPO3\CMS\Core\Error\ErrorHandlerInterface {
 				'tstamp' => $GLOBALS['EXEC_TIME'],
 				'workspace' => $workspace
 			);
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_log', $fields_values);
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_log', $fields_values);
 		}
 	}
 

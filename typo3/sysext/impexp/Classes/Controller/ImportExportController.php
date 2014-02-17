@@ -1015,7 +1015,7 @@ class ImportExportController extends \TYPO3\CMS\Backend\Module\BaseScriptClass {
 					'item_uid' => $inData['pagetree']['id'],
 					'preset_data' => serialize($inData)
 				);
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_impexp_presets', $fields_values);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('tx_impexp_presets', $fields_values);
 				$msg = 'New preset "' . htmlspecialchars($inData['preset']['title']) . '" is created';
 			}
 		}

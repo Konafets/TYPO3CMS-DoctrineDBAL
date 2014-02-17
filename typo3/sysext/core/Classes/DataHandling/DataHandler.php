@@ -5911,7 +5911,7 @@ class DataHandler {
 				}
 				$fieldArray = $this->insertUpdateDB_preprocessBasedOnFieldType($table, $fieldArray);
 				// Execute the INSERT query:
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery($table, $fieldArray);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery($table, $fieldArray);
 				// If succees, do...:
 				if (!$GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 					// Set mapping for NEW... -> real uid:
@@ -6000,7 +6000,7 @@ class DataHandler {
 			$fields_values['tablename'] = $table;
 			$fields_values['recuid'] = $id;
 			$fields_values['sys_log_uid'] = $logId;
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_history', $fields_values);
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_history', $fields_values);
 		}
 	}
 
