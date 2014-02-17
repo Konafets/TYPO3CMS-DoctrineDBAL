@@ -73,7 +73,8 @@ class DatabaseWriter extends \TYPO3\CMS\Core\Log\Writer\AbstractWriter {
 			'message' => $record['message'],
 			'data' => !empty($record['data']) ? json_encode($record['data']) : ''
 		);
-		if (FALSE === $GLOBALS['TYPO3_DB']->exec_INSERTquery($this->logTable, $data)) {
+		//TODO: executeInsertQuery() returns the affected rows not boolean. Investigate this.
+		if (FALSE === $GLOBALS['TYPO3_DB']->executeInsertQuery($this->logTable, $data)) {
 			throw new \RuntimeException('Could not write log record to database', 1345036334);
 		}
 		return $this;

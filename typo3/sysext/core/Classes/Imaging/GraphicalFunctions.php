@@ -2341,7 +2341,7 @@ class GraphicalFunctions {
 				'imagewidth' => $identifyResult[0],
 				'imageheight' => $identifyResult[1]
 			);
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('cache_imagesizes', $fieldArray);
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('cache_imagesizes', $fieldArray);
 			if (!($err = $GLOBALS['TYPO3_DB']->sqlErrorMessage())) {
 				$result = TRUE;
 			}
@@ -2540,7 +2540,7 @@ class GraphicalFunctions {
 						'orig_filename' => $orig
 					);
 					$GLOBALS['TYPO3_DB']->executeDeleteQuery('cache_typo3temp_log', array('md5hash' => $md5Hash));
-					$GLOBALS['TYPO3_DB']->exec_INSERTquery('cache_typo3temp_log', $insertFields);
+					$GLOBALS['TYPO3_DB']->executeInsertQuery('cache_typo3temp_log', $insertFields);
 					if (is_object($GLOBALS['TT'])) {
 						$GLOBALS['TT']->setTSlogMessage('typo3temp_log: The row did not exist, so a new is written and file is being processed: ' . $output);
 					}

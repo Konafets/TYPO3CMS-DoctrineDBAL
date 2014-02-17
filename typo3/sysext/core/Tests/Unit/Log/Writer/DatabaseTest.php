@@ -23,6 +23,7 @@ namespace TYPO3\CMS\Core\Tests\Unit\Log\Writer;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * Testcase for \TYPO3\CMS\Core\Log\Writer\DatabaseWriter
@@ -56,7 +57,11 @@ class DatabaseTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 */
 	private function setUpAndReturnDatabaseStub() {
 		$databaseLink = $GLOBALS['TYPO3_DB']->getDatabaseHandle();
-		$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('exec_INSERTquery'), array(), '', FALSE, FALSE);
+		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Database\\DatabaseConnection', array('executeInsertQuery'), array(), '', FALSE, FALSE);
+		} else {
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('exec_INSERTquery'), array(), '', FALSE, FALSE);
+		}
 		$GLOBALS['TYPO3_DB']->setDatabaseHandle($databaseLink);
 		return $GLOBALS['TYPO3_DB'];
 	}
@@ -113,7 +118,11 @@ class DatabaseTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$logger = $this->createLogger();
 		$databaseWriter = $this->createWriter();
 		$logger->addWriter(\TYPO3\CMS\Core\Log\LogLevel::NOTICE, $databaseWriter);
-		$this->databaseStub->expects($this->once())->method('exec_INSERTquery');
+		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
+			$this->databaseStub->expects($this->once())->method('executeInsertQuery');
+		} else {
+			$this->databaseStub->expects($this->once())->method('exec_INSERTquery');
+		}
 		$logger->log($record->getLevel(), $record->getMessage());
 	}
 

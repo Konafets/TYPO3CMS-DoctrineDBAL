@@ -261,7 +261,7 @@ class MigrateWorkspacesUpdate extends InstallSysExtsUpdate {
 			'title' => $stageLabel,
 			'responsible_persons' => $stageMembers
 		);
-		$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_workspace_stage', $data);
+		$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_workspace_stage', $data);
 		$this->sqlQueries[] = $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery;
 		return $GLOBALS['TYPO3_DB']->sql_insert_id();
 	}
@@ -312,7 +312,7 @@ class MigrateWorkspacesUpdate extends InstallSysExtsUpdate {
 		$data = array(
 			'title' => 'Draft'
 		);
-		$GLOBALS['TYPO3_DB']->exec_INSERTquery('sys_workspace', $data);
+		$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_workspace', $data);
 		$this->sqlQueries[] = $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery;
 		return $GLOBALS['TYPO3_DB']->sql_insert_id();
 	}

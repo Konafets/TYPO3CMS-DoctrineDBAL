@@ -1469,7 +1469,7 @@ class Indexer {
 			'freeIndexSetId' => (int)$this->conf['freeIndexSetId']
 		);
 		if (\TYPO3\CMS\IndexedSearch\Utility\IndexedSearchUtility::isTableUsed('index_phash')) {
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_phash', $fields);
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('index_phash', $fields);
 		}
 		// PROCESSING index_section
 		$this->submit_section($this->hash['phash'], $this->hash['phash']);
@@ -1485,7 +1485,7 @@ class Indexer {
 			$fields['fulltextdata'] = substr($fields['fulltextdata'], 0, $this->indexerConfig['fullTextDataLength']);
 		}
 		if (\TYPO3\CMS\IndexedSearch\Utility\IndexedSearchUtility::isTableUsed('index_fulltext')) {
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_fulltext', $fields);
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('index_fulltext', $fields);
 		}
 		// PROCESSING index_debug
 		if ($this->indexerConfig['debugMode']) {
@@ -1501,7 +1501,7 @@ class Indexer {
 				))
 			);
 			if (\TYPO3\CMS\IndexedSearch\Utility\IndexedSearchUtility::isTableUsed('index_debug')) {
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_debug', $fields);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('index_debug', $fields);
 			}
 		}
 	}
@@ -1524,7 +1524,7 @@ class Indexer {
 			'gr_list' => $this->conf['gr_list']
 		);
 		if (\TYPO3\CMS\IndexedSearch\Utility\IndexedSearchUtility::isTableUsed('index_grlist')) {
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_grlist', $fields);
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('index_grlist', $fields);
 		}
 	}
 
@@ -1545,7 +1545,7 @@ class Indexer {
 		);
 		$this->getRootLineFields($fields);
 		if (\TYPO3\CMS\IndexedSearch\Utility\IndexedSearchUtility::isTableUsed('index_section')) {
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_section', $fields);
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('index_section', $fields);
 		}
 	}
 
@@ -1622,7 +1622,7 @@ class Indexer {
 			'sys_language_uid' => (int)$this->conf['sys_language_uid']
 		);
 		if (\TYPO3\CMS\IndexedSearch\Utility\IndexedSearchUtility::isTableUsed('index_phash')) {
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_phash', $fields);
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('index_phash', $fields);
 		}
 		// PROCESSING index_fulltext
 		$fields = array(
@@ -1634,7 +1634,7 @@ class Indexer {
 			$fields['fulltextdata'] = substr($fields['fulltextdata'], 0, $this->indexerConfig['fullTextDataLength']);
 		}
 		if (\TYPO3\CMS\IndexedSearch\Utility\IndexedSearchUtility::isTableUsed('index_fulltext')) {
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_fulltext', $fields);
+			$GLOBALS['TYPO3_DB']->executeInsertQuery('index_fulltext', $fields);
 		}
 		// PROCESSING index_debug
 		if ($this->indexerConfig['debugMode']) {
@@ -1648,7 +1648,7 @@ class Indexer {
 				))
 			);
 			if (\TYPO3\CMS\IndexedSearch\Utility\IndexedSearchUtility::isTableUsed('index_debug')) {
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_debug', $fields);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('index_debug', $fields);
 			}
 		}
 	}
@@ -1990,7 +1990,7 @@ class Indexer {
 							'metaphone' => $val['metaphone']
 						);
 						// A duplicate-key error will occur here if a word is NOT unset in the unset() line. However as long as the words in $wl are NOT longer as 60 chars (the baseword varchar is 60 characters...) this is not a problem.
-						$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_words', $insertFields);
+						$GLOBALS['TYPO3_DB']->executeInsertQuery('index_words', $insertFields);
 					}
 				}
 			}
@@ -2017,7 +2017,7 @@ class Indexer {
 					'freq' => $this->freqMap($val['count'] / $this->wordcount),
 					'flags' => $val['cmp'] & $this->flagBitMask
 				);
-				$GLOBALS['TYPO3_DB']->exec_INSERTquery('index_rel', $insertFields);
+				$GLOBALS['TYPO3_DB']->executeInsertQuery('index_rel', $insertFields);
 			}
 		}
 	}

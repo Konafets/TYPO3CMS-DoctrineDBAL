@@ -157,7 +157,7 @@ class Typo3DatabaseBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBackend
 		if ($this->compression) {
 			$data = gzcompress($data, $this->compressionLevel);
 		}
-		$GLOBALS['TYPO3_DB']->exec_INSERTquery($this->cacheTable, array(
+		$GLOBALS['TYPO3_DB']->executeInsertQuery($this->cacheTable, array(
 			'identifier' => $entryIdentifier,
 			'expires' => $expires,
 			'content' => $data
