@@ -120,7 +120,7 @@ class MetaDataRepository implements SingletonInterface {
 		$emptyRecord = array_merge($emptyRecord, $additionalFields);
 		$this->getDatabase()->executeInsertQuery($this->tableName, $emptyRecord);
 		$record = $emptyRecord;
-		$record['uid'] = $this->getDatabase()->sql_insert_id();
+		$record['uid'] = $this->getDatabase()->getLastInsertId();
 
 		$this->emitRecordCreated($record);
 

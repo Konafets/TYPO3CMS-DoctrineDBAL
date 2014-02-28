@@ -2097,7 +2097,7 @@ class BackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\AbstractU
 			'workspace' => $this->workspace
 		);
 		$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_log', $fields_values);
-		return $GLOBALS['TYPO3_DB']->sql_insert_id();
+		return $GLOBALS['TYPO3_DB']->getLastInsertId();
 	}
 
 	/**

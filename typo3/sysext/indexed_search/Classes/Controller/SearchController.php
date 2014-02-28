@@ -694,7 +694,7 @@ class SearchController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			'tstamp' => $GLOBALS['EXEC_TIME']
 		);
 		$GLOBALS['TYPO3_DB']->executeInsertQuery('index_stat_search', $insertFields);
-		$newId = $GLOBALS['TYPO3_DB']->sql_insert_id();
+		$newId = $GLOBALS['TYPO3_DB']->getLastInsertId();
 		if ($newId) {
 			foreach ($searchWords as $val) {
 				$insertFields = array(

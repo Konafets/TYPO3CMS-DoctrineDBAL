@@ -1312,7 +1312,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 			'tstamp' => $GLOBALS['EXEC_TIME']
 		);
 		$GLOBALS['TYPO3_DB']->executeInsertQuery('index_stat_search', $insertFields);
-		$newId = $GLOBALS['TYPO3_DB']->sql_insert_id();
+		$newId = $GLOBALS['TYPO3_DB']->getLastInsertId();
 		if ($newId) {
 			foreach ($sWArr as $val) {
 				$insertFields = array(

@@ -102,7 +102,7 @@ class SplitStorage extends \TYPO3\CMS\Rsaauth\Storage\AbstractStorage {
 				'crdate' => $time,
 				'key_value' => $keyPart2
 			));
-			$keyId = $GLOBALS['TYPO3_DB']->sql_insert_id();
+			$keyId = $GLOBALS['TYPO3_DB']->getLastInsertId();
 			// Store another part in session
 			$_SESSION['tx_rsaauth_key'] = array($keyId, $keyPart1);
 		}

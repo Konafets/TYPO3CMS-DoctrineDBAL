@@ -83,7 +83,7 @@ class RootTemplateUpdate extends AbstractUpdate implements InstallerProcessInter
 		$dbQueries[] = str_replace(chr(10), ' ', $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery);
 
 		if ($status) {
-			$pageId = $GLOBALS['TYPO3_DB']->sql_insert_id();
+			$pageId = $GLOBALS['TYPO3_DB']->getLastInsertId();
 
 			$status = $GLOBALS['TYPO3_DB']->executeInsertQuery(
 				'sys_template',
