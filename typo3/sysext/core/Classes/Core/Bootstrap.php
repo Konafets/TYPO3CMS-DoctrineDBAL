@@ -795,6 +795,8 @@ class Bootstrap {
 			$databaseConnection->setInitializeCommandsAfterConnect($commandsAfterConnect);
 		}
 
+		$databaseConnection->connectDB();
+
 		$GLOBALS['TYPO3_DB'] = $databaseConnection;
 		// $GLOBALS['TYPO3_DB'] needs to be defined first in order to work for DBAL
 		$GLOBALS['TYPO3_DB']->initialize();
