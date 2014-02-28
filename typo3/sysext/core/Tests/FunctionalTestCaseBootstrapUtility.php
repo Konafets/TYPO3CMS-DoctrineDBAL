@@ -418,6 +418,7 @@ class FunctionalTestCaseBootstrapUtility {
 		\TYPO3\CMS\Core\Core\Bootstrap::getInstance()->initializeTypo3DbGlobal();
 		/** @var \TYPO3\CMS\Core\Database\DatabaseConnection $database */
 		$database = $GLOBALS['TYPO3_DB'];
+		// TODO: Remove when switch to Doctrine complete
 		if(!$database->sql_pconnect()) {
 			throw new Exception(
 				'TYPO3 Fatal Error: The current username, password or host was not accepted when the'
