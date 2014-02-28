@@ -178,6 +178,6 @@ class DatabaseSelect extends AbstractStepAction {
 		$this->databaseConnection->setDatabaseHost($GLOBALS['TYPO3_CONF_VARS']['DB']['host']);
 		$this->databaseConnection->setDatabasePort($GLOBALS['TYPO3_CONF_VARS']['DB']['port']);
 		$this->databaseConnection->setDatabaseSocket($GLOBALS['TYPO3_CONF_VARS']['DB']['socket']);
-		$this->databaseConnection->sql_pconnect();
+		$this->databaseConnection->connectDatabase();
 	}
 }

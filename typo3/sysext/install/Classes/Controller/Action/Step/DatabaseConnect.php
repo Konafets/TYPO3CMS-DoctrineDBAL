@@ -354,7 +354,8 @@ class DatabaseConnect extends AbstractStepAction {
 		$databaseConnection->setDatabaseCharset($this->getConfiguredCharset());
 
 		$result = FALSE;
-		if (@$databaseConnection->sql_pconnect()) {
+		$databaseConnection->connectDatabase();
+		if (@$databaseConnection->isConnected()) {
 			$result = TRUE;
 		}
 		return $result;
