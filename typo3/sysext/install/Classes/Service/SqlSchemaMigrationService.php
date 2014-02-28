@@ -199,7 +199,7 @@ class SqlSchemaMigrationService {
 				$total[$tableName]['fields'][$fN] = $this->assembleFieldDefinition($fieldRow);
 			}
 			// Keys
-			$keyInformation = $GLOBALS['TYPO3_DB']->adminGetKeys($tableName);
+			$keyInformation = $GLOBALS['TYPO3_DB']->listKeys($tableName);
 			foreach ($keyInformation as $keyRow) {
 				$keyName = $keyRow['Key_name'];
 				$colName = $keyRow['Column_name'];
