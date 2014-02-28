@@ -60,15 +60,27 @@ class BackendUtility {
 	 * This function should ALWAYS be called in the backend for selection on tables which are configured in $GLOBALS['TCA'] since it will ensure consistent selection of records, even if they are marked deleted (in which case the system must always treat them as non-existent!)
 	 * In the frontend a function, ->enableFields(), is known to filter hidden-field, start- and endtime and fe_groups as well. But that is a job of the frontend, not the backend. If you need filtering on those fields as well in the backend you can use ->BEenableFields() though.
 	 *
-	 * @param string $table Table name present in $GLOBALS['TCA']
+	 * @param string $table      Table name present in $GLOBALS['TCA']
 	 * @param string $tableAlias Table alias if any
+	 * @param bool   $isDoctrine
+	 *
 	 * @return string WHERE clause for filtering out deleted records, eg " AND tablename.deleted=0
 	 */
-	static public function deleteClause($table, $tableAlias = '') {
-		if ($GLOBALS['TCA'][$table]['ctrl']['delete']) {
-			return ' AND ' . ($tableAlias ?: $table) . '.' . $GLOBALS['TCA'][$table]['ctrl']['delete'] . '=0';
+	static public function deleteClause($table, $tableAlias = '', $isDoctrine = FALSE) {
+		if ($isDoctrine) {
+			if ($GLOBALS['TCA'][$table]['ctrl']['delete']) {
+				$expr = $GLOBALS['TYPO3_DB']->expr();
+				$where = $expr->equals(($tableAlias ?: $table) . '.' . $GLOBALS['TCA'][$table]['ctrl']['delete'], 0);
+				return $where;
+			} else {
+				return '';
+			}
 		} else {
-			return '';
+			if ($GLOBALS['TCA'][$table]['ctrl']['delete']) {
+				return ' AND ' . ($tableAlias ?: $table) . '.' . $GLOBALS['TCA'][$table]['ctrl']['delete'] . '=0';
+			} else {
+				return '';
+			}
 		}
 	}
 
