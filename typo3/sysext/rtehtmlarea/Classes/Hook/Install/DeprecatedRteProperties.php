@@ -245,8 +245,8 @@ class DeprecatedRteProperties extends \TYPO3\CMS\Install\Updates\AbstractUpdate 
 			$GLOBALS['TYPO3_DB']->executeUpdateQuery('pages', $where, $fieldValues);
 
 			$dbQueries[] = str_replace(chr(10), ' ', $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery);
-			if ($GLOBALS['TYPO3_DB']->sql_error()) {
-				$customMessages .= 'SQL-ERROR: ' . htmlspecialchars($GLOBALS['TYPO3_DB']->sql_error()) . LF . LF;
+			if ($GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
+				$customMessages .= 'SQL-ERROR: ' . htmlspecialchars($GLOBALS['TYPO3_DB']->sqlErrorMessage()) . LF . LF;
 			}
 		}
 	}
