@@ -203,7 +203,7 @@ class BackendUserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
 		$result = $query->execute();
 		// TODO: The former query had a LIMIT 1 here. Should not be needed I guess. Test it!
 
-		if (($GLOBALS['TYPO3_DB']->sql_affected_rows() == 1) || ($result === 1)) {
+		if (($GLOBALS['TYPO3_DB']->getAffectedRows() == 1) || ($result === 1)) {
 			$message = 'Session successfully terminated.';
 			$this->flashMessageContainer->add($message, '', \TYPO3\CMS\Core\Messaging\FlashMessage::OK);
 		}

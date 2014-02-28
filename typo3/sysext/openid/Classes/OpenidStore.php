@@ -128,7 +128,7 @@ class OpenidStore extends \Auth_OpenID_OpenIDStore {
 				'assoc_handle' => $handle
 			)
 		);
-		$deletedCount = $this->databaseConnection->sql_affected_rows();
+		$deletedCount = $this->databaseConnection->getAffectedRows();
 		return $deletedCount > 0;
 	}
 
@@ -162,7 +162,7 @@ class OpenidStore extends \Auth_OpenID_OpenIDStore {
 				'tstamp' => $timestamp
 			);
 			$this->databaseConnection->executeInsertQuery(self::NONCE_TABLE_NAME, $values);
-			$affectedRows = $this->databaseConnection->sql_affected_rows();
+			$affectedRows = $this->databaseConnection->getAffectedRows();
 			$result = $affectedRows > 0;
 		}
 		return $result;

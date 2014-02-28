@@ -232,7 +232,7 @@ class Typo3DatabaseBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBackend
 		$entryRemoved = FALSE;
 		$res = $GLOBALS['TYPO3_DB']->executeDeleteQuery($this->cacheTable, array('identifier' => $entryIdentifier));
 		$GLOBALS['TYPO3_DB']->executeDeleteQuery($this->tagsTable, array('identifier' => $entryIdentifier));
-		if ($GLOBALS['TYPO3_DB']->sql_affected_rows($res) == 1) {
+		if ($GLOBALS['TYPO3_DB']->getAffectedRows($res) == 1) {
 			$entryRemoved = TRUE;
 		}
 		return $entryRemoved;

@@ -457,7 +457,7 @@ class ShortcutToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemHookI
 		$ajaxReturn = 'failed';
 		if ($fullShortcut['raw']['userid'] == $GLOBALS['BE_USER']->user['uid']) {
 			$GLOBALS['TYPO3_DB']->executeDeleteQuery('sys_be_shortcuts', array('uid' => $shortcutId));
-			if ($GLOBALS['TYPO3_DB']->sql_affected_rows() == 1) {
+			if ($GLOBALS['TYPO3_DB']->getAffectedRows() == 1) {
 				$ajaxReturn = 'deleted';
 			}
 		}
@@ -528,7 +528,7 @@ class ShortcutToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemHookI
 					'sorting' => $GLOBALS['EXEC_TIME']
 				);
 				$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_be_shortcuts', $fieldValues);
-				if ($GLOBALS['TYPO3_DB']->sql_affected_rows() == 1) {
+				if ($GLOBALS['TYPO3_DB']->getAffectedRows() == 1) {
 					$shortcutCreated = 'success';
 				}
 			}
