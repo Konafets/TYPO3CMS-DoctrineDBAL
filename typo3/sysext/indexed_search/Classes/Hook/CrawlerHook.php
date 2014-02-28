@@ -86,7 +86,7 @@ class CrawlerHook {
 				'timer_next_indexing' => $nextTime,
 				'session_data' => ''
 			);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('index_config', 'uid=' . (int)$cfgRec['uid'], $field_array);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('index_config', array('uid' => (int)$cfgRec['uid']), $field_array);
 			// Based on configuration type:
 			switch ($cfgRec['type']) {
 				case 1:
@@ -219,7 +219,7 @@ class CrawlerHook {
 				$field_array = array(
 					'session_data' => serialize($session_data)
 				);
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('index_config', 'uid=' . (int)$cfgRec['uid'], $field_array);
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery('index_config', array('uid' => (int)$cfgRec['uid']), $field_array);
 			}
 		}
 		return array('log' => $params);
@@ -452,7 +452,7 @@ class CrawlerHook {
 					'set_id' => 0,
 					'session_data' => ''
 				);
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('index_config', 'uid=' . (int)$cfgRec['uid'], $field_array);
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery('index_config', array('uid' => (int)$cfgRec['uid']), $field_array);
 			}
 		}
 	}

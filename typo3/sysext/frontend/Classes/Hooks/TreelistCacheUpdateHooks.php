@@ -264,9 +264,12 @@ class TreelistCacheUpdateHooks {
 	 * @return void
 	 */
 	protected function setCacheExpiration($affectedPage, $expirationTime) {
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery('cache_treelist', $GLOBALS['TYPO3_DB']->listQuery('treelist', $affectedPage, 'cache_treelist'), array(
-			'expires' => $expirationTime
-		));
+		$expr = $GLOBALS['TYPO3_DB']->expr();
+		$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+				'cache_treelist',
+				$expr->findInSet('treelist', $affectedPage, 'cache_treelist'),
+				array('expires' => $expirationTime)
+		);
 	}
 
 	/**
@@ -275,7 +278,10 @@ class TreelistCacheUpdateHooks {
 	 * @return void
 	 */
 	protected function removeExpiredCacheEntries() {
-		$GLOBALS['TYPO3_DB']->exec_DELETEquery('cache_treelist', 'expires <= ' . $GLOBALS['EXEC_TIME']);
+		$query = $GLOBALS['TYPO3_DB']->createDeleteQuery();
+		$query->delete('cache_treelist')->where(
+			$query->expr->lessThanOrEquals('expires', $query->bindValue($GLOBALS['EXEC_TIME']))
+		)->execute();
 	}
 
 	/**

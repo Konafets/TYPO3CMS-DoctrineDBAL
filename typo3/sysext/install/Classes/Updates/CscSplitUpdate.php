@@ -169,12 +169,11 @@ class CscSplitUpdate extends AbstractUpdate {
 	 */
 	protected function updateCscTemplates($templates, &$dbQueries, &$customMessages) {
 		foreach ($templates as $template) {
-			$table = 'sys_template';
-			$where = 'uid =' . $template['uid'];
 			$field_values = array(
 				'include_static_file' => $template['include_static_file']
 			);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, $where, $field_values);
+
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('sys_template', array('uid' => $template['uid']), $field_values);
 			$dbQueries[] = str_replace(chr(10), ' ', $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery);
 			if ($GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 				$customMessages = 'SQL-ERROR: ' . htmlspecialchars($GLOBALS['TYPO3_DB']->sqlErrorMessage());

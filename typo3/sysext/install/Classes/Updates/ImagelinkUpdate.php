@@ -84,7 +84,7 @@ class ImagelinkUpdate extends AbstractUpdate {
 			foreach ($affectedRows as $row) {
 				$newImageLink = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $row['image_link']);
 				$newImageLink = implode(LF, $newImageLink);
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tt_content', 'uid=' . $row['uid'], array('image_link' => $newImageLink));
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery('tt_content', array('uid' => $row['uid']), array('image_link' => $newImageLink));
 				$dbQueries[] = str_replace(LF, ' ', $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery);
 				if ($GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 					$customMessages = 'SQL-ERROR: ' . htmlspecialchars($GLOBALS['TYPO3_DB']->sqlErrorMessage());

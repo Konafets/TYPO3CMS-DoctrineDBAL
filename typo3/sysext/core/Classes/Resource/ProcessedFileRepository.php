@@ -137,7 +137,7 @@ class ProcessedFileRepository extends AbstractRepository {
 			$uid = (int)$processedFile->getUid();
 			$updateFields = $this->cleanUnavailableColumns($processedFile->toArray());
 			$updateFields['tstamp'] = time();
-			$this->databaseConnection->exec_UPDATEquery($this->table, 'uid=' . (int)$uid, $updateFields);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery($this->table, array('uid' => (int)$uid), $updateFields);
 		}
 	}
 

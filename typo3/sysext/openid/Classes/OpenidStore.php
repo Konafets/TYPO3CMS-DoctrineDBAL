@@ -199,13 +199,17 @@ class OpenidStore extends \Auth_OpenID_OpenIDStore {
 	 * @return void
 	 */
 	protected function updateExistingAssociation($serverUrl, \Auth_OpenID_Association $association) {
-		$where = sprintf('server_url=%s AND assoc_handle=%s AND expires>%d', $this->databaseConnection->fullQuoteStr($serverUrl, self::ASSOCIATION_TABLE_NAME), $this->databaseConnection->fullQuoteStr($association->handle, self::ASSOCIATION_TABLE_NAME), time());
 		$serializedAssociation = serialize($association);
-		$values = array(
-			'content' => base64_encode($serializedAssociation),
-			'tstamp' => time()
-		);
-		$this->databaseConnection->exec_UPDATEquery(self::ASSOCIATION_TABLE_NAME, $where, $values);
+		$query = $this->databaseConnection->createUpdateQuery();
+		$query->update(self::ASSOCIATION_TABLE_NAME)
+				->set('content', base64_encode($serializedAssociation))
+				->set('tstamp', time())
+				->where(
+					$query->expr->equals('server_url', $query->bindValue($serverUrl)),
+					$query->expr->equals('assoc_handle', $query->bindValue($association->handle)),
+					$query->expr->greaterThan('expires', $query->bindValue(time()))
+				)
+				->execute();
 	}
 
 	/**
@@ -237,11 +241,11 @@ class OpenidStore extends \Auth_OpenID_OpenIDStore {
 	 * @return void
 	 */
 	protected function updateAssociationTimeStamp($recordId) {
-		$where = sprintf('uid=%d', $recordId);
-		$values = array(
-			'tstamp' => time()
+		$this->databaseConnection->executeUpdateQuery(
+			self::ASSOCIATION_TABLE_NAME,
+			array('uid' => $recordId),
+			array('tstamp' => time())
 		);
-		$this->databaseConnection->exec_UPDATEquery(self::ASSOCIATION_TABLE_NAME, $where, $values);
 	}
 
 }

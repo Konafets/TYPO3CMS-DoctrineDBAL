@@ -190,17 +190,17 @@ class RteMagicImagesUpdateWizard extends AbstractUpdate {
 						$targetRecord[$targetFieldName]
 					);
 					// Update the record
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery(
 						$refRecord['tablename'],
-						'uid=' . (int)$refRecord['recuid'],
+						array('uid' => (int)$refRecord['recuid']),
 						array($targetFieldName => $targetRecord[$targetFieldName])
 					);
 					$queries[] = str_replace(LF, ' ', $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery);
 
 					// Finally, update the sys_refindex table as well
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery(
 						'sys_refindex',
-						'hash=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($refRecord['hash'], 'sys_refindex'),
+						array('hash' => $refRecord['hash']),
 						array(
 							'ref_table'  => 'sys_file',
 							'ref_uid'    => $file->getUid(),

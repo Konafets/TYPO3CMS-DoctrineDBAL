@@ -262,21 +262,18 @@ class ExtensionRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	 * @return void
 	 */
 	protected function markExtensionWithMaximumVersionAsCurrent($repositoryUid) {
+		$query = $this->databaseConnection->createUpdateQuery();
+		$expr = $query->expr;
 		$whereClauseParts = array();
 		foreach ($this->fetchMaximalVersionsForAllExtensions($repositoryUid) as $row) {
-			$whereClauseParts[] = '(extension_key = ' . $this->databaseConnection->fullQuoteStr($row['extension_key'], self::TABLE_NAME) .
-				' AND integer_version = ' . (int)$row['max_version'] . ')';
+			$whereClauseParts[] = $expr->logicalAnd(
+					$expr->equals('extension_key', $query->bindValue($row['extension_key'])),
+					$expr->equals('integer_version', $query->bindValue((int)$row['max_version']))
+			);
 		}
 
-		$whereClause = implode(' OR ', $whereClauseParts);
-
-		$this->databaseConnection->exec_UPDATEquery(
-			self::TABLE_NAME,
-			$whereClause,
-			array(
-				'current_version' => 1,
-			)
-		);
+		$or = $expr->logicalOr($whereClauseParts);
+		$query->update(self::TABLE_NAME)->set('current_version', 1)->where($or)->execute();
 	}
 
 	/**

@@ -353,11 +353,16 @@ class FrontendLoginController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin 
 							$newPass = $_params['newPassword'];
 						}
 						// Save new password and clear DB-hash
-						$res = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+						$res = $GLOBALS['TYPO3_DB']->executeUpdateQuery(
 							'fe_users',
-							'uid=' . $user['uid'],
-							array('password' => $newPass, 'felogin_forgotHash' => '', 'tstamp' => $GLOBALS['EXEC_TIME'])
+							array('uid' => $user['uid']),
+							array(
+								'password' => $newPass,
+								'felogin_forgotHash' => '',
+								'tstamp' => $GLOBALS['EXEC_TIME']
+							)
 						);
+
 						$markerArray['###STATUS_MESSAGE###'] = $this->getDisplayText(
 							'change_password_done_message',
 							$this->conf['changePasswordDoneMessage_stdWrap.']
@@ -404,7 +409,7 @@ class FrontendLoginController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin 
 		$randHash = $validEnd . '|' . $hash;
 		$randHashDB = $validEnd . '|' . md5($hash);
 		// Write hash to DB
-		$res = $GLOBALS['TYPO3_DB']->exec_UPDATEquery('fe_users', 'uid=' . $user['uid'], array('felogin_forgotHash' => $randHashDB));
+		$res = $GLOBALS['TYPO3_DB']->executeUpdateQuery('fe_users', array('uid' => $user['uid']), array('felogin_forgotHash' => $randHashDB));
 		// Send hashlink to user
 		$this->conf['linkPrefix'] = -1;
 		$isAbsRelPrefix = !empty($GLOBALS['TSFE']->absRefPrefix);

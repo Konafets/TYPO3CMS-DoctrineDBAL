@@ -165,7 +165,7 @@ class CleanUp extends Action\AbstractAction implements Action\ActionInterface {
 	 */
 	protected function resetBackendUserUc() {
 		$database = $this->getDatabase();
-		$database->exec_UPDATEquery('be_users', '', array('uc' => ''));
+		$database->executeUpdateQuery('be_users', array(), array('uc' => ''));
 		/** @var \TYPO3\CMS\Install\Status\OkStatus $message */
 		$message = $this->objectManager->get('TYPO3\\CMS\\Install\\Status\\OkStatus');
 		$message->setTitle('Reset all backend users preferences');

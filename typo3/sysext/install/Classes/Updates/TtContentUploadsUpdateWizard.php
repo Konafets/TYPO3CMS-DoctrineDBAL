@@ -199,7 +199,7 @@ class TtContentUploadsUpdateWizard extends AbstractUpdate {
 	 * @return void
 	 */
 	protected function cleanRecord(array $record, $fileCount, array $collectionUids) {
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tt_content', 'uid = ' . $record['uid'], array(
+		$GLOBALS['TYPO3_DB']->executeUpdateQuery('tt_content', array('uid' => $record['uid']), array(
 			'media' => $fileCount,
 			'imagecaption' => '',
 			'titleText' => '',

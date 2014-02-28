@@ -996,7 +996,7 @@ class ImportExportController extends \TYPO3\CMS\Backend\Module\BaseScriptClass {
 						'item_uid' => $inData['pagetree']['id'],
 						'preset_data' => serialize($inData)
 					);
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_impexp_presets', 'uid=' . (int)$preset['uid'], $fields_values);
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery('tx_impexp_presets', array('uid' => (int)$preset['uid']), $fields_values);
 					$msg = 'Preset #' . $preset['uid'] . ' saved!';
 				} else {
 					$msg = 'ERROR: The preset was not saved because you were not the owner of it!';

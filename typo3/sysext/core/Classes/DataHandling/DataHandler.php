@@ -1469,9 +1469,14 @@ class DataHandler {
 					GeneralUtility::writeFile($eFile['editFile'], $SW_fileNewContent);
 					// Write status:
 					if (!strstr($id, 'NEW') && $eFile['statusField']) {
-						$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$id, array(
-							$eFile['statusField'] => $eFile['relEditFile'] . ' updated ' . date('d-m-Y H:i:s') . ', bytes ' . strlen($mixedRec[$eFile['contentField']])
-						));
+						$updateData = array(
+										$eFile['statusField'] => $eFile['relEditFile'] .
+											' updated ' .
+											date('d-m-Y H:i:s') .
+											', bytes ' .
+											strlen($mixedRec[$eFile['contentField']])
+									);
+						$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$id), $updateData);
 					}
 				} elseif ($eFile && is_string($eFile)) {
 					$this->log($table, $id, 2, 0, 1, 'Write-file error: \'%s\'', 13, array($eFile), $realPid);
@@ -3750,7 +3755,7 @@ class DataHandler {
 				// Check for child records that have also to be moved
 				$this->moveRecord_procFields($table, $uid, $destPid);
 				// Create query for update:
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$uid, $updateFields);
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$uid), $updateFields);
 				// Check for the localizations of that element
 				$this->moveL10nOverlayRecords($table, $uid, $destPid, $destPid);
 				// Call post processing hooks:
@@ -3803,7 +3808,7 @@ class DataHandler {
 						// Check for child records that have also to be moved
 						$this->moveRecord_procFields($table, $uid, $destPid);
 						// Create query for update:
-						$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$uid, $updateFields);
+						$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$uid), $updateFields);
 						// Check for the localizations of that element
 						$this->moveL10nOverlayRecords($table, $uid, $destPid, $originalRecordDestinationPid);
 						// Call post processing hooks:
@@ -4294,7 +4299,7 @@ class DataHandler {
 						}
 						// before (un-)deleting this record, check for child records or references
 						$this->deleteRecord_procFields($table, $uid, $undeleteRecord);
-						$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$uid, $updateFields);
+						$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$uid), $updateFields);
 						// Delete all l10n records aswell, impossible during undelete because it might bring too many records back to life
 						if (!$undeleteRecord) {
 							$this->deleteL10nOverlayRecords($table, $uid);
@@ -5080,7 +5085,7 @@ class DataHandler {
 					$updateValues = array('pid' => $thePidToUpdate);
 					foreach ($dbAnalysis->itemArray as $v) {
 						if ($v['id'] && $v['table'] && is_null(BackendUtility::getLiveVersionIdOfRecord($v['table'], $v['id']))) {
-							$GLOBALS['TYPO3_DB']->exec_UPDATEquery($v['table'], 'uid=' . (int)$v['id'], $updateValues);
+							$GLOBALS['TYPO3_DB']->executeUpdateQuery($v['table'], array('uid' => (int)$v['id']), $updateValues);
 						}
 					}
 				}
@@ -5842,7 +5847,7 @@ class DataHandler {
 			if (count($fieldArray)) {
 				$fieldArray = $this->insertUpdateDB_preprocessBasedOnFieldType($table, $fieldArray);
 				// Execute the UPDATE query:
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$id, $fieldArray);
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$id), $fieldArray);
 				// If succees, do...:
 				if (!$GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 					if ($this->checkStoredRecords) {
@@ -6121,7 +6126,7 @@ class DataHandler {
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 				$uid = (int)$row['uid'];
 				if ($uid) {
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$uid, array($sortRow => $i));
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$uid), array($sortRow => $i));
 					// This is used to return a sortingValue if the list is resorted because of inserting records inside the list and not in the top
 					if ($uid == $return_SortNumber_After_This_Uid) {
 						$i = $i + $intervals;

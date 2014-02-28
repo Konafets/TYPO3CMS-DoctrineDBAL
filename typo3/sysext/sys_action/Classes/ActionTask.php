@@ -332,10 +332,14 @@ class ActionTask implements \TYPO3\CMS\Taskcenter\TaskInterface {
 	 * @return void
 	 */
 	protected function deleteUser($userId, $actionId) {
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery('be_users', 'uid=' . $userId, array(
-			'deleted' => 1,
-			'tstamp' => $GLOBALS['ACCESS_TIME']
-		));
+		$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+				'be_users',
+				array('uid' => $userId),
+				array(
+					'deleted' => 1,
+					'tstamp'  => $GLOBALS['ACCESS_TIME']
+				)
+		);
 		// redirect to the original task
 		$redirectUrl = 'mod.php?M=user_task&show=' . $actionId;
 		\TYPO3\CMS\Core\Utility\HttpUtility::redirect($redirectUrl);

@@ -220,20 +220,18 @@ class BackendUserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
 		$targetUser = \TYPO3\CMS\Backend\Utility\BackendUtility::getRecord('be_users', $switchUser);
 		if (is_array($targetUser) && $GLOBALS['BE_USER']->isAdmin()) {
 			$updateData['ses_userid'] = $targetUser['uid'];
+
 			// User switchback or replace current session?
 			if ($switchBack) {
 				$updateData['ses_backuserid'] = (int)$GLOBALS['BE_USER']->user['uid'];
 			}
-
-			$whereClause = 'ses_id=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($GLOBALS['BE_USER']->id, 'be_sessions');
-			$whereClause .= ' AND ses_name=' . $GLOBALS['TYPO3_DB']->fullQuoteStr(\TYPO3\CMS\Core\Authentication\BackendUserAuthentication::getCookieName(), 'be_sessions');
-			$whereClause .= ' AND ses_userid=' . (int)$GLOBALS['BE_USER']->user['uid'];
-
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
-				'be_sessions',
-				$whereClause,
-				$updateData
+			$whereClause = array(
+					'ses_id'     => $GLOBALS['BE_USER']->id,
+					'ses_name'   => \TYPO3\CMS\Core\Authentication\BackendUserAuthentication::getCookieName(),
+					'ses_userid' => (int)$GLOBALS['BE_USER']->user['uid']
 			);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('be_sessions', $whereClause, $updateData);
+
 			$redirectUrl = $GLOBALS['BACK_PATH'] . 'index.php' . ($GLOBALS['TYPO3_CONF_VARS']['BE']['interfaces'] ? '' : '?commandLI=1');
 			\TYPO3\CMS\Core\Utility\HttpUtility::redirect($redirectUrl);
 		}

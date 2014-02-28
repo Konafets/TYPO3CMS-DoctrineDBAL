@@ -185,7 +185,7 @@ class RecordHistory {
 		$uid = (int)$uid;
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('snapshot', 'sys_history', 'uid=' . $uid);
 		$tmp = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery('sys_history', 'uid=' . $uid, array('snapshot' => !$tmp['snapshot']));
+		$GLOBALS['TYPO3_DB']->executeUpdateQuery('sys_history', array('uid' => $uid), array('snapshot' => !$tmp['snapshot']));
 	}
 
 	/**

@@ -123,7 +123,11 @@ class RecordCollectionRepository {
 	 * @return void
 	 */
 	public function deleteByUid($uid) {
-		$this->getDatabase()->exec_UPDATEquery($this->table, 'uid=' . (int)$uid, array('deleted' => 1, 'tstamp' => $GLOBALS['EXEC_TIME']));
+		$this->getDatabase()->executeUpdateQuery(
+				$this->table,
+				array('uid' => (int)$uid),
+				array('deleted' => 1, 'tstamp' => $GLOBALS['EXEC_TIME'])
+		);
 	}
 
 	/**

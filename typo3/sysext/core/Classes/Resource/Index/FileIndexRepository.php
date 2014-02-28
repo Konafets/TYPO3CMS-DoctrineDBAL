@@ -262,7 +262,7 @@ class FileIndexRepository implements SingletonInterface {
 		}
 		if (count($updateRow) > 0) {
 			$updateRow['tstamp'] = time();
-			$this->getDatabase()->exec_UPDATEquery($this->table, $this->getWhereClauseForFile($file), $updateRow);
+			$this->getDatabase()->executeUpdateQuery($this->table, $this->getWhereClauseForFile($file, TRUE), $updateRow);
 			$this->emitRecordUpdated(array_intersect_key($file->getProperties(), array_flip($this->fields)));
 		}
 	}
@@ -311,7 +311,7 @@ class FileIndexRepository implements SingletonInterface {
 	 * @return void
 	 */
 	public function updateIndexingTime($fileUid) {
-		$this->getDatabase()->exec_UPDATEquery($this->table, 'uid = ' . (int)$fileUid, array('last_indexed' => time()));
+		$this->getDatabase()->executeUpdateQuery($this->table, array('uid' => (int)$fileUid), array('last_indexed' => time()));
 	}
 
 	/**
@@ -321,7 +321,7 @@ class FileIndexRepository implements SingletonInterface {
 	 * @return void
 	 */
 	public function markFileAsMissing($fileUid) {
-		$this->getDatabase()->exec_UPDATEquery($this->table, 'uid = ' . (int)$fileUid, array('missing' => 1));
+		$this->getDatabase()->executeUpdateQuery($this->table, array('uid' => (int)$fileUid), array('missing' => 1));
 	}
 
 	/**
@@ -329,19 +329,35 @@ class FileIndexRepository implements SingletonInterface {
 	 *
 	 * @param File $file
 	 *
-	 * @return string
+	 * @param bool $isDoctrine
+	 *
+	 * @return mixed
 	 */
-	protected function getWhereClauseForFile(File $file) {
-		if ((int)$file->_getPropertyRaw('uid') > 0) {
-			$where = 'uid=' . (int)$file->getUid();
+	protected function getWhereClauseForFile(File $file, $isDoctrine = FALSE) {
+		if ($isDoctrine) {
+			$where = array();
+
+			if ((int)$file->_getPropertyRaw('uid') > 0) {
+				$where['uid'] = (int)$file->getUid();
+			} else {
+				$where['storage'] = (int)$file->getStorage()->getUid();
+				$where['identifier'] = $file->_getPropertyRaw('identifier');
+			}
+
+			return $where;
 		} else {
-			$where = sprintf(
-				'storage=%u AND identifier=%s',
-				(int)$file->getStorage()->getUid(),
-				$this->getDatabase()->fullQuoteStr($file->_getPropertyRaw('identifier'), $this->table)
-			);
+			if ((int)$file->_getPropertyRaw('uid') > 0) {
+				$where = 'uid=' . (int)$file->getUid();
+			} else {
+				$where = sprintf(
+					'storage=%u AND identifier=%s',
+					(int)$file->getStorage()->getUid(),
+					$this->getDatabase()->fullQuoteStr($file->_getPropertyRaw('identifier'), $this->table)
+				);
+			}
+
+			return $where;
 		}
-		return $where;
 	}
 
 	/**

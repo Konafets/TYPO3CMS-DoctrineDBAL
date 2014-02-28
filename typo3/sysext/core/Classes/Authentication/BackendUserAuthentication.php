@@ -1437,7 +1437,11 @@ class BackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\AbstractU
 	 */
 	public function setCachedList($cList) {
 		if ((string) $cList != (string) $this->user['usergroup_cached_list']) {
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('be_users', 'uid=' . (int)$this->user['uid'], array('usergroup_cached_list' => $cList));
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+					'be_users',
+					array('uid' => (int)$this->user['uid']),
+					array('usergroup_cached_list' => $cList)
+			);
 		}
 	}
 
@@ -1992,7 +1996,11 @@ class BackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\AbstractU
 		// If ID is different from the stored one, change it:
 		if ((int)$this->workspace !== (int)$this->user['workspace_id']) {
 			$this->user['workspace_id'] = $this->workspace;
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('be_users', 'uid=' . (int)$this->user['uid'], array('workspace_id' => $this->user['workspace_id']));
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+					'be_users',
+					array('uid' => (int)$this->user['uid']),
+					array('workspace_id' => $this->user['workspace_id'])
+			);
 			$this->simplelog('User changed workspace to "' . $this->workspace . '"');
 		}
 	}
@@ -2035,7 +2043,11 @@ class BackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\AbstractU
 	 */
 	public function setWorkspacePreview($previewState) {
 		$this->user['workspace_preview'] = $previewState;
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery('be_users', 'uid=' . (int)$this->user['uid'], array('workspace_preview' => $this->user['workspace_preview']));
+		$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+				'be_users',
+				array('uid' => (int)$this->user['uid']),
+				array('workspace_preview' => $this->user['workspace_preview'])
+		);
 	}
 
 	/**

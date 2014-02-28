@@ -1041,7 +1041,7 @@ class IndexedPagesController extends \TYPO3\CMS\Backend\Module\AbstractFunctionM
 				$fieldArray = array(
 					'is_stopword' => $state
 				);
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('index_words', 'wid=' . $wid, $fieldArray);
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery('index_words', array('wid' => $wid), $fieldArray);
 			}
 		}
 	}

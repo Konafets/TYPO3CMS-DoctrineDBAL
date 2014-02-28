@@ -276,14 +276,21 @@ class MigrateWorkspacesUpdate extends InstallSysExtsUpdate {
 	 */
 	protected function migrateOldRecordsToStage($workspaceId, $oldStageId, $newStageId) {
 		$tables = array_keys($GLOBALS['TCA']);
-		$where = 't3ver_wsid = ' . (int)$workspaceId . ' AND t3ver_stage = ' . (int)$oldStageId . ' AND pid = -1';
-		$values = array(
-			't3ver_stage' => (int)$newStageId
-		);
+
 		foreach ($tables as $table) {
 			$versioningVer = \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($GLOBALS['TCA'][$table]['ctrl']['versioningWS'], 0, 2, 0);
 			if ($versioningVer > 0) {
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, $where, $values);
+				// TODO: its possible to create the query outside the loop? It is possible to bind the $table too?
+				$query = $GLOBALS['TYPO3_DB']->createUpdateQuery();
+				$query->update($table)
+						->set('t3ver_stage', $query->bindValue((int)$newStageId))
+						->where(
+							$query->expr->equals('t3ver_wsid', $query->bindValue((int)$workspaceId)),
+							$query->expr->equals('t3ver_stage', $query->bindValue((int)$oldStageId)),
+							$query->expr->equals('pid', $query->bindValue(-1))
+						)
+						->execute();
+
 				$this->sqlQueries[] = $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery;
 			}
 		}
@@ -325,14 +332,10 @@ class MigrateWorkspacesUpdate extends InstallSysExtsUpdate {
 	 */
 	protected function migrateDraftWorkspaceRecordsToWorkspace($wsId) {
 		$tables = array_keys($GLOBALS['TCA']);
-		$where = 't3ver_wsid=-1';
-		$values = array(
-			't3ver_wsid' => (int)$wsId
-		);
 		foreach ($tables as $table) {
 			$versioningVer = \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($GLOBALS['TCA'][$table]['ctrl']['versioningWS'], 0, 2, 0);
 			if ($versioningVer > 0 && $this->hasElementsOnWorkspace($table, -1)) {
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, $where, $values);
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('t3ver_wsid' => -1), array('t3ver_wsid' => (int)$wsId));
 				$this->sqlQueries[] = $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery;
 			}
 		}
@@ -353,7 +356,7 @@ class MigrateWorkspacesUpdate extends InstallSysExtsUpdate {
 			$updateArray = array(
 				'adminusers' => 'be_users_' . implode(',be_users_', \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $workspace['adminusers'], TRUE))
 			);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('sys_workspace', 'uid = ' . $workspace['uid'], $updateArray);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('sys_workspace', array('uid' => $workspace['uid']), $updateArray);
 			$this->sqlQueries[] = $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery;
 		}
 	}

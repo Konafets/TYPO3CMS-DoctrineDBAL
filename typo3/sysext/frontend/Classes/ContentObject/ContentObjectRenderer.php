@@ -7003,7 +7003,7 @@ class ContentObjectRenderer {
 				}
 
 				if ($doExec) {
-					return $GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . $uid, $updateFields);
+					return $GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => $uid), $updateFields);
 				} else {
 					return $GLOBALS['TYPO3_DB']->UPDATEquery($table, 'uid=' . $uid, $updateFields);
 				}
@@ -7050,7 +7050,7 @@ class ContentObjectRenderer {
 			}
 			if (count($updateFields)) {
 				if ($doExec) {
-					return $GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . $uid, $updateFields);
+					return $GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => $uid), $updateFields);
 				} else {
 					return $GLOBALS['TYPO3_DB']->UPDATEquery($table, 'uid=' . $uid, $updateFields);
 				}

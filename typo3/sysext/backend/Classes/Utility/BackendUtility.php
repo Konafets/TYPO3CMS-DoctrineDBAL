@@ -1232,7 +1232,7 @@ class BackendUtility {
 				$TSlines = array_reverse($TSlines);
 				// Store those changes
 				$TSconf = implode(LF, $TSlines);
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('pages', 'uid=' . (int)$id, array('TSconfig' => $TSconf));
+				$GLOBALS['TYPO3_DB']->executeDeleteQuery('pages', array('uid' => (int)$id), array('TSconfig' => $TSconf));
 			}
 		}
 	}

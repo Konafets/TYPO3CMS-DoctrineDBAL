@@ -171,7 +171,7 @@ class AddFlexFormsToAclUpdate extends AbstractUpdate {
 			$flexExcludeFields = implode(',', $flexExcludeFields);
 			$nonExcludeFields = trim($nonExcludeFields . ',' . $flexExcludeFields, ', ');
 			// Finally override with new fields
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('be_groups', 'uid=' . (int)$groupUID, array('non_exclude_fields' => $nonExcludeFields));
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('be_groups', array('uid' => (int)$groupUID), array('non_exclude_fields' => $nonExcludeFields));
 			// Get last executed query
 			$dbQueries[] = str_replace(chr(10), ' ', $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery);
 			// Check for errors

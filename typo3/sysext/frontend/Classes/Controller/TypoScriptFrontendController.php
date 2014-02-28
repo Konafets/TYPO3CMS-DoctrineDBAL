@@ -947,7 +947,11 @@ class TypoScriptFrontendController {
 		}
 		// For every 60 seconds the is_online timestamp is updated.
 		if (is_array($this->fe_user->user) && $this->fe_user->user['uid'] && $this->fe_user->user['is_online'] < $GLOBALS['EXEC_TIME'] - 60) {
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('fe_users', 'uid=' . (int)$this->fe_user->user['uid'], array('is_online' => $GLOBALS['EXEC_TIME']));
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+					'fe_users',
+					array('uid' => (int)$this->fe_user->user['uid']),
+					array('is_online' => $GLOBALS['EXEC_TIME'])
+			);
 		}
 	}
 
@@ -3191,7 +3195,11 @@ class TypoScriptFrontendController {
 	 */
 	public function setSysLastChanged() {
 		if ($this->page['SYS_LASTCHANGED'] < (int)$this->register['SYS_LASTCHANGED']) {
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('pages', 'uid=' . (int)$this->id, array('SYS_LASTCHANGED' => (int)$this->register['SYS_LASTCHANGED']));
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+					'pages',
+					array('uid' => (int)$this->id),
+					array('SYS_LASTCHANGED' => (int)$this->register['SYS_LASTCHANGED'])
+			);
 		}
 	}
 
@@ -4191,7 +4199,11 @@ if (version == "n3") {
 	 * @todo Define visibility
 	 */
 	public function updateMD5paramsRecord($hash) {
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery('cache_md5params', 'md5hash=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($hash, 'cache_md5params'), array('tstamp' => $GLOBALS['EXEC_TIME']));
+		$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+				'cache_md5params',
+				array('md5hash' => $hash),
+				array('tstamp' => $GLOBALS['EXEC_TIME'])
+		);
 	}
 
 	/**

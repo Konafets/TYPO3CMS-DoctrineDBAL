@@ -470,6 +470,7 @@ class RelationHandler {
 		}
 		// Select all MM relations:
 		$where = $uidLocal_field . '=' . (int)$uid . $additionalWhere;
+		//TODO: Click on the Extension Manager to test this.
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $tableName, $where, '', $sorting_field);
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			// Default
@@ -584,12 +585,21 @@ class RelationHandler {
 					// In principle, selecting on the UID is all we need to do
 					// if a uid field is available since that is unique!
 					// But as long as it "doesn't hurt" we just add it to the where clause. It should all match up.
-					$whereClause = $uidLocal_field . '=' . $uid . ' AND ' . $uidForeign_field . '=' . $val['id']
-						. ($this->MM_hasUidField ? ' AND uid=' . (int)$oldMMs_inclUid[$oldMMs_index][2] : '');
-					if ($tablename) {
-						$whereClause .= ' AND tablenames=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($tablename, $MM_tableName);
+					$where = array(
+							$uidLocal_field => $uid,
+							$uidForeign_field => $val['id']
+					);
+
+					if ($this->MM_hasUidField) {
+						$where['uid'] = (int)$oldMMs_inclUid[$oldMMs_index][2];
 					}
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery($MM_tableName, $whereClause . $additionalWhere, array($sorting_field => $c));
+
+					if ($tablename) {
+						$where['tablenames'] = $tablename;
+					}
+
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery($MM_tableName, $where, array($sorting_field => $c));
+
 					// Remove the item from the $oldMMs array so after this
 					// foreach loop only the ones that need to be deleted are in there.
 					unset($oldMMs[$oldMMs_index]);
@@ -692,21 +702,25 @@ class RelationHandler {
 		if ($tableC) {
 			// Boolean: does the field "tablename" need to be filled?
 			$prep = $tableC > 1 || $prependTableName || $this->MM_isMultiTableRelationship;
-			$additionalWhere_tablenames = '';
+			$where = array();
 			if ($this->MM_is_foreign && $prep) {
-				$additionalWhere_tablenames = ' AND tablenames=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->currentTable, $MM_tableName);
+				$where['tablenames'] = $this->currentTable;
 			}
-			$additionalWhere = '';
 			// Add WHERE clause if configured
 			if ($this->MM_table_where) {
-				$additionalWhere .= LF . str_replace('###THIS_UID###', (int)$uid, $this->MM_table_where);
+				// $this->MM_table_where contains a string like "AND 2 = 2" or " AND tx_dam_mm_cat.uid_foreign=###THIS_UID###"
+				$MM_tableNameCleaned = str_replace('###THIS_UID###', (int)$uid, $this->MM_table_where);
+				$MM_tableNameCleaned = trim(str_replace('AND', '', $MM_tableNameCleaned));
+				$MM_tableNameArray = explode('=', $MM_tableNameCleaned);
+				$where[trim($MM_tableNameArray[0])] = trim($MM_tableNameArray[1]);
 			}
 			// Select, update or delete only those relations that match the configured fields
 			foreach ($this->MM_match_fields as $field => $value) {
-				$additionalWhere .= ' AND ' . $field . '=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($value, $MM_tableName);
+				$where[$field] = $value;
 			}
-			$where = $uidLocal_field . '=' . (int)$uid . $additionalWhere_tablenames . $additionalWhere;
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($MM_tableName, $where, array($uidLocal_field => $newUid));
+			$where[$uidLocal_field] = (int)$uid;
+
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery($MM_tableName, $where, array($uidLocal_field => $newUid));
 		}
 	}
 
@@ -882,7 +896,7 @@ class RelationHandler {
 				}
 				// Update accordant fields in the database:
 				if (count($updateValues)) {
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$uid, $updateValues);
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$uid), $updateValues);
 					$this->updateRefIndex($table, $uid);
 				}
 				// Update accordant fields in the database for workspaces overlays/placeholders:
@@ -892,7 +906,7 @@ class RelationHandler {
 						&& $row['t3ver_oid']
 						&& VersionState::cast($row['t3ver_state'])->equals(VersionState::NEW_PLACEHOLDER_VERSION)
 					) {
-						$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$row['t3ver_oid'], $workspaceValues);
+						$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$row['t3ver_oid']), $workspaceValues);
 					}
 				}
 			}

@@ -68,10 +68,13 @@ class ImagecolsUpdate extends AbstractUpdate {
 	public function performUpdate(array &$dbQueries, &$customMessages) {
 		$result = FALSE;
 		if ($this->versionNumber >= 4003000) {
-			$updateArray = array(
-				'imagecols' => 1
-			);
-			$res = $GLOBALS['TYPO3_DB']->exec_UPDATEquery('tt_content', 'CTYPE IN (\'textpic\', \'image\') AND imagecols=0', $updateArray);
+			$query = $GLOBALS['TYPO3_DB']->createUpdateQuery();
+			$query->update('tt_content')
+					->set('imagecols', 1)
+					->where(
+						$query->expr->in('ctype', array('textpic', 'image')),
+						$query->expr->equals('imagecols', $query->bindValue(0))
+					)->execute();
 			$dbQueries[] = str_replace(chr(10), ' ', $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery);
 			if ($GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 				$customMessages = 'SQL-ERROR: ' . htmlspecialchars($GLOBALS['TYPO3_DB']->sqlErrorMessage());

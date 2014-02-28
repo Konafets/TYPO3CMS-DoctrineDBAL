@@ -242,7 +242,7 @@ class SaltedPasswordService extends \TYPO3\CMS\Sv\AbstractAuthenticationService 
 	 * @return void
 	 */
 	protected function updatePassword($uid, $updateFields) {
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->pObj->user_table, sprintf('uid = %u', $uid), $updateFields);
+		$GLOBALS['TYPO3_DB']->executeUpdateQuery($this->pObj->user_table, array('uid' => $uid), $updateFields);
 		\TYPO3\CMS\Core\Utility\GeneralUtility::devLog(sprintf('Automatic password update for user record in %s with uid %u', $this->pObj->user_table, $uid), $this->extKey, 1);
 	}
 
