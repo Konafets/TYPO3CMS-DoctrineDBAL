@@ -808,7 +808,7 @@ class TypoScriptFrontendController {
 	 */
 	public function connectToDB() {
 		try {
-			$GLOBALS['TYPO3_DB']->connectDB();
+			$GLOBALS['TYPO3_DB']->connectDatabase();
 		} catch (\RuntimeException $exception) {
 			switch ($exception->getCode()) {
 				case 1270853883:

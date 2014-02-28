@@ -266,7 +266,7 @@ abstract class AbstractAction implements ActionInterface {
 			$database->setDatabasePort($GLOBALS['TYPO3_CONF_VARS']['DB']['port']);
 			$database->setDatabaseSocket($GLOBALS['TYPO3_CONF_VARS']['DB']['socket']);
 			$database->setDatabaseName($GLOBALS['TYPO3_CONF_VARS']['DB']['database']);
-			$database->connectDB();
+			$database->connectDatabase();
 		}
 		return $database;
 	}
