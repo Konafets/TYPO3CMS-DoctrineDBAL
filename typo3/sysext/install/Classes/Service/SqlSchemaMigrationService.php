@@ -44,7 +44,7 @@ class SqlSchemaMigrationService {
 	protected $deletedPrefixKey = 'zzz_deleted_';
 
 	/**
-	 * @var array Caching output of $GLOBALS['TYPO3_DB']->adminGetCharset()
+	 * @var array Caching output of $GLOBALS['TYPO3_DB']->listDatabaseCharsets()
 	 */
 	protected $character_sets = array();
 
@@ -166,8 +166,8 @@ class SqlSchemaMigrationService {
 	public function getCollationForCharset($charset) {
 		// Load character sets, if not cached already
 		if (!count($this->character_sets)) {
-			if (method_exists($GLOBALS['TYPO3_DB'], 'adminGetCharset')) {
-				$this->character_sets = $GLOBALS['TYPO3_DB']->adminGetCharset();
+			if (method_exists($GLOBALS['TYPO3_DB'], 'listDatabaseCharsets')) {
+				$this->character_sets = $GLOBALS['TYPO3_DB']->listDatabaseCharsets();
 			} else {
 				// Add empty element to avoid that the check will be repeated
 				$this->character_sets[$charset] = array();
