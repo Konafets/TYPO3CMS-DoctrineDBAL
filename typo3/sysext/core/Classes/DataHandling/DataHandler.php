@@ -6314,7 +6314,7 @@ class DataHandler {
 			$c = 0;
 			$cRecTypes = array();
 			foreach ($currentRecord as $col => $val) {
-				$cRecTypes[$col] = $GLOBALS['TYPO3_DB']->sql_field_type($res, $c);
+				$cRecTypes[$col] = $GLOBALS['TYPO3_DB']->getSqlFieldType($res, $c);
 				$c++;
 			}
 			// Free result:
