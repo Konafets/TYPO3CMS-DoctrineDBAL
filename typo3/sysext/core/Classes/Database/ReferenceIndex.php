@@ -906,10 +906,8 @@ class ReferenceIndex {
 				if (!$testOnly) {
 					$query = $this->db->createDeleteQuery();
 					$query->delete('sys_refindex')->where(
-						$query->expr->logicalAnd(
 							$query->expr->equals('tablename', $query->bindValue($tableName)),
 							$query->expr->notIn('recuid', $uidList)
-						)
 					)->execute();
 				}
 			}
