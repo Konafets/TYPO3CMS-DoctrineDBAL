@@ -440,7 +440,7 @@ class FunctionalTestCaseBootstrapUtility {
 			);
 		}
 		$database->setDatabaseName($this->databaseName);
-		$database->sql_select_db($this->databaseName);
+		$database->selectDb($this->databaseName);
 	}
 
 	/**
