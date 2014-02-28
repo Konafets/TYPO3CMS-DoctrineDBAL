@@ -36,11 +36,13 @@ class ProcessedFileRepositoryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	public function cleanUnavailableColumnsWorks() {
 		$fixture = $this->getAccessibleMock('TYPO3\\CMS\\Core\\Resource\\ProcessedFileRepository', array('dummy'), array(), '', FALSE);
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
-			$databaseMock = $this->getAccessibleMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array('adminGetFields'));
+			$databaseMock = $this->getAccessibleMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array('listFields'));
+			$databaseMock->expects($this->once())->method('listFields')->will($this->returnValue(array('storage' => '', 'checksum' => '')));
 		} else {
 			$databaseMock = $this->getAccessibleMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('admin_get_fields'));
+			$databaseMock->expects($this->once())->method('admin_get_fields')->will($this->returnValue(array('storage' => '', 'checksum' => '')));
 		}
-		$databaseMock->expects($this->once())->method('adminGetFields')->will($this->returnValue(array('storage' => '', 'checksum' => '')));
+
 		$fixture->_set('databaseConnection', $databaseMock);
 
 		$actual = $fixture->_call('cleanUnavailableColumns', array('storage' => 'a', 'checksum' => 'b', 'key3' => 'c'));

@@ -112,8 +112,8 @@ class FileTableSplittingUpdate extends AbstractUpdate {
 	 */
 	protected function detectFieldsToMigrate() {
 		$fieldsBlackListed = array('uid', 'deleted', 'sys_language_uid');
-		$fieldsInSysFile = array_keys($GLOBALS['TYPO3_DB']->adminGetFields('sys_file'));
-		$fieldsInSysFileMetaData = array_keys($GLOBALS['TYPO3_DB']->adminGetFields($this->metaDataTable));
+		$fieldsInSysFile = array_keys($GLOBALS['TYPO3_DB']->listFields('sys_file'));
+		$fieldsInSysFileMetaData = array_keys($GLOBALS['TYPO3_DB']->listFields($this->metaDataTable));
 
 		$commonFields = array_intersect($fieldsInSysFileMetaData, $fieldsInSysFile);
 		$commonFields = array_diff($commonFields, $fieldsBlackListed);

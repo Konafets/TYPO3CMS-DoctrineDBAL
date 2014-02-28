@@ -194,7 +194,7 @@ class SqlSchemaMigrationService {
 		$tables = $GLOBALS['TYPO3_DB']->listTables();
 		foreach ($tables as $tableName => $tableStatus) {
 			// Fields
-			$fieldInformation = $GLOBALS['TYPO3_DB']->adminGetFields($tableName);
+			$fieldInformation = $GLOBALS['TYPO3_DB']->listFields($tableName);
 			foreach ($fieldInformation as $fN => $fieldRow) {
 				$total[$tableName]['fields'][$fN] = $this->assembleFieldDefinition($fieldRow);
 			}
