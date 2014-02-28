@@ -36,7 +36,7 @@ class ProcessedFileRepositoryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	public function cleanUnavailableColumnsWorks() {
 		$fixture = $this->getAccessibleMock('TYPO3\\CMS\\Core\\Resource\\ProcessedFileRepository', array('dummy'), array(), '', FALSE);
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
-			$databaseMock = $this->getAccessibleMock('TYPO3\\DoctrineDbal\\Database\\DatabaseConnection', array('adminGetFields'));
+			$databaseMock = $this->getAccessibleMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array('adminGetFields'));
 		} else {
 			$databaseMock = $this->getAccessibleMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('admin_get_fields'));
 		}

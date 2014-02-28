@@ -53,7 +53,7 @@ class ContentObjectRendererTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 */
 	public function setUp() {
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
-			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Database\\DatabaseConnection', array());
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array());
 		} else {
 			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array());
 		}

@@ -108,7 +108,7 @@ class ClearCacheService {
 		if (!is_object($database)) {
 			/** @var \TYPO3\CMS\Core\Database\DatabaseConnection $database */
 			if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
-				$database = $this->objectManager->get('TYPO3\\DoctrineDbal\\Database\\DatabaseConnection');
+				$database = $this->objectManager->get('TYPO3\\Persistence\\Legacy\\Database\\DatabaseConnection');
 			} else {
 				$database = $this->objectManager->get('TYPO3\\CMS\\Core\\Database\\DatabaseConnection');
 			}

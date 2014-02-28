@@ -58,7 +58,7 @@ class DatabaseTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	private function setUpAndReturnDatabaseStub() {
 		$databaseLink = $GLOBALS['TYPO3_DB']->getDatabaseHandle();
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
-			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Database\\DatabaseConnection', array('executeInsertQuery'), array(), '', FALSE, FALSE);
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array('executeInsertQuery'), array(), '', FALSE, FALSE);
 		} else {
 			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('exec_INSERTquery'), array(), '', FALSE, FALSE);
 		}

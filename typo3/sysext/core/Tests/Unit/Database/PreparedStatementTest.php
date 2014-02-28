@@ -66,7 +66,7 @@ class PreparedStatementTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$databaseLink = $GLOBALS['TYPO3_DB']->getDatabaseHandle();
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
 			$GLOBALS['TYPO3_DB'] = $this->getAccessibleMock(
-				'TYPO3\\DoctrineDbal\\Database\\DatabaseConnection',
+				'TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy',
 				array('exec_PREPAREDquery'),
 				array(),
 				'',
@@ -108,7 +108,11 @@ class PreparedStatementTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @return void
 	 */
 	public function setUpAndReturnDatabaseStubReturnsMockObjectOfDatabaseConnection() {
-		$this->assertTrue($this->setUpAndReturnDatabaseStub() instanceof \TYPO3\CMS\Core\Database\DatabaseConnection);
+		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
+			$this->assertTrue($this->setUpAndReturnDatabaseStub() instanceof \TYPO3\DoctrineDbal\Persistence\Legacy\DatabaseConnectionLegacy);
+		} else {
+			$this->assertTrue($this->setUpAndReturnDatabaseStub() instanceof \TYPO3\CMS\Core\Database\DatabaseConnection);
+		}
 	}
 
 	/**

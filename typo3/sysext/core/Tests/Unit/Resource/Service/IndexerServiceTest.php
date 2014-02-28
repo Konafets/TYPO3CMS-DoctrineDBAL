@@ -79,7 +79,7 @@ class IndexerServiceTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$fixture->expects($this->any())->method('getFileIndexRepository')->will($this->returnValue($repositoryMock));
 
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
-			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Database\\DatabaseConnection', array(), array(), '', FALSE);
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array(), array(), '', FALSE);
 		} else {
 			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array(), array(), '', FALSE);
 		}

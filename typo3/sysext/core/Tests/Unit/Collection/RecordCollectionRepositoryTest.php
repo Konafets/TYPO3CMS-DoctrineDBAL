@@ -67,7 +67,7 @@ class RecordCollectionRepositoryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase 
 		// TODO: Add tests for the new executeUpdateQuery method
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
 			$this->databaseMock = $this->getMock(
-				'TYPO3\\DoctrineDbal\\Database\\DatabaseConnection',
+				'TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy',
 				array('executeUpdateQuery', 'exec_SELECTgetSingleRow', 'exec_SELECTgetRows', 'fullQuoteStr')
 			);
 		} else {

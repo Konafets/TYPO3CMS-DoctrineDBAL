@@ -47,7 +47,7 @@ class AbstractMenuContentObjectTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTe
 		$this->fixture = new $proxy();
 
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
-			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Database\\DatabaseConnection');
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy');
 		} else {
 			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection');
 		}
