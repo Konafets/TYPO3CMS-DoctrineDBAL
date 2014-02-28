@@ -1757,7 +1757,7 @@ class DatabaseConnection {
 	 * @api
 	 */
 	public function setDatabaseDriver($driver = 'pdo_mysql') {
-
+		// This exists only here to avoid a fatal error for missing method
 	}
 
 	/**
