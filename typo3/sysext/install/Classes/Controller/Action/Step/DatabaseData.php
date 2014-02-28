@@ -88,7 +88,7 @@ class DatabaseData extends AbstractStepAction {
 	 */
 	public function needsExecution() {
 		$result = FALSE;
-		$existingTables = $this->getDatabase()->adminGetTables();
+		$existingTables = $this->getDatabase()->listTables();
 		if (count($existingTables) === 0) {
 			$result = TRUE;
 		}

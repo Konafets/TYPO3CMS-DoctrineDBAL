@@ -150,7 +150,7 @@ abstract class AbstractUpdate {
 	 * @return boolean
 	 */
 	public function checkIfTableExists($table) {
-		$databaseTables = $GLOBALS['TYPO3_DB']->adminGetTables();
+		$databaseTables = $GLOBALS['TYPO3_DB']->listTables();
 		if (array_key_exists($table, $databaseTables)) {
 			return TRUE;
 		}

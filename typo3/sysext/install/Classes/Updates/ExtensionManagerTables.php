@@ -89,7 +89,7 @@ class ExtensionManagerTables extends AbstractUpdate {
 		$updateStatements = $this->getUpdateStatements();
 		if (empty($updateStatements)) {
 			// Check for repository database table
-			$databaseTables = $GLOBALS['TYPO3_DB']->adminGetTables();
+			$databaseTables = $GLOBALS['TYPO3_DB']->listTables();
 			if (!isset($databaseTables['tx_extensionmanager_domain_model_repository'])) {
 				$result = TRUE;
 			} else {

@@ -191,7 +191,7 @@ class SqlSchemaMigrationService {
 		$tempKeysPrefix = array();
 		$GLOBALS['TYPO3_DB']->selectDb();
 		echo $GLOBALS['TYPO3_DB']->sqlErrorMessage();
-		$tables = $GLOBALS['TYPO3_DB']->adminGetTables();
+		$tables = $GLOBALS['TYPO3_DB']->listTables();
 		foreach ($tables as $tableName => $tableStatus) {
 			// Fields
 			$fieldInformation = $GLOBALS['TYPO3_DB']->adminGetFields($tableName);
@@ -631,10 +631,10 @@ class SqlSchemaMigrationService {
 	 * Returns list of tables in the database
 	 *
 	 * @return array List of tables.
-	 * @see \TYPO3\CMS\Core\Database\DatabaseConnection::adminGetTables()
+	 * @see \TYPO3\CMS\Core\Database\DatabaseConnection::listTables()
 	 */
 	public function getListOfTables() {
-		$whichTables = $GLOBALS['TYPO3_DB']->adminGetTables(TYPO3_db);
+		$whichTables = $GLOBALS['TYPO3_DB']->listTables(TYPO3_db);
 		foreach ($whichTables as $key => &$value) {
 			$value = $key;
 		}

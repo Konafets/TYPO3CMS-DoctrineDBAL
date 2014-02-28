@@ -77,8 +77,8 @@ class DatabaseSelect extends AbstractStepAction {
 		} elseif ($postValues['type'] === 'existing' && !empty($postValues['existing'])) {
 			// Only store database information when it's empty
 			$this->databaseConnection->setDatabaseName($postValues['existing']);
-			$existingTables = $this->databaseConnection->adminGetTables();
 			$this->databaseConnection->selectDb();
+			$existingTables = $this->databaseConnection->listTables();
 			$isInitialInstallation = $configurationManager->getConfigurationValueByPath('SYS/isInitialInstallationInProgress');
 			if (!$isInitialInstallation || count($existingTables) === 0) {
 				$localConfigurationPathValuePairs['DB/database'] = $postValues['existing'];
@@ -156,7 +156,7 @@ class DatabaseSelect extends AbstractStepAction {
 			foreach ($allPossibleDatabases as $database) {
 				$this->databaseConnection->setDatabaseName($database);
 				$this->databaseConnection->selectDb();
-				$existingTables = $this->databaseConnection->adminGetTables();
+				$existingTables = $this->databaseConnection->listTables();
 				$databases[] = array(
 					'name' => $database,
 					'tables' => count($existingTables),
