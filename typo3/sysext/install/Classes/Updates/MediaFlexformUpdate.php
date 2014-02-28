@@ -102,9 +102,9 @@ class MediaFlexformUpdate extends AbstractUpdate {
 			}
 			$newXML = $flexformTools->flexArray2Xml($data, TRUE);
 			$newXML = str_replace('encoding=""', 'encoding="utf-8"', $newXML);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery(
 				$GLOBALS['TYPO3_CONF_VARS']['SYS']['contentTable'],
-				'uid = ' . $row['uid'],
+				array('uid' => $row['uid']),
 				array('pi_flexform' => $newXML)
 			);
 		}

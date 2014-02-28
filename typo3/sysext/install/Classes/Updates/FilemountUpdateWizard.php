@@ -140,9 +140,10 @@ class FilemountUpdateWizard extends AbstractUpdate {
 				$storagePath = '/';
 				$this->sqlQueries[] = $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery;
 			}
-			$this->db->exec_UPDATEquery(
+
+			$this->db->executeUpdateQuery(
 				'sys_filemounts',
-				'uid=' . (int)$filemount['uid'],
+				array('uid' => (int)$filemount['uid']),
 				array('base' => $storageId, 'path' => $storagePath)
 			);
 			$this->sqlQueries[] = $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery;
@@ -162,9 +163,9 @@ class FilemountUpdateWizard extends AbstractUpdate {
 			'base = 1' . BackendUtility::deleteClause('sys_filemounts')
 		);
 		foreach ($relativeFilemounts as $filemount) {
-			$this->db->exec_UPDATEquery(
+			$this->db->executeUpdateQuery(
 				'sys_filemounts',
-				'uid=' . (int)$filemount['uid'],
+				array('uid' => (int)$filemount['uid']),
 				array('base' => $this->storage->getUid(), 'path' => '/' . ltrim($filemount['path'], '/'))
 			);
 			$this->sqlQueries[] = $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery;

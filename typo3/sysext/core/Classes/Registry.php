@@ -91,9 +91,12 @@ class Registry implements \TYPO3\CMS\Core\SingletonInterface {
 				'entry_value' => $serializedValue
 			));
 		} else {
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('sys_registry', 'entry_namespace = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($namespace, 'sys_registry') . ' AND entry_key = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($key, 'sys_registry'), array(
-				'entry_value' => $serializedValue
-			));
+			$where = array(
+					'entry_namespace' => $namespace,
+					'entry_key' => $key
+			);
+
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('sys_registry', $where, array('entry_value' => $serializedValue));
 		}
 		$this->entries[$namespace][$key] = $value;
 	}

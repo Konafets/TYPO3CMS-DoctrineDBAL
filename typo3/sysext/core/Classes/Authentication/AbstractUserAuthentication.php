@@ -867,11 +867,9 @@ abstract class AbstractUserAuthentication {
 		}
 		// Updating lastLogin_column carrying information about last login.
 		if ($this->lastLogin_column && $inserted) {
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
-				$this->user_table,
-				$this->userid_column . '=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($tempuser[$this->userid_column], $this->user_table),
-				array($this->lastLogin_column => $GLOBALS['EXEC_TIME'])
-			);
+			$where = array($this->userid_column => $tempuser[$this->userid_column]);
+			$updateData = array($this->lastLogin_column => $GLOBALS['EXEC_TIME']);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery($this->user_table, $where, $updateData);
 		}
 
 		return $inserted ? $insertFields : array();
@@ -930,8 +928,13 @@ abstract class AbstractUserAuthentication {
 			// Option later on: We could check that last update was at least x seconds ago in order not to update twice in a row if one script redirects to another...
 			if ($timeout > 0 && $GLOBALS['EXEC_TIME'] < $user['ses_tstamp'] + $timeout) {
 				if (!$skipSessionUpdate) {
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->session_table, 'ses_id=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->id, $this->session_table) . '
-												AND ses_name=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->name, $this->session_table), array('ses_tstamp' => $GLOBALS['EXEC_TIME']));
+					$where = array(
+							'ses_id'   => (int)$this->id,
+							'ses_name' => $this->name
+					);
+					$updateData = array('ses_tstamp' => $GLOBALS['EXEC_TIME']);
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery($this->session_table, $where, $updateData);
+
 					// Make sure that the timestamp is also updated in the array
 					$user['ses_tstamp'] = $GLOBALS['EXEC_TIME'];
 				}
@@ -1188,7 +1191,11 @@ abstract class AbstractUserAuthentication {
 			if ($this->writeDevLog) {
 				GeneralUtility::devLog('writeUC: ' . $this->userid_column . '=' . (int)$this->user[$this->userid_column], 'TYPO3\\CMS\\Core\\Authentication\\AbstractUserAuthentication');
 			}
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->user_table, $this->userid_column . '=' . (int)$this->user[$this->userid_column], array('uc' => serialize($variable)));
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+					$this->user_table,
+					array($this->userid_column => (int)$this->user[$this->userid_column]),
+					array('uc' => serialize($variable))
+			);
 		}
 	}
 
@@ -1270,7 +1277,12 @@ abstract class AbstractUserAuthentication {
 		if ($this->writeDevLog) {
 			GeneralUtility::devLog('setAndSaveSessionData: ses_id = ' . $this->user['ses_id'], 'TYPO3\\CMS\\Core\\Authentication\\AbstractUserAuthentication');
 		}
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->session_table, 'ses_id=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->user['ses_id'], $this->session_table), array('ses_data' => $this->user['ses_data']));
+
+		$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+				$this->session_table,
+				array('ses_id' => $this->user['ses_id']),
+				array('ses_data' => $this->user['ses_data'])
+		);
 	}
 
 	/*************************

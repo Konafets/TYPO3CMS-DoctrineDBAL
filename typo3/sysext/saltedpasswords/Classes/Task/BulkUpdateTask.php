@@ -163,9 +163,11 @@ class BulkUpdateTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
 				$newPassword = 'M' . $newPassword;
 			}
 			// Persist updated password
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery(strtolower($mode) . '_users', 'uid = ' . $user['uid'], array(
-				'password' => $newPassword
-			));
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+					strtolower($mode) . '_users',
+					array('uid' => $user['uid']),
+					array('password' => $newPassword)
+			);
 		}
 	}
 

@@ -345,7 +345,8 @@ class DatabaseIntegrityCheck {
 			if ($GLOBALS['TCA'][$table]['ctrl']['enablecolumns']['disabled']) {
 				$updateFields[$GLOBALS['TCA'][$table]['ctrl']['enablecolumns']['disabled']] = 1;
 			}
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$uid, $updateFields);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$uid), $updateFields);
+
 			return TRUE;
 		} else {
 			return FALSE;

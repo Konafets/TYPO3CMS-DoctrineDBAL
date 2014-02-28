@@ -223,7 +223,7 @@ Automatic Repair:
 					$fields_values = array(
 						't3ver_wsid' => 0
 					);
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$uid, $fields_values);
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$uid), $fields_values);
 					echo 'DONE';
 				}
 				echo LF;

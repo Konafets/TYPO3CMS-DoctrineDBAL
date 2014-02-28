@@ -26,6 +26,7 @@ namespace TYPO3\CMS\Core\Tests\Unit\Collection;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * Test case for \TYPO3\CMS\Core\Collection\RecordCollectionRepository
@@ -63,10 +64,18 @@ class RecordCollectionRepositoryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase 
 	 * Sets up this test case.
 	 */
 	protected function setUp() {
-		$this->databaseMock = $this->getMock(
-			'TYPO3\\CMS\\Core\\Database\\DatabaseConnection',
-			array('exec_UPDATEquery', 'exec_SELECTgetSingleRow', 'exec_SELECTgetRows', 'fullQuoteStr')
-		);
+		// TODO: Add tests for the new executeUpdateQuery method
+		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
+			$this->databaseMock = $this->getMock(
+				'TYPO3\\DoctrineDbal\\Database\\DatabaseConnection',
+				array('executeUpdateQuery', 'exec_SELECTgetSingleRow', 'exec_SELECTgetRows', 'fullQuoteStr')
+			);
+		} else {
+			$this->databaseMock = $this->getMock(
+					'TYPO3\\CMS\\Core\\Database\\DatabaseConnection',
+					array('exec_UPDATEquery', 'exec_SELECTgetSingleRow', 'exec_SELECTgetRows', 'fullQuoteStr')
+			);
+		}
 		$this->fixture = $this->getMock('TYPO3\\CMS\\Core\\Collection\\RecordCollectionRepository', array('getDatabase'));
 		$this->fixture->expects($this->any())->method('getDatabase')->will($this->returnValue($this->databaseMock));
 		$this->testTableName = uniqid('tx_testtable');

@@ -239,12 +239,11 @@ class DeprecatedRteProperties extends \TYPO3\CMS\Install\Updates\AbstractUpdate 
 	 */
 	protected function updatePages($pages, &$dbQueries, &$customMessages) {
 		foreach ($pages as $page) {
-			$table = 'pages';
-			$where = 'uid =' . $page['uid'];
-			$field_values = array(
-				'TSconfig' => $page['TSconfig']
-			);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, $where, $field_values);
+			$where = array('uid' => $page['uid']);
+			$fieldValues = array('TSconfig' => $page['TSconfig']);
+
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('pages', $where, $fieldValues);
+
 			$dbQueries[] = str_replace(chr(10), ' ', $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery);
 			if ($GLOBALS['TYPO3_DB']->sql_error()) {
 				$customMessages .= 'SQL-ERROR: ' . htmlspecialchars($GLOBALS['TYPO3_DB']->sql_error()) . LF . LF;

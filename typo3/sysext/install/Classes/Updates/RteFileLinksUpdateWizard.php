@@ -280,19 +280,17 @@ class RteFileLinksUpdateWizard extends AbstractUpdate {
 		}
 
 		// Save the changed field
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+		$GLOBALS['TYPO3_DB']->executeUpdateQuery(
 			$reference['tablename'],
-			'uid = ' . $reference['recuid'],
-			array(
-				$reference['field'] => $modifiedText
-			)
+			array('uid' => $reference['recuid']),
+			array($reference['field'] => $modifiedText)
 		);
 		$this->queries[] = htmlspecialchars(str_replace(LF, ' ', $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery));
 
 		// Finally, update the sys_refindex table as well
-		$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+		$GLOBALS['TYPO3_DB']->executeUpdateQuery(
 			'sys_refindex',
-			'hash = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($reference['hash'], 'sys_refindex'),
+			array('hash' => $reference['hash']),
 			array(
 				'ref_table'  => 'sys_file',
 				'ref_uid'    => $file->getUid(),

@@ -441,7 +441,11 @@ class FrontendUserAuthentication extends \TYPO3\CMS\Core\Authentication\Abstract
 					'tstamp' => $GLOBALS['EXEC_TIME']
 				);
 				$this->sessionDataTimestamp = $GLOBALS['EXEC_TIME'];
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('fe_session_data', 'hash=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->id, 'fe_session_data'), $updateFields);
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+						'fe_session_data',
+						array('hash' => $this->id),
+						$updateFields
+				);
 			}
 		}
 	}

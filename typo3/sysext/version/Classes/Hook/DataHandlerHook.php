@@ -209,7 +209,7 @@ class DataHandlerHook {
 								't3ver_label' => 'DELETED!',
 								't3ver_state' => 2,
 							);
-							$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . $id, $updateFields);
+							$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => $id), $updateFields);
 							// Delete localization overlays:
 							$tcemainObj->deleteL10nOverlayRecords($table, $id);
 
@@ -243,7 +243,7 @@ class DataHandlerHook {
 					$updateFields = array(
 						't3ver_state' => (string)new VersionState(VersionState::DEFAULT_STATE)
 					);
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$wsRec['uid'], $updateFields);
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$wsRec['uid']), $updateFields);
 				}
 				$tcemainObj->deleteEl($table, $id);
 			} else {
@@ -599,7 +599,7 @@ class DataHandlerHook {
 				$updateData = array(
 					't3ver_stage' => $stageId
 				);
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$id, $updateData);
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$id), $updateData);
 				$tcemainObj->newlog2('Stage for record was changed to ' . $stageId . '. Comment was: "' . substr($comment, 0, 100) . '"', $table, $id);
 				// TEMPORARY, except 6-30 as action/detail number which is observed elsewhere!
 				$tcemainObj->log($table, $id, 6, 0, 0, 'Stage raised...', 30, array('comment' => $comment, 'stage' => $stageId));
@@ -810,11 +810,11 @@ class DataHandlerHook {
 										$tcemainObj->compareFieldArrayWithCurrentAndUnset($table, $swapWith, $curVersion);
 										// Execute swapping:
 										$sqlErrors = array();
-										$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . intval($id), $swapVersion);
+										$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$id), $swapVersion);
 										if ($GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 											$sqlErrors[] = $GLOBALS['TYPO3_DB']->sqlErrorMessage();
 										} else {
-											$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . intval($swapWith), $curVersion);
+											$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$swapWith), $curVersion);
 											if ($GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 												$sqlErrors[] = $GLOBALS['TYPO3_DB']->sqlErrorMessage();
 											} else {
@@ -833,7 +833,7 @@ class DataHandlerHook {
 													$tcemainObj->deleteEl($table, $movePlhID, TRUE, TRUE);
 												} else {
 													// Otherwise update the movePlaceholder:
-													$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$movePlhID, $movePlh);
+													$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$movePlhID), $movePlh);
 													$tcemainObj->addRemapStackRefIndex($table, $movePlhID);
 												}
 											}
@@ -997,13 +997,13 @@ class DataHandlerHook {
 					't3ver_wsid' => 0,
 					't3ver_tstamp' => $GLOBALS['EXEC_TIME']
 				);
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$id, $updateData);
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$id), $updateData);
 				// Clear workspace ID for live version AND DELETE IT as well because it is a new record!
 				if (
 					VersionState::cast($liveRec['t3ver_state'])->equals(VersionState::NEW_PLACEHOLDER)
 					|| VersionState::cast($liveRec['t3ver_state'])->equals(VersionState::DELETE_PLACEHOLDER)
 				) {
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$liveRec['uid'], $updateData);
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$liveRec['uid']), $updateData);
 					// THIS assumes that the record was placeholder ONLY for ONE record (namely $id)
 					$tcemainObj->deleteEl($table, $liveRec['uid'], TRUE);
 				}
@@ -1255,7 +1255,7 @@ class DataHandlerHook {
 			$updateFields = array(
 				't3ver_state' => (string)new VersionState(VersionState::MOVE_POINTER)
 			);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery($table, 'uid=' . (int)$wsUid, $updateFields);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$wsUid), $updateFields);
 		}
 		// Check for the localizations of that element and move them as well
 		$tcemainObj->moveL10nOverlayRecords($table, $uid, $destPid, $originalRecordDestinationPid);

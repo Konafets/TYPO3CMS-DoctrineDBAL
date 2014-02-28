@@ -263,14 +263,8 @@ class ExtensionRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	 */
 	protected function markExtensionWithMaximumVersionAsCurrent($repositoryUid) {
 		$uidsOfCurrentVersion = $this->fetchMaximalVersionsForAllExtensions($repositoryUid);
-
-		$this->databaseConnection->exec_UPDATEquery(
-			self::TABLE_NAME,
-			'uid IN (' . implode(',', $uidsOfCurrentVersion) . ')',
-			array(
-				'current_version' => 1,
-			)
-		);
+		$query = $this->databaseConnection->createUpdateQuery();
+		$query->update(self::TABLE_NAME)->set('current_version', 1)->where($query->expr->in('uid', $uidsOfCurrentVersion))->execute();
 	}
 
 	/**

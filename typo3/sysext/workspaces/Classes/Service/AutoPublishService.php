@@ -53,7 +53,7 @@ class AutoPublishService {
 		foreach ($workspaces as $rec) {
 			// First, clear start/end time so it doesn't get select once again:
 			$fieldArray = $rec['publish_time'] != 0 ? array('publish_time' => 0) : array('unpublish_time' => 0);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('sys_workspace', 'uid=' . (int)$rec['uid'], $fieldArray);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('sys_workspace', array('uid' => (int)$rec['uid']), $fieldArray);
 			// Get CMD array:
 			$cmd = $workspaceService->getCmdArrayForPublishWS($rec['uid'], $rec['swap_modes'] == 1);
 			// $rec['swap_modes']==1 means that auto-publishing will swap versions, not just publish and empty the workspace.

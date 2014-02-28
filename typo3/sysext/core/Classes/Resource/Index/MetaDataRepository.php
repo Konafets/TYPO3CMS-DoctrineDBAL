@@ -146,7 +146,7 @@ class MetaDataRepository implements SingletonInterface {
 		$row = $this->findByFileUid($fileUid);
 		if (count($updateRow) > 0) {
 			$updateRow['tstamp'] = time();
-			$this->getDatabase()->exec_UPDATEquery($this->tableName, 'uid = ' . (int)$row['uid'], $updateRow);
+			$this->getDatabase()->executeUpdateQuery($this->tableName, array('uid' => (int)$row['uid']), $updateRow);
 
 			$this->emitRecordUpdated(array_merge($row, $updateRow));
 		}

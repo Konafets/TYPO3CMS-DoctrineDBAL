@@ -376,12 +376,10 @@ class TceformsUpdateWizard extends AbstractUpdate {
 			}
 		}
 
-		// Update referencing table's original field to now contain the count of references,
-		// but only if all new references could be set
-		if ($i === count($fieldItems)) {
-			$this->database->exec_UPDATEquery($table, 'uid=' . $row['uid'], array($fieldname => $i));
-			$queries[] = str_replace(LF, ' ', $this->database->debug_lastBuiltQuery);
-		}
+		// Update referencing table's original field to now contain the count of references.
+		$this->database->executeUpdateQuery($table, array('uid' => $row['uid']), array($fieldname => $i));
+		$queries[] = str_replace(LF, ' ', $this->database->debug_lastBuiltQuery);
+
 		return $queries;
 	}
 }

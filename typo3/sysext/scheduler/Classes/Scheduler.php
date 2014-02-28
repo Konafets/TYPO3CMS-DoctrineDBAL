@@ -119,7 +119,11 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 				} else {
 					$value = serialize($executions);
 				}
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_scheduler_task', 'uid = ' . (int)$row['uid'], array('serialized_executions' => $value));
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+						'tx_scheduler_task',
+						array('uid' => (int)$row['uid']),
+						array('serialized_executions' => $value)
+				);
 			}
 		}
 		$GLOBALS['TYPO3_DB']->sql_free_result($res);
@@ -239,7 +243,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 				'task_group' => $task->getTaskGroup(),
 				'serialized_task_object' => serialize($task)
 			);
-			$result = $GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_scheduler_task', 'uid = ' . $taskUid, $fields);
+			$result = $GLOBALS['TYPO3_DB']->executeUpdateQuery('tx_scheduler_task', array('uid' => $taskUid), $fields);
 		} else {
 			$result = FALSE;
 		}
@@ -290,7 +294,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 			} else {
 				// Forcibly set the disable flag to 1 in the database,
 				// so that the task does not come up again and again for execution
-				$GLOBALS['TYPO3_DB']->exec_UPDATEquery('tx_scheduler_task', 'uid = ' . $row['uid'], array('disable' => 1));
+				$GLOBALS['TYPO3_DB']->executeUpdateQuery('tx_scheduler_task', array('uid' => $row['uid']), array('disable' => 1));
 				// Throw an exception to raise the problem
 				throw new \UnexpectedValueException('Could not unserialize task', 1255083671);
 			}

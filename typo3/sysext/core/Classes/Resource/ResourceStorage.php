@@ -456,7 +456,7 @@ class ResourceStorage {
 	public function markAsPermanentlyOffline() {
 		if ($this->getUid() > 0) {
 			// @todo: move this to the storage repository
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('sys_file_storage', 'uid=' . (int)$this->getUid(), array('is_online' => 0));
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('sys_file_storage', array('uid' => (int)$this->getUid()), array('is_online' => 0));
 		}
 		$this->storageRecord['is_online'] = 0;
 		$this->isOnline = FALSE;

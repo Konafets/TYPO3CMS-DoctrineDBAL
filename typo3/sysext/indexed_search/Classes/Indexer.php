@@ -1853,7 +1853,7 @@ class Indexer {
 			if ($mtime) {
 				$updateFields['item_mtime'] = (int)$mtime;
 			}
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('index_phash', 'phash=' . (int)$phash, $updateFields);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('index_phash', array('phash' => (int)$phash), $updateFields);
 		}
 	}
 
@@ -1869,7 +1869,7 @@ class Indexer {
 			$updateFields = array(
 				'freeIndexSetId' => (int)$this->conf['freeIndexSetId']
 			);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('index_phash', 'phash=' . (int)$phash, $updateFields);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('index_phash', array('phash' => (int)$phash), $updateFields);
 		}
 	}
 
@@ -1886,7 +1886,7 @@ class Indexer {
 			$updateFields = array(
 				'parsetime' => (int)$parsetime
 			);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('index_phash', 'phash=' . (int)$phash, $updateFields);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('index_phash', array('phash' => (int)$phash), $updateFields);
 		}
 	}
 
@@ -1900,7 +1900,7 @@ class Indexer {
 		if (\TYPO3\CMS\IndexedSearch\Utility\IndexedSearchUtility::isTableUsed('index_section')) {
 			$updateFields = array();
 			$this->getRootLineFields($updateFields);
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery('index_section', 'page_id=' . (int)$this->conf['id'], $updateFields);
+			$GLOBALS['TYPO3_DB']->executeUpdateQuery('index_section', array('page_id' => (int)$this->conf['id']), $updateFields);
 		}
 	}
 

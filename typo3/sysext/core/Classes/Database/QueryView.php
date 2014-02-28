@@ -198,14 +198,14 @@ class QueryView {
 				$res = @$GLOBALS['TYPO3_DB']->sql_query($qCount);
 				if (!$GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 					$GLOBALS['TYPO3_DB']->sql_free_result($res);
-					$dA = array();
-					$dA['t2_data'] = serialize(array(
+					$updateData = array();
+					$updateData['t2_data'] = serialize(array(
 						'qC' => $saveArr,
 						'qCount' => $qCount,
 						'qSelect' => $qSelect,
 						'qString' => $qString
 					));
-					$GLOBALS['TYPO3_DB']->exec_UPDATEquery('sys_action', 'uid=' . (int)$uid, $dA);
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery('sys_action', array('uid' => (int)$uid), $updateData);
 					$qOK = 1;
 				}
 			}
