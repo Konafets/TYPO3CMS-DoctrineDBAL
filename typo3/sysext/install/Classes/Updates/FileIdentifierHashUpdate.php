@@ -143,14 +143,14 @@ class FileIdentifierHashUpdate extends AbstractUpdate {
 			$configurationArray['data']['sDEF']['lDEF']['caseSensitive'] = array('vDEF' => $caseSensitive);
 
 			$configuration = $flexObj->flexArray2Xml($configurationArray);
-			$dbQueries[] = $query = $this->db->UPDATEquery(
-				'sys_file_storage',
-				'uid=' . $storage['uid'],
-				array(
-					'configuration' => $configuration
-				)
-			);
-			$this->db->sql_query($query);
+
+			$dbQueries[] = $this->db->updateQuery(
+					'sys_file_storage',
+					array('uid' => $storage['uid']),
+					array('configuration' => $configuration)
+			)->getSql();
+
+			$this->db->executeUpdateQuery('sys_file_storage', array('uid' => $storage['uid']), array('configuration' => $configuration));
 		}
 		return $dbQueries;
 	}
@@ -188,15 +188,13 @@ class FileIdentifierHashUpdate extends AbstractUpdate {
 			foreach ($files as $file) {
 				$folderHash = $storage->hashFileIdentifier($storage->getFolderIdentifierFromFileIdentifier($file['identifier']));
 
-				$queries[] = $query = $this->db->UPDATEquery(
+				$queries[] = $this->db->updateQuery(
 					'sys_file',
-					'uid=' . $file['uid'],
-					array(
-						'folder_hash' => $folderHash
-					)
-				);
+					array('uid' => $file['uid']),
+					array('folder_hash' => $folderHash)
+				)->getSql();
 
-				$this->db->sql_query($query);
+				$this->db->executeUpdateQuery('sys_file', array('uid' => $file['uid']), array('folder_hash' => $folderHash));
 			}
 		} else {
 			// manually hash the identifiers when using DBAL
@@ -208,16 +206,22 @@ class FileIdentifierHashUpdate extends AbstractUpdate {
 				$hash = $storage->hashFileIdentifier($file['identifier']);
 				$folderHash = $storage->hashFileIdentifier($storage->getFolderIdentifierFromFileIdentifier($file['identifier']));
 
-				$queries[] = $query = $this->db->UPDATEquery(
+				$queries[] = $this->db->updateQuery(
 					'sys_file',
-					'uid=' . $file['uid'],
+					array('uid' => $file['uid']),
 					array(
 						'identifier_hash' => $hash,
 						'folder_hash' => $folderHash
 					)
-				);
+				)->getSql();
 
-				$this->db->sql_query($query);
+				$this->db->executeUpdateQuery(
+						'sys_file',
+						array('uid' => $file['uid']),
+						array(
+							'identifier_hash' => $hash,
+							'folder_hash' => $folderHash)
+						);
 			}
 		}
 

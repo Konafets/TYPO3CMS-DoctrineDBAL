@@ -77,13 +77,18 @@ class ReferenceIntegrityUpdateWizard extends AbstractUpdate {
 		if (isset($updates['improperConnectedFileReferences'])) {
 			foreach ($updates['improperConnectedFileReferences'] as $fileReferenceRecord) {
 				if ($fileReferenceRecord['newpid'] > 0) {
-					$updateQuery = $GLOBALS['TYPO3_DB']->UPDATEquery(
+
+					$dbQueries[] = $GLOBALS['TYPO3_DB']->updateQuery(
 						'sys_file_reference',
-						'uid=' . (int)$fileReferenceRecord['uid'],
+						array('uid' => (int)$fileReferenceRecord['uid']),
 						array('pid' => $fileReferenceRecord['newpid'])
 					);
-					$GLOBALS['TYPO3_DB']->sql_query($updateQuery);
-					$dbQueries[] = $updateQuery;
+
+					$GLOBALS['TYPO3_DB']->executeUpdateQuery(
+						'sys_file_reference',
+						array('uid' => (int)$fileReferenceRecord['uid']),
+						array('pid' => $fileReferenceRecord['newpid'])
+					);
 				}
 			}
 		}
