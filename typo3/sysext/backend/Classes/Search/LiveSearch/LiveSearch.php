@@ -234,7 +234,7 @@ class LiveSearch {
 			);
 			$isFirst = FALSE;
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($result);
+		$GLOBALS['TYPO3_DB']->freeResult($result);
 		return $collect;
 	}
 

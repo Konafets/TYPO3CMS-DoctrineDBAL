@@ -362,7 +362,7 @@ class AdminPanelView {
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 				$options .= '<option value="' . $row['uid'] . '"' . ($GLOBALS['BE_USER']->uc['TSFE_adminConfig']['preview_simulateUserGroup'] == $row['uid'] ? ' selected="selected"' : '') . '>' . htmlspecialchars(('[' . $row['uid'] . '] ' . $row['title'])) . '</option>';
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			if ($options) {
 				$options = '<option value="0">&nbsp;</option>' . $options;
 				$out .= $this->extGetItem('preview_simulateUserGroup', '<select id="preview_simulateUserGroup" name="TSFE_ADMIN_PANEL[preview_simulateUserGroup]">' . $options . '</select>');

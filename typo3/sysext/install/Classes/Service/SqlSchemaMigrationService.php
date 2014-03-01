@@ -615,7 +615,7 @@ class SqlSchemaMigrationService {
 					if ($res === FALSE) {
 						$result[$key] = $GLOBALS['TYPO3_DB']->sqlErrorMessage();
 					} elseif (is_resource($res) || is_a($res, '\\mysqli_result')) {
-						$GLOBALS['TYPO3_DB']->sql_free_result($res);
+						$GLOBALS['TYPO3_DB']->freeResult($res);
 					}
 				}
 			}

@@ -2394,7 +2394,7 @@ class DataHandler {
 					break;
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// If the new value is there:
 			$value = strlen($newValue) ? $newValue : $value;
 		}
@@ -3186,7 +3186,7 @@ class DataHandler {
 						// Copying each of the underlying records...
 						$this->copyRecord($table, $row['uid'], $theNewRootID);
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($mres);
+					$GLOBALS['TYPO3_DB']->freeResult($mres);
 				}
 			}
 			return $theNewRootID;
@@ -4330,7 +4330,7 @@ class DataHandler {
 							} else {
 								$this->log($table, $uid, 3, 0, 100, 'Delete: Zero rows in result when trying to read filenames from record which should be deleted');
 							}
-							$GLOBALS['TYPO3_DB']->sql_free_result($mres);
+							$GLOBALS['TYPO3_DB']->freeResult($mres);
 						}
 						// Delete the hard way...:
 						$GLOBALS['TYPO3_DB']->executeDeleteQuery($table, array('uid' => (int)$uid));
@@ -4448,7 +4448,7 @@ class DataHandler {
 						$this->deleteVersionsForRecord($table, $row['uid'], $forceHardDelete);
 						$this->deleteRecord($table, $row['uid'], TRUE, $forceHardDelete);
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($mres);
+					$GLOBALS['TYPO3_DB']->freeResult($mres);
 				}
 			}
 			$this->copyMovedRecordToNewLocation('pages', $uid);
@@ -4727,7 +4727,7 @@ class DataHandler {
 								// Look for next version number:
 								$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('t3ver_id', $table, '((pid=-1 && t3ver_oid=' . $id . ') OR uid=' . $id . ')' . $this->deleteClause($table), '', 't3ver_id DESC', '1');
 								list($highestVerNumber) = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
-								$GLOBALS['TYPO3_DB']->sql_free_result($res);
+								$GLOBALS['TYPO3_DB']->freeResult($res);
 								// Look for version number of the current:
 								$subVer = $row['t3ver_id'] . '.' . ($highestVerNumber + 1);
 								// Set up the values to override when making a raw-copy:
@@ -5617,7 +5617,7 @@ class DataHandler {
 					return -1;
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($mres);
+			$GLOBALS['TYPO3_DB']->freeResult($mres);
 		}
 		return $inList;
 	}
@@ -5675,7 +5675,7 @@ class DataHandler {
 			} else {
 				return FALSE;
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return TRUE;
 	}
@@ -5755,7 +5755,7 @@ class DataHandler {
 			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
 				$this->pageCache[$id] = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $this->pageCache[$id][$field];
 	}
@@ -5775,7 +5775,7 @@ class DataHandler {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fieldList, $table, 'uid=' . (int)$id);
 			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
 				$result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 				return $result;
 			}
 		}
@@ -5983,7 +5983,7 @@ class DataHandler {
 				// Return selected rows:
 				return $row;
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 	}
 
@@ -6103,7 +6103,7 @@ class DataHandler {
 							// If after the last record in the list, we just add the sortInterval to the last sortvalue
 							$sortNumber = $row[$sortRow] + $this->sortIntervals;
 						}
-						$GLOBALS['TYPO3_DB']->sql_free_result($subres);
+						$GLOBALS['TYPO3_DB']->freeResult($subres);
 					}
 					return array('pid' => $row['pid'], 'sortNumber' => $sortNumber);
 				} else {
@@ -6150,7 +6150,7 @@ class DataHandler {
 				}
 				$i = $i + $intervals;
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			return $returnVal;
 		}
 	}
@@ -6191,7 +6191,7 @@ class DataHandler {
 						$previousLocalizedRecordUid = $previousLocalizedRecord[0]['uid'];
 					}
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 		}
 		return $previousLocalizedRecordUid;
@@ -6318,7 +6318,7 @@ class DataHandler {
 				$c++;
 			}
 			// Free result:
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Unset the fields which are similar:
 			foreach ($fieldArray as $col => $val) {
 				$fieldConfiguration = $GLOBALS['TCA'][$table]['columns'][$col]['config'];
@@ -6568,7 +6568,7 @@ class DataHandler {
 					}
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($mres);
+			$GLOBALS['TYPO3_DB']->freeResult($mres);
 		}
 		return $CPtable;
 	}
@@ -6778,7 +6778,7 @@ class DataHandler {
 		if ($pid < 0) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid', $table, 'uid=' . abs($pid));
 			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Look, if the record UID happens to be an offline record. If so, find its live version.
 			// Offline uids will be used when a page is versionized as "branch" so this is when we
 			// must correct - otherwise a pid of "-1" and a wrong sort-row number
@@ -6918,10 +6918,10 @@ class DataHandler {
 								while ($row_tmp2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res_tmp2)) {
 									$list_cache[] = $row_tmp2['uid'];
 								}
-								$GLOBALS['TYPO3_DB']->sql_free_result($res_tmp2);
+								$GLOBALS['TYPO3_DB']->freeResult($res_tmp2);
 							}
 						}
-						$GLOBALS['TYPO3_DB']->sql_free_result($res_tmp);
+						$GLOBALS['TYPO3_DB']->freeResult($res_tmp);
 						// Finally, add the parent page as well:
 						$list_cache[] = $pid_tmp;
 						// Add grand-parent as well:
@@ -6930,7 +6930,7 @@ class DataHandler {
 							if ($row_tmp = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res_tmp)) {
 								$list_cache[] = $row_tmp['pid'];
 							}
-							$GLOBALS['TYPO3_DB']->sql_free_result($res_tmp);
+							$GLOBALS['TYPO3_DB']->freeResult($res_tmp);
 						}
 					} else {
 						// For other tables than "pages", delete cache for the records "parent page".
@@ -7191,7 +7191,7 @@ class DataHandler {
 			$defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
 			$defaultFlashMessageQueue->enqueue($flashMessage);
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res_log);
+		$GLOBALS['TYPO3_DB']->freeResult($res_log);
 	}
 
 	/*****************************

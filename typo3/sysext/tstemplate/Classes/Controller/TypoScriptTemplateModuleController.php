@@ -195,7 +195,7 @@ class TypoScriptTemplateModuleController extends \TYPO3\CMS\Backend\Module\BaseS
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 				$this->setInPageArray($pArray, BackendUtility::BEgetRootLine($row['uid'], 'AND 1=1'), $row);
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 
 			$table = '<table class="t3-table" id="ts-overview">' .
 					'<thead>' .

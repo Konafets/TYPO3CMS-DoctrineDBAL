@@ -5112,7 +5112,7 @@ TBE_EDITOR.customEvalFunctions[\'' . $evalData . '\'] = function(value) {
 				);
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $items;
 	}
 
@@ -5879,7 +5879,7 @@ TBE_EDITOR.customEvalFunctions[\'' . $evalData . '\'] = function(value) {
 						}
 					}
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 			foreach ($GLOBALS['TCA'][$table]['columns'] as $field => $info) {
 				if (isset($info['config']['default'])) {
@@ -6068,7 +6068,7 @@ TBE_EDITOR.customEvalFunctions[\'' . $evalData . '\'] = function(value) {
 				unset($output[$row['uid']]);
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $output;
 	}
 

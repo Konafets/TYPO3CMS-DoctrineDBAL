@@ -56,7 +56,7 @@ class BackendUserSessionRepository extends \TYPO3\CMS\Extbase\Persistence\Reposi
 				'timestamp' => new \DateTime('@' . $row['timestamp'])
 			);
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $sessions;
 	}
 

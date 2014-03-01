@@ -122,7 +122,7 @@ class ActionToolbarMenu implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemHookInt
 					\TYPO3\CMS\Backend\Utility\IconUtility::getSpriteIconForRecord('sys_action', $actionRow)
 				);
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($queryResource);
+			$GLOBALS['TYPO3_DB']->freeResult($queryResource);
 		}
 		return $actions;
 	}

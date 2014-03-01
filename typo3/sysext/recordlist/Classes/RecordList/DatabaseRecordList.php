@@ -490,7 +490,7 @@ class DatabaseRecordList extends \TYPO3\CMS\Recordlist\RecordList\AbstractDataba
 						}
 					}
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($result);
+				$GLOBALS['TYPO3_DB']->freeResult($result);
 				$this->totalRowCount = count($accRows);
 				// CSV initiated
 				if ($this->csvOutput) {

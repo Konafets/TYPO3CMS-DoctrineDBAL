@@ -188,7 +188,7 @@ class ActionTask implements \TYPO3\CMS\Taskcenter\TaskInterface {
 				'icon' => 'EXT:sys_action/sys_action.gif'
 			);
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $actionList;
 	}
 
@@ -391,7 +391,7 @@ class ActionTask implements \TYPO3\CMS\Taskcenter\TaskInterface {
 			}
 			$userList[] = $line;
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		// If any records found
 		if (count($userList)) {
 			$content .= '<br />' . $this->taskObject->doc->section($GLOBALS['LANG']->getLL('action_t1_listOfUsers'), implode('<br />', $userList));

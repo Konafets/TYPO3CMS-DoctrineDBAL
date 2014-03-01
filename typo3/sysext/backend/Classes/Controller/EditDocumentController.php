@@ -1379,7 +1379,7 @@ class EditDocumentController {
 				}
 				$this->editconf['tt_content'][implode(',', $ecUids)] = 'edit';
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 	}
 

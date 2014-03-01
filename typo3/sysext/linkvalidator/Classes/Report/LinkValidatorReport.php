@@ -442,7 +442,7 @@ class LinkValidatorReport extends \TYPO3\CMS\Backend\Module\AbstractFunctionModu
 				} else {
 					$brokenLinksMarker = $this->getNoBrokenLinkMessage($brokenLinksMarker);
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 		} else {
 			$brokenLinksMarker = $this->getNoBrokenLinkMessage($brokenLinksMarker);

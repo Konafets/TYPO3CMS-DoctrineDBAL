@@ -212,7 +212,7 @@ class ValidatorTaskAdditionalFieldProvider implements \TYPO3\CMS\Scheduler\Addit
 					\TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
 				);
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		} else {
 			$isValid = FALSE;
 			$schedulerModule->addMessage(

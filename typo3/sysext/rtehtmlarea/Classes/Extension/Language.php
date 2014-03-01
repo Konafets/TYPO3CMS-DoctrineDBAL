@@ -140,7 +140,7 @@ class Language extends \TYPO3\CMS\Rtehtmlarea\RteHtmlAreaApi {
 					}
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			uasort($nameArray, 'strcoll');
 		}
 		return $nameArray;

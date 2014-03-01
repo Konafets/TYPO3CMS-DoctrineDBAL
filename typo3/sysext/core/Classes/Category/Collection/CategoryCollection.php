@@ -143,7 +143,7 @@ class CategoryCollection extends \TYPO3\CMS\Core\Collection\AbstractRecordCollec
 			while ($record = $this->getDatabase()->sql_fetch_assoc($resource)) {
 				$relatedRecords[] = $record;
 			}
-			$this->getDatabase()->sql_free_result($resource);
+			$this->getDatabase()->freeResult($resource);
 		}
 		return $relatedRecords;
 	}

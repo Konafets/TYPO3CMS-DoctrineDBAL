@@ -3512,7 +3512,7 @@ class ContentObjectRenderer {
 			$row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
 			$result = (int)$row[0];
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $result;
 	}
 
@@ -7632,7 +7632,7 @@ class ContentObjectRenderer {
 					$conf['max'] = str_ireplace('total', $row[0], $conf['max']);
 					$conf['begin'] = str_ireplace('total', $row[0], $conf['begin']);
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 			if (!$error) {
 				$conf['begin'] = \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange(ceil($this->calc($conf['begin'])), 0);
@@ -7837,7 +7837,7 @@ class ContentObjectRenderer {
 					$outArr[] = $row['uid'];
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $outArr;
 	}

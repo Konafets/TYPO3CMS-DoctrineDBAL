@@ -588,7 +588,7 @@ class SearchController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 					$content = preg_replace('/(http:\\/\\/[^ ]{60})([^ ]+)/i', '$1...', $ftdrow['fulltextdata']);
 					$markedSW = $this->markupSWpartsOfString($content);
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 			if (!trim($markedSW)) {
 				$outputStr = $GLOBALS['TSFE']->csConvObj->crop('utf-8', $row['item_description'], $length);
@@ -1200,7 +1200,7 @@ class SearchController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 				$menu[$row['uid']] = $GLOBALS['TSFE']->sys_page->getPageOverlay($row);
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		} else {
 			$menu = $GLOBALS['TSFE']->sys_page->getMenu($pageUid);
 		}

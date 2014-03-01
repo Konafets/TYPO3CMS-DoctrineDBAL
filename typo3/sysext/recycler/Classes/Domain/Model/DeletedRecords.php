@@ -239,7 +239,7 @@ class DeletedRecords {
 							}
 						}
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($resPages);
+					$GLOBALS['TYPO3_DB']->freeResult($resPages);
 				}
 			}
 			$this->label[$table] = $tcaCtrl['label'];

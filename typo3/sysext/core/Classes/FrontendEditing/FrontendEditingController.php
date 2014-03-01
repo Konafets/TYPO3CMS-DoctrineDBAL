@@ -337,7 +337,7 @@ class FrontendEditingController {
 					}
 					$sortCheck = ' AND ' . $sortField . $operator . (int)$row[$sortField];
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,pid', $table, 'pid=' . (int)$row['pid'] . $sortCheck . $copyAfterFieldsQuery . $GLOBALS['TSFE']->sys_page->enableFields($table, '', $ignore), '', $sortField . ' ' . $order, '2');
 				if ($row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 					if ($afterUID) {
@@ -354,7 +354,7 @@ class FrontendEditingController {
 				} elseif ($direction == 'up') {
 					$cmdData[$table][$uid]['move'] = $row['pid'];
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 			if (!empty($cmdData)) {
 				$this->initializeTceMain();

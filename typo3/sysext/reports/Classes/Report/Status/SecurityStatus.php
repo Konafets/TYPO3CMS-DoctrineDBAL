@@ -84,7 +84,7 @@ class SecurityStatus implements \TYPO3\CMS\Reports\StatusProviderInterface {
 				$message = sprintf($GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.xlf:warning.backend_admin'), '<a href="' . $editUserAccountUrl . '">', '</a>');
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return GeneralUtility::makeInstance('TYPO3\\CMS\\Reports\\Status', $GLOBALS['LANG']->getLL('status_adminUserAccount'), $value, $message, $severity);
 	}
 

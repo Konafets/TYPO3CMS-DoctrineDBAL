@@ -137,7 +137,7 @@ class DatabaseUtility implements \TYPO3\CMS\Core\SingletonInterface {
 			$lines[] = 'INSERT INTO ' . $table . ' VALUES (' . implode(', ', $values) . ');';
 		}
 		// Free DB result:
-		$GLOBALS['TYPO3_DB']->sql_free_result($result);
+		$GLOBALS['TYPO3_DB']->freeResult($result);
 		// Implode lines and return:
 		return implode(LF, $lines);
 	}

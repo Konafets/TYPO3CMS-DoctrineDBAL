@@ -271,7 +271,7 @@ class FlexFormTools {
 				unset($output[$row['uid']]);
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $output;
 	}
 

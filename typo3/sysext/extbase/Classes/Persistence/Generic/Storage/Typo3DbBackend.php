@@ -295,7 +295,7 @@ class Typo3DbBackend implements \TYPO3\CMS\Extbase\Persistence\Generic\Storage\B
 		$result = $this->databaseHandle->sql_query($sql);
 		$this->checkSqlErrors($sql);
 		$rows = $this->getRowsFromResult($result);
-		$this->databaseHandle->sql_free_result($result);
+		$this->databaseHandle->freeResult($result);
 		// Get language uid from querySettings.
 		// Ensure the backend handling is not broken (fallback to Get parameter 'L' if needed)
 		$rows = $this->doLanguageAndWorkspaceOverlay($query->getSource(), $rows, $query->getQuerySettings());
@@ -341,7 +341,7 @@ class Typo3DbBackend implements \TYPO3\CMS\Extbase\Persistence\Generic\Storage\B
 			$rows = $this->getRowsFromResult($result);
 			$count = current(current($rows));
 		}
-		$this->databaseHandle->sql_free_result($result);
+		$this->databaseHandle->freeResult($result);
 		return (int)$count;
 	}
 

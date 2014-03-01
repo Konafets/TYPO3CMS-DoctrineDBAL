@@ -117,7 +117,7 @@ class ContentContentObject extends \TYPO3\CMS\Frontend\ContentObject\AbstractCon
 						}
 					}
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 			if ($slideCollectReverse) {
 				$theValue = $cobjValue . $theValue;

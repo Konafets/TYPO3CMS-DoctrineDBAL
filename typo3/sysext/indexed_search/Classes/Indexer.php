@@ -1941,7 +1941,7 @@ class Indexer {
 				$this->log_setTSlogMessage('The currently indexed page was indexed under no user-login and apparently this page has been indexed under login conditions earlier, but with the SAME content. Therefore the old similar page with phash=\'' . $row['phash'] . '\' are now removed.', 1);
 				$this->removeOldIndexedPages($row['phash']);
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 	}
 
@@ -1982,7 +1982,7 @@ class Indexer {
 					while (FALSE != ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 						unset($wordListArray[$row['baseword']]);
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($res);
+					$GLOBALS['TYPO3_DB']->freeResult($res);
 					foreach ($wordListArray as $key => $val) {
 						$insertFields = array(
 							'wid' => $val['hash'],

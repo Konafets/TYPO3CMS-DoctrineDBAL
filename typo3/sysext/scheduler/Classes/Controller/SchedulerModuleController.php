@@ -261,7 +261,7 @@ class SchedulerModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClas
 				$schedulerUserStatus = 1;
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $schedulerUserStatus;
 	}
 
@@ -910,7 +910,7 @@ class SchedulerModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClas
 		);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($query);
 		$numRows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 
 		// No tasks defined, display information message
 		if ($numRows == 0) {
@@ -1157,7 +1157,7 @@ class SchedulerModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClas
 					}
 					$tr++;
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 
 			// Render table
@@ -1484,7 +1484,7 @@ class SchedulerModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClas
 		while (($groupRecord = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) !== FALSE) {
 			$list[] = $groupRecord;
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 
 		return $list;
 	}

@@ -113,7 +113,7 @@ class BackendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Backend
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$uids[] = $row['ses_userid'];
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		$query = $this->createQuery();
 		$query->matching($query->in('uid', $uids));
 		return $query->execute();

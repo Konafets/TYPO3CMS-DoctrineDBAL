@@ -23,6 +23,8 @@ namespace TYPO3\CMS\Frontend\Tests\Unit\Page;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 /**
  * Test case
  *
@@ -40,7 +42,11 @@ class PageRepositoryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * Sets up this testcase
 	 */
 	public function setUp() {
-		$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('exec_SELECTquery', 'sql_fetch_assoc', 'sql_free_result'));
+		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array('exec_SELECTquery', 'sql_fetch_assoc', 'freeResult'));
+		} else {
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('exec_SELECTquery', 'sql_fetch_assoc', 'sql_free_result'));
+		}
 		$this->pageSelectObject = $this->getAccessibleMock('TYPO3\\CMS\\Frontend\\Page\\PageRepository', array('getMultipleGroupsWhereClause'));
 		$this->pageSelectObject->expects($this->any())->method('getMultipleGroupsWhereClause')->will($this->returnValue(' AND 1=1'));
 	}

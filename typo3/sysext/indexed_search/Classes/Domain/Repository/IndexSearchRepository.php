@@ -325,7 +325,7 @@ class IndexSearchRepository {
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 					$phashList[] = $row['phash'];
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 				// Here the phash list are merged with the existing result based on whether we are dealing with OR, NOT or AND operations.
 				if ($c) {
 					switch ($v['oper']) {

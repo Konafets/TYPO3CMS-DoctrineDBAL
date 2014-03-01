@@ -369,7 +369,7 @@ abstract class AbstractTask {
 				$isRunning = TRUE;
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $isRunning;
 	}
 
@@ -393,7 +393,7 @@ abstract class AbstractTask {
 				$runningExecutions = unserialize($row['serialized_executions']);
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		// Count the number of existing executions and use that number as a key
 		// (we need to know that number, because it is returned at the end of the method)
 		$numExecutions = count($runningExecutions);
@@ -461,7 +461,7 @@ abstract class AbstractTask {
 				);
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 	}
 
 	/**

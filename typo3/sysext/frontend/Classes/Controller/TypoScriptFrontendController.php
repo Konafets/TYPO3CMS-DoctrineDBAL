@@ -4925,7 +4925,7 @@ if (version == "n3") {
 				);
 			}
 			$runtimeCache->set($entryIdentifier, $sysDomainData);
-			$GLOBALS['TYPO3_DB']->sql_free_result($result);
+			$GLOBALS['TYPO3_DB']->freeResult($result);
 		}
 		return $sysDomainData;
 	}

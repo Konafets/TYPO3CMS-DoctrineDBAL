@@ -571,7 +571,7 @@ class TemplateService {
 						$this->outermostRootlineIndexWithTemplate = $a;
 					}
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 			$addC = '';
 			// If first loop AND there is set an alternative template uid, use that
@@ -586,7 +586,7 @@ class TemplateService {
 					$this->outermostRootlineIndexWithTemplate = $a;
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			$this->rootLine[] = $this->absoluteRootLine[$a];
 		}
 
@@ -655,7 +655,7 @@ class TemplateService {
 							$this->processTemplate($subrow, $idList . ',sys_' . $id, $pid, 'sys_' . $id, $templateID);
 						}
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($res);
+					$GLOBALS['TYPO3_DB']->freeResult($res);
 				}
 			} else {
 				// Normal Operation, which is to include the "based-on" sys_templates,
@@ -1620,7 +1620,7 @@ class TemplateService {
 					$nextLevelAcc[] = array($next_id, $next_MP_array);
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Call recursively, if any:
 			foreach ($nextLevelAcc as $pSet) {
 				$this->initMPmap_create($pSet[0], $pSet[1], $level + 1);

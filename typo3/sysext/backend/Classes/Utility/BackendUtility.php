@@ -102,7 +102,7 @@ class BackendUtility {
 		if ($GLOBALS['TCA'][$table]) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, 'uid=' . (int)$uid . ($useDeleteClause ? self::deleteClause($table) : '') . $where);
 			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			if ($row) {
 				return $row;
 			}
@@ -155,7 +155,7 @@ class BackendUtility {
 		$row = FALSE;
 		if (FALSE !== ($res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, $where, '', '', '1'))) {
 			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $row;
 	}
@@ -192,7 +192,7 @@ class BackendUtility {
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 				$rows[] = $row;
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			if (count($rows)) {
 				return $rows;
 			}
@@ -389,7 +389,7 @@ class BackendUtility {
 					$getPageForRootline_cache[$ident] = $row;
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $row;
 	}
@@ -948,7 +948,7 @@ class BackendUtility {
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,' . $ds_pointerField . ',' . $ds_searchParentField . ($subFieldPointer ? ',' . $subFieldPointer : ''), $table, 'uid=' . (int)($newRecordPidValue ?: $rr[$ds_searchParentField]) . self::deleteClause($table));
 					$newRecordPidValue = 0;
 					$rr = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-					$GLOBALS['TYPO3_DB']->sql_free_result($res);
+					$GLOBALS['TYPO3_DB']->freeResult($res);
 					// Break if no result from SQL db or if looping...
 					if (!is_array($rr) || isset($uidAcc[$rr['uid']])) {
 						break;
@@ -1276,7 +1276,7 @@ class BackendUtility {
 			// include only the requested fields in the result
 			$result[$recordId] = array_intersect_key($record, $fieldsIndex);
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 
 		// sort records by $sortField. This is not done in the query because the title might have been overwritten by
 		// self::getRecordTitle();
@@ -2017,7 +2017,7 @@ class BackendUtility {
 										$MMrow['uid'] :
 										self::getRecordTitle($theColConf['foreign_table'], $MMrow, FALSE, $forceResult);
 								}
-								$GLOBALS['TYPO3_DB']->sql_free_result($MMres);
+								$GLOBALS['TYPO3_DB']->freeResult($MMres);
 								ksort($mmlA);
 								if (is_array($mmlA)) {
 									$l = implode('; ', $mmlA);
@@ -3098,7 +3098,7 @@ class BackendUtility {
 					$GLOBALS['LOCKED_RECORDS']['pages:' . $row['record_pid']]['msg'] = sprintf($GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.xlf:labels.lockedRecordUser_content'), $userType, $userName, self::calcAge($GLOBALS['EXEC_TIME'] - $row['tstamp'], $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.xlf:labels.minutesHoursDaysYears')));
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $GLOBALS['LOCKED_RECORDS'][$table . ':' . $uid];
 	}
@@ -3380,7 +3380,7 @@ class BackendUtility {
 				AND sys_domain.hidden=0
 				AND (sys_domain.domainName=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($domain, 'sys_domain') . ' OR sys_domain.domainName=' . $GLOBALS['TYPO3_DB']->fullQuoteStr(($domain . '/'), 'sys_domain') . ')' . self::deleteClause('pages'), '', '', '1');
 			$result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			return $result;
 		}
 	}
@@ -3598,7 +3598,7 @@ class BackendUtility {
 						$realPid = $row['pid'];
 						$outputRows[] = $row;
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($res);
+					$GLOBALS['TYPO3_DB']->freeResult($res);
 				}
 			}
 			// Select all offline versions of record:
@@ -3607,7 +3607,7 @@ class BackendUtility {
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 				$outputRows[] = $row;
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Set real-pid:
 			foreach ($outputRows as $idx => $oRow) {
 				$outputRows[$idx]['_REAL_PID'] = $realPid;

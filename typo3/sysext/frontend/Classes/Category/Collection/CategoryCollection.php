@@ -159,7 +159,7 @@ class CategoryCollection extends \TYPO3\CMS\Core\Category\Collection\CategoryCol
 					$relatedRecords[] = $record;
 				}
 			}
-			$this->getDatabase()->sql_free_result($resource);
+			$this->getDatabase()->freeResult($resource);
 		}
 		return $relatedRecords;
 	}

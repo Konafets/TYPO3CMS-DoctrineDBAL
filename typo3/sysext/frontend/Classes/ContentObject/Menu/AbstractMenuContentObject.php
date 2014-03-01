@@ -1842,7 +1842,7 @@ class AbstractMenuContentObject {
 				$result[$uid]['sectionIndex_uid'] = $uid;
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($resource);
+		$GLOBALS['TYPO3_DB']->freeResult($resource);
 		return $result;
 	}
 

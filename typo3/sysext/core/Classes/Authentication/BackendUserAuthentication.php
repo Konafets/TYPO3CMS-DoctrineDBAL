@@ -1346,7 +1346,7 @@ class BackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\AbstractU
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$this->userGroups[$row['uid']] = $row;
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		// Traversing records in the correct order
 		$include_staticArr = GeneralUtility::intExplode(',', $grList);
 		// Traversing list
@@ -2132,7 +2132,7 @@ class BackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\AbstractU
 			if ($testRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 				$theTimeBack = $testRow['tstamp'];
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Check for more than $max number of error failures with the last period.
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_log', 'type=255 AND action=3 AND error<>0 AND tstamp>' . (int)$theTimeBack, '', 'tstamp');
 			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > $max) {
@@ -2156,7 +2156,7 @@ This is a dump of the failures:
 				$mail->send();
 				// Logout written to log
 				$this->writelog(255, 4, 0, 3, 'Failure warning (%s failures within %s seconds) sent by email to %s', array($GLOBALS['TYPO3_DB']->sql_num_rows($res), $secondsBack, $email));
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 		}
 	}

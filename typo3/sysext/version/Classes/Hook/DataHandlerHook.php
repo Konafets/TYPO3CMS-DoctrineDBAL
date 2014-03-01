@@ -1058,7 +1058,7 @@ class DataHandlerHook {
 							$tcemainObj->copyRecord_raw($table, $row['uid'], $newPageId);
 						}
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($mres);
+					$GLOBALS['TYPO3_DB']->freeResult($mres);
 				}
 			}
 		}
@@ -1095,7 +1095,7 @@ class DataHandlerHook {
 					while (FALSE != ($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res))) {
 						$elementData[$table][] = array($row[1], $row[0]);
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($res);
+					$GLOBALS['TYPO3_DB']->freeResult($res);
 				}
 			}
 			if ($offlinePageId && $offlinePageId != $pageId) {
@@ -1122,7 +1122,7 @@ class DataHandlerHook {
 					while (FALSE !== ($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res))) {
 						$elementList[$table][] = $row[0];
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($res);
+					$GLOBALS['TYPO3_DB']->freeResult($res);
 					if (is_array($elementList[$table])) {
 						// Yes, it is possible to get non-unique array even with DISTINCT above!
 						// It happens because several UIDs are passed in the array already.
@@ -1157,7 +1157,7 @@ class DataHandlerHook {
 					$elementList['pages'][$row[0]] = $rec['_ORIG_uid'];
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// The line below is necessary even with DISTINCT
 			// because several elements can be passed by caller
 			$pageIdList = array_unique($pageIdList);

@@ -379,7 +379,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 		while (FALSE !== ($data = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
 			$this->optValues['lang'][$data['uid']] = $data['title'];
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		// Calling hook for modification of initialized content
 		if ($hookObj = $this->hookRequest('initialize_postProc')) {
 			$hookObj->initialize_postProc();
@@ -633,7 +633,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 					$totalSearchResultCount--;
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			$result = array(
 				'resultRows' => $resultRows,
 				'firstRow' => $firstRow,
@@ -870,7 +870,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 					$phashList[] = $row['phash'];
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 				// Here the phash list are merged with the existing result based on whether we are dealing with OR, NOT or AND operations.
 				if ($c) {
 					switch ($v['oper']) {
@@ -1921,7 +1921,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 						$content = preg_replace('/(http:\\/\\/[^ ]{60})([^ ]+)/i', '$1...', $ftdrow['fulltextdata']);
 						$markedSW = $this->markupSWpartsOfString($content);
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($res);
+					$GLOBALS['TYPO3_DB']->freeResult($res);
 				}
 			}
 			if (!trim($markedSW)) {
@@ -2271,7 +2271,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 				$output[$row['uid']] = $GLOBALS['TSFE']->sys_page->getPageOverlay($row);
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			return $output;
 		} else {
 			return $GLOBALS['TSFE']->sys_page->getMenu($id);

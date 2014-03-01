@@ -205,7 +205,7 @@ class DatabaseIntegrityCheck {
 				$this->genTree($newID, $this->genTree_HTML ? $genHTML : '', TRUE);
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 	}
 
 	/**
@@ -267,7 +267,7 @@ class DatabaseIntegrityCheck {
 				$this->genTree_records($newID, $genHTML, $table, TRUE);
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 	}
 
 	/**
@@ -320,7 +320,7 @@ class DatabaseIntegrityCheck {
 					);
 					$lostIdList[] = $row['uid'];
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($garbage);
+				$GLOBALS['TYPO3_DB']->freeResult($garbage);
 				if ($table == 'pages') {
 					$this->lostPagesList = implode(',', $lostIdList);
 				}
@@ -530,7 +530,7 @@ class DatabaseIntegrityCheck {
 							}
 						}
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($mres);
+					$GLOBALS['TYPO3_DB']->freeResult($mres);
 				}
 			}
 		}
@@ -635,7 +635,7 @@ class DatabaseIntegrityCheck {
 							$result .= 'Strange Error. ...<br />';
 						}
 					}
-					$GLOBALS['TYPO3_DB']->sql_free_result($mres);
+					$GLOBALS['TYPO3_DB']->freeResult($mres);
 					foreach ($dbArr as $theId => $theC) {
 						$result .= 'There are ' . $theC . ' records pointing to this missing or deleted record; [' . $table . '][' . $theId . ']<br />';
 					}
@@ -676,7 +676,7 @@ class DatabaseIntegrityCheck {
 					}
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($mres);
+			$GLOBALS['TYPO3_DB']->freeResult($mres);
 		}
 		return $theRecordList;
 	}
@@ -708,7 +708,7 @@ class DatabaseIntegrityCheck {
 					}
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($mres);
+			$GLOBALS['TYPO3_DB']->freeResult($mres);
 		}
 		return $theRecordList;
 	}

@@ -53,7 +53,7 @@ class SysLanguageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$content .= '<li>' . htmlspecialchars($row['title']) . ' [' . htmlspecialchars($row['uid']) . ']</li>';
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return '<ul>' . $content . '</ul>';
 	}
 

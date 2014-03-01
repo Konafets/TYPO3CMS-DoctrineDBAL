@@ -999,7 +999,7 @@ abstract class AbstractTreeView {
 	 */
 	public function getDataFree(&$res) {
 		if (!is_array($this->data)) {
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 	}
 

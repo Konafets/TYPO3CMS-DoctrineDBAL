@@ -399,7 +399,7 @@ class PagePositionMap {
 					$lines[$vv][] = $this->insertPositionIcon($row, $vv, $kk, $moveUid, $pid);
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $this->printRecordMap($lines, $colPosArray, $pid);
 	}

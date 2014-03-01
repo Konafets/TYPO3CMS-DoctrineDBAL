@@ -295,7 +295,7 @@ class Typo3DatabaseBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBackend
 		while ($tagsEntryIdentifierRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($tagsEntryIdentifierRowsResource)) {
 			$tagsEntryIdentifiers[] = $this->db->quote($tagsEntryIdentifierRow['identifier']);
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($tagsEntryIdentifierRowsResource);
+		$GLOBALS['TYPO3_DB']->freeResult($tagsEntryIdentifierRowsResource);
 		// Delete tag rows connected to expired cache entries
 		if (count($tagsEntryIdentifiers)) {
 			$query = $this->db->createDeleteQuery();
@@ -397,7 +397,7 @@ class Typo3DatabaseBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBackend
 		while ($cacheEntryIdentifierRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($cacheEntryIdentifierRowsResource)) {
 			$cacheEntryIdentifiers[] = $this->db->quote($cacheEntryIdentifierRow['identifier']);
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($cacheEntryIdentifierRowsResource);
+		$GLOBALS['TYPO3_DB']->freeResult($cacheEntryIdentifierRowsResource);
 		if (count($cacheEntryIdentifiers)) {
 			$query = $this->db->createDeleteQuery();
 			$in = $query->expr->in('identifier', $cacheEntryIdentifiers);

@@ -169,7 +169,7 @@ class StaticRecordCollection extends \TYPO3\CMS\Core\Collection\AbstractRecordCo
 			while ($record = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource)) {
 				$relatedRecords[] = $record;
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($resource);
+			$GLOBALS['TYPO3_DB']->freeResult($resource);
 		}
 		return $relatedRecords;
 	}

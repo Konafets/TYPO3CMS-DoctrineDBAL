@@ -168,7 +168,7 @@ class DataPreprocessor {
 									}
 								}
 							}
-							$GLOBALS['TYPO3_DB']->sql_free_result($res);
+							$GLOBALS['TYPO3_DB']->freeResult($res);
 						}
 						// Finally, call renderRecord:
 						$this->renderRecord($table, uniqid('NEW'), $id, $newRow);
@@ -182,7 +182,7 @@ class DataPreprocessor {
 							$contentTable = $GLOBALS['TYPO3_CONF_VARS']['SYS']['contentTable'];
 							$this->lockRecord($table, $id, $contentTable == $table ? $row['pid'] : 0);
 						}
-						$GLOBALS['TYPO3_DB']->sql_free_result($res);
+						$GLOBALS['TYPO3_DB']->freeResult($res);
 					}
 				}
 			}
@@ -759,7 +759,7 @@ class DataPreprocessor {
 			BackendUtility::workspaceOL($fieldConfig['config']['foreign_table'], $subrow);
 			$recordList[$subrow['uid']] = BackendUtility::getRecordTitle($fieldConfig['config']['foreign_table'], $subrow);
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($subres);
+		$GLOBALS['TYPO3_DB']->freeResult($subres);
 		// neg_foreign_table
 		if (is_array($GLOBALS['TCA'][$fieldConfig['config']['neg_foreign_table']])) {
 			$subres = BackendUtility::exec_foreign_table_where_query($fieldConfig, $field, $TSconfig, 'neg_');
@@ -768,7 +768,7 @@ class DataPreprocessor {
 				BackendUtility::workspaceOL($fieldConfig['config']['nes_foreign_table'], $subrow);
 				$recordList[-$subrow['uid']] = BackendUtility::getRecordTitle($fieldConfig['config']['neg_foreign_table'], $subrow);
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($subres);
+			$GLOBALS['TYPO3_DB']->freeResult($subres);
 		}
 		// At this point all records that CAN be selected is found in $recordList
 		// Now, get the data from loadDBgroup based on the input list of values.

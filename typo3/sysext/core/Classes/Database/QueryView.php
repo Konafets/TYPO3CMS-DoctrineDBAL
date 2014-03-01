@@ -105,7 +105,7 @@ class QueryView {
 					$opt[] = '<option value="-' . $row['uid'] . '">' . htmlspecialchars(($row['title'] . ' [' . $row['uid'] . ']')) . '</option>';
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		$TDparams = ' nowrap="nowrap" class="bgColor4"';
 		$tmpCode = '
@@ -197,7 +197,7 @@ class QueryView {
 				$qSelect = $qGen->getSelectQuery($qString);
 				$res = @$GLOBALS['TYPO3_DB']->sql_query($qCount);
 				if (!$GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
-					$GLOBALS['TYPO3_DB']->sql_free_result($res);
+					$GLOBALS['TYPO3_DB']->freeResult($res);
 					$updateData = array();
 					$updateData['t2_data'] = serialize(array(
 						'qC' => $saveArr,
@@ -362,7 +362,7 @@ class QueryView {
 					$output .= $GLOBALS['SOBE']->doc->section('SQL error', $out, 0, 1);
 				} else {
 					$cPR = $this->getQueryResultCode($mQ, $res, $qGen->table);
-					$GLOBALS['TYPO3_DB']->sql_free_result($res);
+					$GLOBALS['TYPO3_DB']->freeResult($res);
 					$output .= $GLOBALS['SOBE']->doc->section($cPR['header'], $cPR['content'], 0, 1);
 				}
 			}
@@ -520,7 +520,7 @@ class QueryView {
 							$rowArr[] = $this->resultRowDisplay($row, $conf, $table);
 							$lrow = $row;
 						}
-						$GLOBALS['TYPO3_DB']->sql_free_result($res);
+						$GLOBALS['TYPO3_DB']->freeResult($res);
 						$out .= '<table border="0" cellpadding="2" cellspacing="1">' . $this->resultRowTitles($lrow, $conf, $table) . implode(LF, $rowArr) . '</table>';
 					}
 					$out .= '<HR>';
@@ -739,7 +739,7 @@ class QueryView {
 					$theList .= $this->getTreeList($row['uid'], $depth - 1, $begin - 1, $perms_clause);
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $theList;
 	}
@@ -846,7 +846,7 @@ class QueryView {
 								}
 							}
 						}
-						$GLOBALS['TYPO3_DB']->sql_free_result($checkres);
+						$GLOBALS['TYPO3_DB']->freeResult($checkres);
 					}
 				}
 			} else {
@@ -916,7 +916,7 @@ class QueryView {
 						while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 							$this->tableArray[$from_table][] = $row;
 						}
-						$GLOBALS['TYPO3_DB']->sql_free_result($res);
+						$GLOBALS['TYPO3_DB']->freeResult($res);
 					}
 					foreach ($this->tableArray[$from_table] as $key => $val) {
 						$GLOBALS['SOBE']->MOD_SETTINGS['labels_noprefix'] = $GLOBALS['SOBE']->MOD_SETTINGS['labels_noprefix'] == 1 ? 'on' : $GLOBALS['SOBE']->MOD_SETTINGS['labels_noprefix'];

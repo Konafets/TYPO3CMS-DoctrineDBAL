@@ -171,7 +171,7 @@ class LinkAnalyzer {
 					// Analyse each record
 					$this->analyzeRecord($results, $table, $fields, $row);
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 			foreach ($this->hookObjectsArr as $key => $hookObj) {
 				if (is_array($results[$key]) && empty($checkOptions) || is_array($results[$key]) && $checkOptions[$key]) {
@@ -381,7 +381,7 @@ class LinkAnalyzer {
 				$markerArray['brokenlinkCount'] += $row['nbBrokenLinks'];
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $markerArray;
 	}
 
@@ -419,7 +419,7 @@ class LinkAnalyzer {
 					$theList .= $this->extGetTreeList($row['uid'], $depth - 1, $begin - 1, $permsClause, $considerHidden);
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $theList;
 	}
@@ -440,7 +440,7 @@ class LinkAnalyzer {
 				while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) !== FALSE) {
 					$hidden = $this->getRootLineIsHidden($row);
 				}
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 			} else {
 				$hidden = FALSE;
 			}

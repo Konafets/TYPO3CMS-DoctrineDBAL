@@ -126,7 +126,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 				);
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 	}
 
 	/**
@@ -298,7 +298,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 				// Throw an exception to raise the problem
 				throw new \UnexpectedValueException('Could not unserialize task', 1255083671);
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $task;
 	}
@@ -318,7 +318,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 			throw new \OutOfBoundsException('No task', 1247827245);
 		} else {
 			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $row;
 	}
@@ -354,7 +354,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 					$tasks[] = $task;
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $tasks;
 	}

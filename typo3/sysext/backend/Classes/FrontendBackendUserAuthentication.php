@@ -248,7 +248,7 @@ class FrontendBackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\B
 					$theList .= $this->extGetTreeList($row['uid'], $depth - 1, $begin - 1, $perms_clause);
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $theList;
 	}

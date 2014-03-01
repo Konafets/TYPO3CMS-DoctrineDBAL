@@ -183,7 +183,7 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AbstractAuthenticationService 
 					$groupDataArr[$row['uid']] = $row;
 				}
 				if ($res) {
-					$GLOBALS['TYPO3_DB']->sql_free_result($res);
+					$GLOBALS['TYPO3_DB']->freeResult($res);
 				}
 			} else {
 				if ($this->writeDevLog) {

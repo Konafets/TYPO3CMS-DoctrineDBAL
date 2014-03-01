@@ -1529,7 +1529,7 @@ abstract class AbstractUserAuthentication {
 		$dbres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->user_table, 'uid=' . (int)$uid . ' ' . $this->user_where_clause());
 		if ($dbres) {
 			$user = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbres);
-			$GLOBALS['TYPO3_DB']->sql_free_result($dbres);
+			$GLOBALS['TYPO3_DB']->freeResult($dbres);
 		}
 		return $user;
 	}
@@ -1548,7 +1548,7 @@ abstract class AbstractUserAuthentication {
 		$dbres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->user_table, 'username=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($name, $this->user_table) . ' ' . $this->user_where_clause());
 		if ($dbres) {
 			$user = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbres);
-			$GLOBALS['TYPO3_DB']->sql_free_result($dbres);
+			$GLOBALS['TYPO3_DB']->freeResult($dbres);
 		}
 		return $user;
 	}
@@ -1576,7 +1576,7 @@ abstract class AbstractUserAuthentication {
 			$dbres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $dbUser['table'], $usernameClause . $dbUser['check_pid_clause'] . $dbUser['enable_clause'] . $extraWhere);
 			if ($dbres) {
 				$user = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbres);
-				$GLOBALS['TYPO3_DB']->sql_free_result($dbres);
+				$GLOBALS['TYPO3_DB']->freeResult($dbres);
 			}
 		}
 		return $user;

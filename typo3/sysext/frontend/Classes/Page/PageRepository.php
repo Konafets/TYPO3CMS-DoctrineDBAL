@@ -196,7 +196,7 @@ class PageRepository {
 		$result = array();
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'uid=' . (int)$uid . $this->where_hid_del . $accessCheck);
 		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		if ($row) {
 			$this->versionOL('pages', $row);
 			if (is_array($row)) {
@@ -221,7 +221,7 @@ class PageRepository {
 		}
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'uid=' . (int)$uid . $this->deleteClause('pages'));
 		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		$result = array();
 		if ($row) {
 			$this->versionOL('pages', $row);
@@ -245,7 +245,7 @@ class PageRepository {
 		$output = '';
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'pid=' . (int)$uid . $this->where_hid_del . $this->where_groupAccess, '', 'sorting', '1');
 		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		if ($row) {
 			$this->versionOL('pages', $row);
 			if (is_array($row)) {
@@ -271,7 +271,7 @@ class PageRepository {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'pages', 'alias=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($alias, 'pages') . ' AND pid>=0 AND pages.deleted=0');
 		// "AND pid>=0" because of versioning (means that aliases sent MUST be online!)
 		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		if ($row) {
 			$this->cache_getPageIdFromAlias[$alias] = $row['uid'];
 			return $row['uid'];
@@ -323,7 +323,7 @@ class PageRepository {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(implode(',', $fieldArr), 'pages_language_overlay', 'pid=' . (int)$page_id . '
 								AND sys_language_uid=' . (int)$lUid . $this->enableFields('pages_language_overlay'), '', '', '1');
 				$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 				$this->versionOL('pages_language_overlay', $row);
 				if (is_array($row)) {
 					$row['_PAGES_OVERLAY'] = TRUE;
@@ -388,7 +388,7 @@ class PageRepository {
 							// Select overlay record:
 							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, 'pid=' . (int)$row['pid'] . ' AND ' . $GLOBALS['TCA'][$table]['ctrl']['languageField'] . '=' . (int)$sys_language_content . ' AND ' . $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'] . '=' . (int)$row['uid'] . $this->enableFields($table), '', '', '1');
 							$olrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-							$GLOBALS['TYPO3_DB']->sql_free_result($res);
+							$GLOBALS['TYPO3_DB']->freeResult($res);
 							$this->versionOL($table, $olrow);
 							// Merge record content by traversing all fields:
 							if (is_array($olrow)) {
@@ -507,7 +507,7 @@ class PageRepository {
 				}
 			}
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $output;
 	}
 
@@ -534,7 +534,7 @@ class PageRepository {
 						AND sys_domain.hidden=0
 						AND (sys_domain.domainName=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($domain, 'sys_domain') . ' OR sys_domain.domainName=' . $GLOBALS['TYPO3_DB']->fullQuoteStr(($domain . '/'), 'sys_domain') . ') ' . $this->where_hid_del . $this->where_groupAccess, '', '', 1);
 		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		if ($row) {
 			if ($row['redirectTo']) {
 				$redirectUrl = $row['redirectTo'];
@@ -655,7 +655,7 @@ class PageRepository {
 			if (!is_array($pageRec)) {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,pid,doktype,mount_pid,mount_pid_ol,t3ver_state', 'pages', 'uid=' . (int)$pageId . ' AND pages.deleted=0 AND pages.doktype<>255');
 				$pageRec = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 				// Only look for version overlay if page record is not supplied; This assumes that the input record is overlaid with preview version, if any!
 				$this->versionOL('pages', $pageRec);
 			}
@@ -669,7 +669,7 @@ class PageRepository {
 				// Get the mount point record (to verify its general existence):
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,pid,doktype,mount_pid,mount_pid_ol,t3ver_state', 'pages', 'uid=' . $mount_pid . ' AND pages.deleted=0 AND pages.doktype<>255');
 				$mountRec = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 				$this->versionOL('pages', $mountRec);
 				if (is_array($mountRec)) {
 					// Look for recursive mount point:
@@ -713,14 +713,14 @@ class PageRepository {
 		if (is_array($GLOBALS['TCA'][$table]) && $uid > 0) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, 'uid = ' . $uid . $this->enableFields($table));
 			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			if ($row) {
 				$this->versionOL($table, $row);
 				if (is_array($row)) {
 					if ($checkPage) {
 						$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'pages', 'uid=' . (int)$row['pid'] . $this->enableFields('pages'));
 						$numRows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
-						$GLOBALS['TYPO3_DB']->sql_free_result($res);
+						$GLOBALS['TYPO3_DB']->freeResult($res);
 						if ($numRows > 0) {
 							return $row;
 						} else {
@@ -751,7 +751,7 @@ class PageRepository {
 		if ((is_array($GLOBALS['TCA'][$table]) || $table == 'pages') && $uid > 0) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, 'uid = ' . $uid . $this->deleteClause($table));
 			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			if ($row) {
 				if (!$noWSOL) {
 					$this->versionOL($table, $row);
@@ -785,7 +785,7 @@ class PageRepository {
 					$rows[] = $row;
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			if (count($rows)) {
 				return $rows;
 			}
@@ -1114,7 +1114,7 @@ class PageRepository {
 			if ($moveID) {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(implode(',', array_keys($row)), $table, 'uid=' . (int)$moveID . $this->enableFields($table));
 				$origRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-				$GLOBALS['TYPO3_DB']->sql_free_result($res);
+				$GLOBALS['TYPO3_DB']->freeResult($res);
 				if ($origRow) {
 					$row = $origRow;
 					return TRUE;

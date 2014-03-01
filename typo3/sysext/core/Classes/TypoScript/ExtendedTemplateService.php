@@ -851,7 +851,7 @@ class ExtendedTemplateService extends \TYPO3\CMS\Core\TypoScript\TemplateService
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_template', 'pid=' . (int)$id . $addC . ' ' . $this->whereClause, '', 'sorting', '1');
 			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 			BackendUtility::workspaceOL('sys_template', $row);
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Returns the template row if found.
 			return $row;
 		}
@@ -875,7 +875,7 @@ class ExtendedTemplateService extends \TYPO3\CMS\Core\TypoScript\TemplateService
 					$outRes[] = $row;
 				}
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Returns the template rows in an array.
 			return $outRes;
 		}

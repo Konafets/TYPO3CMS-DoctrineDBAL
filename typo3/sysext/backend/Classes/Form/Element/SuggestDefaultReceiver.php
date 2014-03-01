@@ -198,7 +198,7 @@ class SuggestDefaultReceiver {
 				);
 				$rows[$this->table . '_' . $uid] = $this->renderRecord($row, $entry);
 			}
-			$GLOBALS['TYPO3_DB']->sql_free_result($res);
+			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// if there are less records than we need, call this function again to get more records
 			if (count($rows) < $this->maxItems && $allRowsCount >= 50 && $recursionCounter < $this->maxItems) {
 				$tmp = self::queryTable($params, ++$recursionCounter);

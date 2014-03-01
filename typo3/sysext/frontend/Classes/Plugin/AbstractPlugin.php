@@ -1160,7 +1160,7 @@ class AbstractPlugin {
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$outArr[$row['uid']] = $row;
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $outArr;
 	}
 

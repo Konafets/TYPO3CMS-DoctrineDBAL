@@ -66,7 +66,11 @@ class ConditionMatcherTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	}
 
 	private function setUpDatabaseMockForDeterminePageId() {
-		$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('exec_SELECTquery', 'sql_fetch_assoc', 'sql_free_result'));
+		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array('exec_SELECTquery', 'sql_fetch_assoc', 'freeResult'));
+		} else {
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('exec_SELECTquery', 'sql_fetch_assoc', 'sql_free_result'));
+		}
 		$GLOBALS['TYPO3_DB']->expects($this->any())->method('exec_SELECTquery')->will($this->returnCallback(array($this, 'determinePageIdByRecordDatabaseExecuteCallback')));
 		$GLOBALS['TYPO3_DB']->expects($this->any())->method('sql_fetch_assoc')->will($this->returnCallback(array($this, 'determinePageIdByRecordDatabaseFetchCallback')));
 	}

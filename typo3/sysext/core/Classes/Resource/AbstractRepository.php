@@ -142,7 +142,7 @@ abstract class AbstractRepository implements \TYPO3\CMS\Extbase\Persistence\Repo
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$itemList[] = $this->createDomainObject($row);
 		}
-		$GLOBALS['TYPO3_DB']->sql_free_result($res);
+		$GLOBALS['TYPO3_DB']->freeResult($res);
 		return $itemList;
 	}
 
