@@ -7026,8 +7026,7 @@ class ContentObjectRenderer {
 				if ($doExec) {
 					return $GLOBALS['TYPO3_DB']->executeDeleteQuery($table, array('uid' => (int)$uid));
 				} else {
-					$query = $GLOBALS['TYPO3_DB']->createDeleteQuery();
-					return $query->delete($table)->where($query->expr->equals('uid', (int)$uid))->getSql();
+					return $GLOBALS['TYPO3_DB']->deleteQuery($table, array('uid' => (int)$uid))->getSql();
 				}
 			}
 		}
