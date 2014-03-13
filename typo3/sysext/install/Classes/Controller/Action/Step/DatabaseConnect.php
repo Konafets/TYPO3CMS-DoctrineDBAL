@@ -545,7 +545,6 @@ class DatabaseConnect extends AbstractStepAction {
 					->assign('renderConnectDetailsHost', TRUE)
 					->assign('renderConnectDetailsSocket', TRUE)
 					->assign('renderConnectDetailsPort', TRUE)
-					->assign('renderConnectDetailsDatabase', TRUE)
 					->assign('renderConnectDetailsCharset', TRUE);
 				break;
 			case 'pdo_sqlite':
@@ -561,7 +560,6 @@ class DatabaseConnect extends AbstractStepAction {
 					->assign('renderConnectDetailsPassword', TRUE)
 					->assign('renderConnectDetailsHost', TRUE)
 					->assign('renderConnectDetailsPort', TRUE)
-					->assign('renderConnectDetailsDatabase', TRUE);
 				break;
 			case 'oci8':
 				$this->view
@@ -569,7 +567,6 @@ class DatabaseConnect extends AbstractStepAction {
 					->assign('renderConnectDetailsPassword', TRUE)
 					->assign('renderConnectDetailsHost', TRUE)
 					->assign('renderConnectDetailsPort', TRUE)
-					->assign('renderConnectDetailsDatabase', TRUE)
 					->assign('renderConnectDetailsCharset', TRUE);
 				break;
 			case 'pdo_sqlsrv':
