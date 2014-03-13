@@ -803,7 +803,7 @@ class Bootstrap {
 			$databaseConnection->setInitializeCommandsAfterConnect($commandsAfterConnect);
 		}
 
-		$databaseConnection->connectDatabase();
+//		$databaseConnection->connectDatabase();
 
 		$GLOBALS['TYPO3_DB'] = $databaseConnection;
 
