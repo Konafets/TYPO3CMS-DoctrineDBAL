@@ -586,6 +586,7 @@ class DatabaseConnect extends AbstractStepAction {
 
 	/**
 	 * Returns a list of database drivers that are available on current server.
+	 * @todo Delete this method when Doctrine takes over
 	 *
 	 * @return array
 	 */
@@ -664,6 +665,7 @@ class DatabaseConnect extends AbstractStepAction {
 	/**
 	 * Returns a list of DBAL supported database drivers, with a
 	 * user-friendly name and any PHP module dependency.
+	 * @todo Delete this method when Doctrine takes over
 	 *
 	 * @return array
 	 */

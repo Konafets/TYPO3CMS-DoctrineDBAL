@@ -806,6 +806,8 @@ class Bootstrap {
 		$databaseConnection->connectDatabase();
 
 		$GLOBALS['TYPO3_DB'] = $databaseConnection;
+
+		// TODO: This cann be removed when Doctrine takes over.
 		// $GLOBALS['TYPO3_DB'] needs to be defined first in order to work for DBAL
 		$GLOBALS['TYPO3_DB']->initialize();
 
