@@ -90,6 +90,9 @@ class DatabaseConnect extends AbstractStepAction {
 				$config['_DEFAULT']['config'] = array_merge($config['_DEFAULT']['config'], $driverConfig);
 			}
 			$configurationManager->setLocalConfigurationValueByPath('EXTCONF/dbal/handlerCfg', $config);
+		} elseif (isset($postValues['setDoctrineDriver'])) {
+			$localConfigurationPathValuePairs['DB/driver'] = $postValues['setDoctrineDriver'];
+			$configurationManager->setLocalConfigurationValuesByPathValuePairs($localConfigurationPathValuePairs);
 		} else {
 			$localConfigurationPathValuePairs = array();
 
@@ -340,7 +343,6 @@ class DatabaseConnect extends AbstractStepAction {
 			if (isset($GLOBALS['TYPO3_CONF_VARS']['DB']['database'])) {
 				$databaseConnection->setDatabaseName($GLOBALS['TYPO3_CONF_VARS']['DB']['database']);
 			}
-			// TODO: Get the databasedriver from user input
 			if (isset($GLOBALS['TYPO3_CONF_VARS']['DB']['driver'])) {
 				$databaseConnection->setDatabaseDriver($GLOBALS['TYPO3_CONF_VARS']['DB']['driver']);
 			}
@@ -625,34 +627,29 @@ class DatabaseConnect extends AbstractStepAction {
 	 */
 	protected function getAvailableDoctrineDrivers() {
 		$supportedDrivers = $this->getSupportedDoctrineDrivers();
-		$availableDrivers = array();
+		$availableDrivers = array('none' => array('driver' => 'none', 'label' => 'Select a driver', 'selected' => TRUE));
 		$selectedDoctrineDriver = $this->getSelectedDoctrineDriver();
-		foreach ($supportedDrivers as $abstractionLayer => $drivers) {
-			foreach ($drivers as $driver => $info) {
+		foreach ($supportedDrivers as $driver => $info) {
+			if (isset($info['combine']) && $info['combine'] === 'OR') {
+				$isAvailable = FALSE;
+			} else {
+				$isAvailable = TRUE;
+			}
+			// Loop through each PHP module dependency to ensure it is loaded
+			foreach ($info['extensions'] as $extension) {
 				if (isset($info['combine']) && $info['combine'] === 'OR') {
-					$isAvailable = FALSE;
+					$isAvailable |= extension_loaded($extension);
 				} else {
-					$isAvailable = TRUE;
+					$isAvailable &= extension_loaded($extension);
 				}
-				// Loop through each PHP module dependency to ensure it is loaded
-				foreach ($info['extensions'] as $extension) {
-					if (isset($info['combine']) && $info['combine'] === 'OR') {
-						$isAvailable |= extension_loaded($extension);
-					} else {
-						$isAvailable &= extension_loaded($extension);
-					}
-				}
-				if ($isAvailable) {
-					if (!isset($availableDrivers[$abstractionLayer])) {
-						$availableDrivers[$abstractionLayer] = array();
-					}
-					$availableDrivers[$abstractionLayer][$driver] = array();
-					$availableDrivers[$abstractionLayer][$driver]['driver'] = $driver;
-					$availableDrivers[$abstractionLayer][$driver]['label'] = $info['label'];
-					$availableDrivers[$abstractionLayer][$driver]['selected'] = FALSE;
-					if ($selectedDoctrineDriver === $driver) {
-						$availableDrivers[$abstractionLayer][$driver]['selected'] = TRUE;
-					}
+			}
+			if ($isAvailable) {
+				$availableDrivers[$driver] = array();
+				$availableDrivers[$driver]['driver'] = $driver;
+				$availableDrivers[$driver]['label'] = $info['label'];
+				$availableDrivers[$driver]['selected'] = FALSE;
+				if ($selectedDoctrineDriver === $driver) {
+					$availableDrivers[$driver]['selected'] = TRUE;
 				}
 			}
 		}
@@ -699,27 +696,25 @@ class DatabaseConnect extends AbstractStepAction {
 	 */
 	protected function getSupportedDoctrineDrivers() {
 		$supportedDrivers = array(
-			'Native' => array(
-				'pdo_mysql' => array(
-					'label' => 'MySQL PDO driver',
-					'extensions' => array('pdo_mysql')
-				),
-				'pdo_sqlite' => array(
-					'label' => 'SQLite PDO driver',
-					'extensions' => array('pdo_sqlite')
-				),
-				'pdo_pgsql' => array(
-					'label' => 'PostgreSQL PDO driver',
-					'extensions' => array('pdo_pgsql')
-				),
-				'sqlsrv' => array(
-					'label' => 'Microsoft SQL Server PDO driver',
-					'extensions' => array('pdo_sqlsrv')
-				),
-				'oci8' => array(
-					'label' => 'Oracle OCI8 PDO driver',
-					'extensions' => array('oci8')
-				)
+			'pdo_mysql' => array(
+				'label' => 'MySQL PDO driver',
+				'extensions' => array('pdo_mysql')
+			),
+			'pdo_sqlite' => array(
+				'label' => 'SQLite PDO driver',
+				'extensions' => array('pdo_sqlite')
+			),
+			'pdo_pgsql' => array(
+				'label' => 'PostgreSQL PDO driver',
+				'extensions' => array('pdo_pgsql')
+			),
+			'sqlsrv' => array(
+				'label' => 'Microsoft SQL Server PDO driver',
+				'extensions' => array('pdo_sqlsrv')
+			),
+			'oci8' => array(
+				'label' => 'Oracle OCI8 PDO driver',
+				'extensions' => array('oci8')
 			)
 		);
 
@@ -743,10 +738,10 @@ class DatabaseConnect extends AbstractStepAction {
 	 * @return string Dbal driver or empty string if not yet selected
 	 */
 	protected function getSelectedDoctrineDriver() {
-		$result = 'pdo_mysql';
+		$result = 'none';
 
-		if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['doctrine']['handlerCfg']['_DEFAULT']['config']['driver'])) {
-			$result = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['doctrine']['handlerCfg']['_DEFAULT']['config']['driver'];
+		if (isset($GLOBALS['TYPO3_CONF_VARS']['DB']['driver'])) {
+			$result = $GLOBALS['TYPO3_CONF_VARS']['DB']['driver'];
 		}
 
 		return $result;
@@ -888,5 +883,16 @@ class DatabaseConnect extends AbstractStepAction {
 		$charset = isset($GLOBALS['TYPO3_CONF_VARS']['DB']['charset']) ? $GLOBALS['TYPO3_CONF_VARS']['DB']['charset'] : 'utf8';
 
 		return $charset;
+	}
+
+	/**
+	 * Returns configured dirver, if set
+	 *
+	 * @return string
+	 */
+	protected function getConfiguredDriver() {
+		$driver = isset($GLOBALS['TYPO3_CONF_VARS']['DB']['driver']) ? $GLOBALS['TYPO3_CONF_VARS']['DB']['driver'] : 'pdo_mysql';
+
+		return $driver;
 	}
 }

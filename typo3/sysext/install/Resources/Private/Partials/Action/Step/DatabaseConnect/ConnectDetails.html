@@ -79,8 +79,16 @@
 		</ol>
 	</fieldset>
 
-	<button type="submit">
-		Continue
-	</button>
+	<f:if condition="{0:selectedDoctrineDriver} == {0:'none'}">
+		<f:then>
 </form>
-<hr />
+		</f:then>
+		<f:else>
+			<button type="submit">
+				Continue
+			</button>
+			</form>
+			<hr />
+		</f:else>
+
+	</f:if>

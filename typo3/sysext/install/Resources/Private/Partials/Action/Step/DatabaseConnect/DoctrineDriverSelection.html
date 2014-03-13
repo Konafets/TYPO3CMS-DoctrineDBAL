@@ -17,9 +17,7 @@
 
 					<f:if condition="{doctrineDrivers}">
 						<f:then>
-							<f:for each="{doctrineDrivers}" as="drivers" key="abstractionLayer">
-								<optgroup label="{abstractionLayer}">
-									<f:for each="{drivers}" as="driver">
+									<f:for each="{doctrineDrivers}" as="driver">
 										<f:if condition="{driver.selected}">
 											<f:then>
 												<option value="{driver.driver}" selected="selected">
@@ -33,8 +31,6 @@
 											</f:else>
 										</f:if>
 									</f:for>
-								</optgroup>
-							</f:for>
 						</f:then>
 					</f:if>
 				</select>

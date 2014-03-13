@@ -768,6 +768,10 @@ class Bootstrap {
 		}
 		$databaseConnection->setDatabaseHost($databaseHost);
 
+		if (!empty($GLOBALS['TYPO3_CONF_VARS']['DB']['driver'])) {
+			$databaseConnection->setDatabaseDriver($GLOBALS['TYPO3_CONF_VARS']['DB']['driver']);
+		}
+
 		$databaseConnection->debugOutput = $GLOBALS['TYPO3_CONF_VARS']['SYS']['sqlDebug'];
 
 		if (
