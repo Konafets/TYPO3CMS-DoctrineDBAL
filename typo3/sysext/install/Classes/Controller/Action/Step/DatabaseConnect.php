@@ -218,7 +218,9 @@ class DatabaseConnect extends AbstractStepAction {
 		if ($this->isConnectSuccessful() && $this->isConfigurationComplete()) {
 			return FALSE;
 		}
-		if (!$this->isHostConfigured() && !$this->isDbalEnabled()) {
+		// TODO: Redo this for Doctrine
+		if (!$this->isHostConfigured() && !$this->isDbalEnabled() && !$this->isDoctrineEnabled()) {
+//		if (!$this->isHostConfigured() && !$this->isDbalEnabled()) {
 			$this->useDefaultValuesForNotConfiguredOptions();
 			throw new \TYPO3\CMS\Install\Controller\Exception\RedirectException(
 				'Wrote default settings to LocalConfiguration.php, redirect needed',
