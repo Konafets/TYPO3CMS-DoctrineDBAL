@@ -173,7 +173,6 @@ class DatabaseSelect extends AbstractStepAction {
 	 */
 	protected function initializeDatabaseConnection() {
 		$this->databaseConnection = $this->objectManager->get('TYPO3\\CMS\\Core\\Database\\DatabaseConnection');
-		$this->databaseConnection->connectDatabase();
 		if (!empty($GLOBALS['TYPO3_CONF_VARS']['DB']['username'])) {
 			$this->databaseConnection->setDatabaseUsername($GLOBALS['TYPO3_CONF_VARS']['DB']['username']);
 		}
@@ -190,5 +189,6 @@ class DatabaseSelect extends AbstractStepAction {
 			$this->databaseConnection->setDatabaseSocket($GLOBALS['TYPO3_CONF_VARS']['DB']['socket']);
 		}
 
+		$this->databaseConnection->connectDB();
 	}
 }
