@@ -182,6 +182,11 @@ class DatabaseConnect extends AbstractStepAction {
 				}
 			}
 
+			if (!empty($postValues['sslmode'])) {
+				$value = $postValues['sslmode'];
+				$localConfigurationPathValuePairs['DB/sslmode'] = $value;
+			}
+
 			if (!empty($localConfigurationPathValuePairs)) {
 				$configurationManager->setLocalConfigurationValuesByPathValuePairs($localConfigurationPathValuePairs);
 
@@ -575,6 +580,8 @@ class DatabaseConnect extends AbstractStepAction {
 					->assign('renderConnectDetailsHost', TRUE)
 					->assign('renderConnectDetailsSocket', TRUE)
 					->assign('renderConnectDetailsPort', TRUE)
+					->assign('renderConnectDetailsSslMode', TRUE)
+					->assign('renderConnectDetailsCharset', TRUE);
 				break;
 			case 'oci8':
 				$this->view

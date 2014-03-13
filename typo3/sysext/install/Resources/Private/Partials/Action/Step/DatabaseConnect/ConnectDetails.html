@@ -60,6 +60,15 @@
 				</li>
 			</f:if>
 
+
+			<!-- TODO: Add a dropdown with the possible options here http://www.postgresql.org/docs/9.1/static/libpq-connect.html#LIBPQ-CONNECT-SSLMODE -->
+			<f:if condition="{renderConnectDetailsSslMode}">
+				<li>
+					<label for="t3-install-step-ssl">SSL</label>
+					<input id="t3-install-step-ssl" class="t3-install-form-input-text" type="text" value="{sslmode}" name="install[values][sslmode]" />
+				</li>
+			</f:if>
+
 			<f:if condition="{renderConnectDetailsOracleSidConnect}">
 				<li>
 					<label for="t3-install-form-type">Oracle Sid</label>
