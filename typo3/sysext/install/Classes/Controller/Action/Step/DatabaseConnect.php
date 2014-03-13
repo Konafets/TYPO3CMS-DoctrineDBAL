@@ -326,8 +326,13 @@ class DatabaseConnect extends AbstractStepAction {
 	 * @return boolean TRUE if connect was successful
 	 */
 	protected function isConnectSuccessful() {
-		/** @var $databaseConnection \TYPO3\CMS\Core\Database\DatabaseConnection */
-		$databaseConnection = $this->objectManager->get('TYPO3\\CMS\\Core\\Database\\DatabaseConnection');
+		if ($this->isDoctrineEnabled()) {
+			/** @var $databaseConnection \TYPO3\CMS\Core\Database\DatabaseConnection */
+			$databaseConnection = $this->objectManager->get('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy');
+		} else {
+			/** @var $databaseConnection \TYPO3\CMS\Core\Database\DatabaseConnection */
+			$databaseConnection = $this->objectManager->get('TYPO3\\CMS\\Core\\Database\\DatabaseConnection');
+		}
 
 		if ($this->isDbalEnabled()) {
 			// Set additional connect information based on dbal driver. postgres for example needs
