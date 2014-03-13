@@ -60,6 +60,19 @@
 				</li>
 			</f:if>
 
+			<f:if condition="{renderConnectDetailsPath}">
+				<li>
+					<label for="t3-install-step-path">Path</label>
+					<input id="t3-install-step-path" class="t3-install-form-input-text" type="text" value="{database}" name="install[values][database]" />
+				</li>
+			</f:if>
+
+			<f:if condition="{renderConnectDetailsMemory}">
+				<li>
+					<label for="t3-install-step-memory">Memory</label>
+					<input id="t3-install-step-memory" class="t3-install-form-input-text" type="checkbox" value="{memory}" name="install[values][memory]" />
+				</li>
+			</f:if>
 
 			<!-- TODO: Add a dropdown with the possible options here http://www.postgresql.org/docs/9.1/static/libpq-connect.html#LIBPQ-CONNECT-SSLMODE -->
 			<f:if condition="{renderConnectDetailsSslMode}">
