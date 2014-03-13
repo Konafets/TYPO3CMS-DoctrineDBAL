@@ -559,6 +559,7 @@ class DatabaseConnect extends AbstractStepAction {
 					->assign('renderConnectDetailsUsername', TRUE)
 					->assign('renderConnectDetailsPassword', TRUE)
 					->assign('renderConnectDetailsHost', TRUE)
+					->assign('renderConnectDetailsSocket', TRUE)
 					->assign('renderConnectDetailsPort', TRUE)
 				break;
 			case 'oci8':
