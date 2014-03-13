@@ -368,7 +368,14 @@ class DatabaseConnect extends AbstractStepAction {
 		$databaseConnection->setDatabaseCharset($this->getConfiguredCharset());
 
 		$result = FALSE;
-		$databaseConnection->connectDatabase();
+		if ($this->isDoctrineEnabled() && $this->getConfiguredUsername()) {
+			/** @var $configurationManager \TYPO3\CMS\Core\Configuration\ConfigurationManager */
+			$configurationManager = $this->objectManager->get('TYPO3\\CMS\\Core\\Configuration\\ConfigurationManager');
+			$isInitialInstallationInProgress = $configurationManager->getConfigurationValueByPath('SYS/isInitialInstallationInProgress');
+
+			$databaseConnection->connectDatabase($isInitialInstallationInProgress);
+		}
+
 		if (@$databaseConnection->isConnected()) {
 			$result = TRUE;
 		}
