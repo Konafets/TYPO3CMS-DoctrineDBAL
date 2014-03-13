@@ -54,13 +54,13 @@ class DatabaseConnect extends AbstractStepAction {
 		// TODO: Why is here an isset at the first line but not at the other checks?
 		if (isset($postValues['loadDbal'])) {
 			$result[] = $this->executeLoadDbalExtension();
-		} elseif ($postValues['unloadDbal']) {
+		} elseif (isset($postValues['unloadDbal'])) {
 			$result[] = $this->executeUnloadDbalExtension();
-		} elseif ($postValues['loadDoctrine']) {
+		} elseif (isset($postValues['loadDoctrine'])) {
 			$result[] = $this->executeLoadDoctrineExtension();
-		} elseif ($postValues['unloadDoctrine']) {
+		} elseif (isset($postValues['unloadDoctrine'])) {
 			$result[] = $this->executeUnloadDoctrineExtension();
-		} elseif ($postValues['setDbalDriver']) {
+		} elseif (isset($postValues['setDbalDriver'])) {
 			$driver = $postValues['setDbalDriver'];
 			switch ($driver) {
 				case 'mssql':
@@ -105,7 +105,7 @@ class DatabaseConnect extends AbstractStepAction {
 				}
 			}
 
-			if (isset($postValues['username'])) {
+			if (!empty($postValues['username'])) {
 				$value = $postValues['username'];
 				if (strlen($value) <= 50) {
 					$localConfigurationPathValuePairs['DB/username'] = $value;
@@ -118,7 +118,7 @@ class DatabaseConnect extends AbstractStepAction {
 				}
 			}
 
-			if (isset($postValues['password'])) {
+			if (!empty($postValues['password'])) {
 				$value = $postValues['password'];
 				if (strlen($value) <= 50) {
 					$localConfigurationPathValuePairs['DB/password'] = $value;
@@ -131,7 +131,7 @@ class DatabaseConnect extends AbstractStepAction {
 				}
 			}
 
-			if (isset($postValues['host'])) {
+			if (!empty($postValues['host'])) {
 				$value = $postValues['host'];
 				if (preg_match('/^[a-zA-Z0-9_\\.-]+(:.+)?$/', $value) && strlen($value) <= 50) {
 					$localConfigurationPathValuePairs['DB/host'] = $value;
@@ -144,7 +144,7 @@ class DatabaseConnect extends AbstractStepAction {
 				}
 			}
 
-			if (isset($postValues['port']) && $postValues['host'] !== 'localhost') {
+			if (!empty($postValues['port']) && $postValues['host'] !== 'localhost') {
 				$value = $postValues['port'];
 				if (preg_match('/^[0-9]+(:.+)?$/', $value) && $value > 0 && $value <= 65535) {
 					$localConfigurationPathValuePairs['DB/port'] = (int)$value;
@@ -157,7 +157,7 @@ class DatabaseConnect extends AbstractStepAction {
 				}
 			}
 
-			if (isset($postValues['socket']) && $postValues['socket'] !== '') {
+			if (!empty($postValues['socket']) && $postValues['socket'] !== '') {
 				if (@file_exists($postValues['socket'])) {
 					$localConfigurationPathValuePairs['DB/socket'] = $postValues['socket'];
 				} else {
@@ -169,7 +169,7 @@ class DatabaseConnect extends AbstractStepAction {
 				}
 			}
 
-			if (isset($postValues['database'])) {
+			if (!empty($postValues['database'])) {
 				$value = $postValues['database'];
 				if (strlen($value) <= 50) {
 					$localConfigurationPathValuePairs['DB/database'] = $value;
@@ -340,7 +340,7 @@ class DatabaseConnect extends AbstractStepAction {
 		if ($this->isDoctrineEnabled()) {
 			// Set additional connect information based on dbal driver. postgres for example needs
 			// database name already for connect.
-			if (isset($GLOBALS['TYPO3_CONF_VARS']['DB']['database'])) {
+			if (!empty($GLOBALS['TYPO3_CONF_VARS']['DB']['database'])) {
 				$databaseConnection->setDatabaseName($GLOBALS['TYPO3_CONF_VARS']['DB']['database']);
 			}
 			if (isset($GLOBALS['TYPO3_CONF_VARS']['DB']['driver'])) {
@@ -350,9 +350,14 @@ class DatabaseConnect extends AbstractStepAction {
 
 		$databaseConnection->setDatabaseUsername($this->getConfiguredUsername());
 		$databaseConnection->setDatabasePassword($this->getConfiguredPassword());
-		$databaseConnection->setDatabaseHost($this->getConfiguredHost());
-		$databaseConnection->setDatabasePort($this->getConfiguredPort());
-		$databaseConnection->setDatabaseSocket($this->getConfiguredSocket());
+
+		if (empty($GLOBALS['TYPO3_CONF_VARS']['DB']['socket'])) {
+			$databaseConnection->setDatabaseHost($this->getConfiguredHost());
+			$databaseConnection->setDatabasePort($this->getConfiguredPort());
+		} else {
+			$databaseConnection->setDatabaseSocket($this->getConfiguredSocket());
+		}
+
 		$databaseConnection->setDatabaseCharset($this->getConfiguredCharset());
 
 		$result = FALSE;

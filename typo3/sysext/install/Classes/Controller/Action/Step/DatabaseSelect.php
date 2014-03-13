@@ -173,11 +173,22 @@ class DatabaseSelect extends AbstractStepAction {
 	 */
 	protected function initializeDatabaseConnection() {
 		$this->databaseConnection = $this->objectManager->get('TYPO3\\CMS\\Core\\Database\\DatabaseConnection');
-		$this->databaseConnection->setDatabaseUsername($GLOBALS['TYPO3_CONF_VARS']['DB']['username']);
-		$this->databaseConnection->setDatabasePassword($GLOBALS['TYPO3_CONF_VARS']['DB']['password']);
-		$this->databaseConnection->setDatabaseHost($GLOBALS['TYPO3_CONF_VARS']['DB']['host']);
-		$this->databaseConnection->setDatabasePort($GLOBALS['TYPO3_CONF_VARS']['DB']['port']);
-		$this->databaseConnection->setDatabaseSocket($GLOBALS['TYPO3_CONF_VARS']['DB']['socket']);
 		$this->databaseConnection->connectDatabase();
+		if (!empty($GLOBALS['TYPO3_CONF_VARS']['DB']['username'])) {
+			$this->databaseConnection->setDatabaseUsername($GLOBALS['TYPO3_CONF_VARS']['DB']['username']);
+		}
+		if (!empty($GLOBALS['TYPO3_CONF_VARS']['DB']['password'])) {
+			$this->databaseConnection->setDatabasePassword($GLOBALS['TYPO3_CONF_VARS']['DB']['password']);
+		}
+		if (!empty($GLOBALS['TYPO3_CONF_VARS']['DB']['host'])) {
+			$this->databaseConnection->setDatabaseHost($GLOBALS['TYPO3_CONF_VARS']['DB']['host']);
+		}
+		if (!empty($GLOBALS['TYPO3_CONF_VARS']['DB']['port'])) {
+			$this->databaseConnection->setDatabasePort($GLOBALS['TYPO3_CONF_VARS']['DB']['port']);
+		}
+		if (!empty($GLOBALS['TYPO3_CONF_VARS']['DB']['socket'])) {
+			$this->databaseConnection->setDatabaseSocket($GLOBALS['TYPO3_CONF_VARS']['DB']['socket']);
+		}
+
 	}
 }
