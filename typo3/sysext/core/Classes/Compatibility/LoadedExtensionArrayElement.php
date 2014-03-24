@@ -47,7 +47,8 @@ class LoadedExtensionArrayElement implements \IteratorAggregate, \ArrayAccess, \
 		'ext_tables.sql',
 		'ext_tables_static+adt.sql',
 		'ext_typoscript_constants.txt',
-		'ext_typoscript_setup.txt'
+		'ext_typoscript_setup.txt',
+		'Schema.php'
 	);
 
 	/**
@@ -105,6 +106,7 @@ class LoadedExtensionArrayElement implements \IteratorAggregate, \ArrayAccess, \
 					break;
 			}
 			if ($packageType !== NULL && $relativePackagePathToPathSite !== NULL && $relativePackagePathToPathTypo3 !== NULL) {
+				$this->extensionInformation['key'] = $this->package->getPackageKey();
 				$this->extensionInformation['type'] = $packageType;
 				$this->extensionInformation['siteRelPath'] = $relativePackagePathToPathSite;
 				$this->extensionInformation['typo3RelPath'] = $relativePackagePathToPathTypo3;

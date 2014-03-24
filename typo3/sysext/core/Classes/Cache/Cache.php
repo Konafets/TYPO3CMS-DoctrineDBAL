@@ -107,6 +107,29 @@ class Cache {
 				$tableDefinitions .= LF . $backend->getTableDefinitions();
 			}
 		}
+
+		return $tableDefinitions;
+	}
+
+	/**
+	 * Helper method for install tool and extension manager to determine
+	 * required table structure of all caches that depend on it
+	 *
+	 * This is not a public API method!
+	 *
+	 * @return array Required table structure of all registered caches
+	 */
+	static public function getDatabaseTableDefinitionsDoctrine() {
+		$tableDefinitions = array();
+		foreach ($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'] as $cacheName => $_) {
+			$backend = self::$cacheManager->getCache($cacheName)->getBackend();
+			if (method_exists($backend, 'getTableDefinitions')) {
+				foreach ($backend->getTableDefinitionsSchemaDoctrine() as $schemaName => $schema) {
+					$tableDefinitions[$schemaName] = $schema;
+				}
+			}
+		}
+
 		return $tableDefinitions;
 	}
 

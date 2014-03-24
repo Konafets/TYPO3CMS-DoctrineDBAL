@@ -386,6 +386,25 @@ class Typo3DatabaseBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBackend
 	}
 
 	/**
+	 * Calculate needed table definitions for this cache.
+	 * This helper method is used by install tool and extension manager
+	 * and is not part of the public API!
+	 *
+	 * @return string|array SQL of table definitions
+	 */
+	public function getTableDefinitionsSchemaDoctrine() {
+		$requiredTableStructuresDoctrine = array();
+
+		$schema = new \TYPO3\CMS\Core\Cache\Schema\Typo3DatabaseBackendCacheSchema($this->cacheTable);
+		$requiredTableStructuresDoctrine[$this->cacheTable] = $schema->getCacheSchemaFromTemplate();
+
+		$schema = new \TYPO3\CMS\Core\Cache\Schema\Typo3DatabaseBackendTagsSchema($this->tagsTable);
+		$requiredTableStructuresDoctrine[$this->tagsTable] = $schema->getTagsSchemaFromTemplate();
+
+		return $requiredTableStructuresDoctrine;
+	}
+
+	/**
 	 * Deletes rows in cache table found by where clause on tags table
 	 *
 	 * @param string $tagsTableWhereClause The where clause for the tags table
