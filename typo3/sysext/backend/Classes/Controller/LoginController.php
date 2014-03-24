@@ -593,6 +593,7 @@ class LoginController {
 	protected function getSystemNews() {
 		$systemNewsTable = 'sys_news';
 		$systemNews = array();
+		// TODO: Change the methods here
 		$systemNewsRecords = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('title, content, crdate', $systemNewsTable, '1=1' . BackendUtility::BEenableFields($systemNewsTable) . BackendUtility::deleteClause($systemNewsTable), '', 'crdate DESC');
 		foreach ($systemNewsRecords as $systemNewsRecord) {
 			$systemNews[] = array(
