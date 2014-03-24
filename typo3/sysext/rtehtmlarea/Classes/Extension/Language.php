@@ -131,7 +131,7 @@ class Language extends \TYPO3\CMS\Rtehtmlarea\RteHtmlAreaApi {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($table . '.lg_iso_2,' . $table . '.lg_country_iso_2,' . $labelFields, $table, $where . ' AND lg_constructed = 0 ' . ($this->htmlAreaRTE->is_FE() ? $GLOBALS['TSFE']->sys_page->enableFields($table) : \TYPO3\CMS\Backend\Utility\BackendUtility::BEenableFields($table) . \TYPO3\CMS\Backend\Utility\BackendUtility::deleteClause($table)));
 			$prefixLabelWithCode = (boolean)$this->thisConfig['buttons.']['language.']['prefixLabelWithCode'];
 			$postfixLabelWithCode = (boolean)$this->thisConfig['buttons.']['language.']['postfixLabelWithCode'];
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$code = strtolower($row['lg_iso_2']) . ($row['lg_country_iso_2'] ? '-' . strtoupper($row['lg_country_iso_2']) : '');
 				foreach ($titleFields as $titleField) {
 					if ($row[$titleField]) {

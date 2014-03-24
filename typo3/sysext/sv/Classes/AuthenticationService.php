@@ -179,7 +179,7 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AbstractAuthenticationService 
 					$hiddenP = 'AND hidden=0 ';
 				}
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->db_groups['table'], 'deleted=0 ' . $hiddenP . ' AND uid IN (' . $list . ')' . $lockToDomain_SQL);
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$groupDataArr[$row['uid']] = $row;
 				}
 				if ($res) {
@@ -218,7 +218,7 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AbstractAuthenticationService 
 		// Internal group record storage
 		$groupRows = array();
 		// The groups array is filled
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			if (!in_array($row['uid'], $groups)) {
 				$groups[] = $row['uid'];
 			}

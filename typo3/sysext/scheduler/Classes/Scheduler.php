@@ -100,7 +100,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 		// to avoid leaving old executions lying around
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid, serialized_executions, serialized_task_object', 'tx_scheduler_task', 'serialized_executions <> \'\'');
 		$maxDuration = $this->extConf['maxLifetime'] * 60;
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$executions = array();
 			if ($serialized_executions = unserialize($row['serialized_executions'])) {
 				foreach ($serialized_executions as $task) {
@@ -285,7 +285,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 		if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) == 0) {
 			throw new \OutOfBoundsException('No task', 1247827244);
 		} else {
-			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			/** @var $task \TYPO3\CMS\Scheduler\Task\AbstractTask */
 			$task = unserialize($row['serialized_task_object']);
 			if ($this->isValidTaskObject($task)) {
@@ -317,7 +317,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 		if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) == 0) {
 			throw new \OutOfBoundsException('No task', 1247827245);
 		} else {
-			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $row;
@@ -345,7 +345,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('serialized_task_object', 'tx_scheduler_task', $whereClause);
 		if ($res) {
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				/** @var $task Task */
 				$task = unserialize($row['serialized_task_object']);
 				// Add the task to the list only if it is valid

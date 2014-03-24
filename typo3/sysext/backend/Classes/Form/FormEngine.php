@@ -5092,7 +5092,7 @@ TBE_EDITOR.customEvalFunctions[\'' . $evalData . '\'] = function(value) {
 		$iField = $GLOBALS['TCA'][$f_table]['ctrl']['selicon_field'];
 		$iPath = trim($GLOBALS['TCA'][$f_table]['ctrl']['selicon_field_path']);
 		// Traverse the selected rows to add them:
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			BackendUtility::workspaceOL($f_table, $row);
 			if (is_array($row)) {
 				// Prepare the icon if available:
@@ -5870,7 +5870,7 @@ TBE_EDITOR.customEvalFunctions[\'' . $evalData . '\'] = function(value) {
 			if ($pid < 0 && $GLOBALS['TCA'][$table]['ctrl']['useColumnsForDefaultValues']) {
 				// Fetches the previous record:
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, 'uid=' . abs($pid) . BackendUtility::deleteClause($table));
-				if ($drow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				if ($drow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					// Gets the list of fields to copy from the previous record.
 					$fArr = explode(',', $GLOBALS['TCA'][$table]['ctrl']['useColumnsForDefaultValues']);
 					foreach ($fArr as $theF) {
@@ -6056,7 +6056,7 @@ TBE_EDITOR.customEvalFunctions[\'' . $evalData . '\'] = function(value) {
 				'ISOcode' => 'DEF'
 			);
 		}
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$output[$row['uid']] = $row;
 			if ($isL && $row['static_lang_isocode']) {
 				$rr = BackendUtility::getRecord('static_languages', $row['static_lang_isocode'], 'lg_iso_2');

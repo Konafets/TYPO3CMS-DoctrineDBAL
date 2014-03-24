@@ -139,7 +139,7 @@ abstract class AbstractRepository implements \TYPO3\CMS\Extbase\Persistence\Repo
 		}
 		$whereClause .= $this->getWhereClauseForEnabledFields();
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->table, $whereClause);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$itemList[] = $this->createDomainObject($row);
 		}
 		$GLOBALS['TYPO3_DB']->freeResult($res);

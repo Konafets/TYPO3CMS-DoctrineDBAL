@@ -223,7 +223,7 @@ class LiveSearch {
 		);
 		$result = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($queryParts);
 		$dbCount = $GLOBALS['TYPO3_DB']->sql_num_rows($result);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($result)) {
 			$collect[] = array(
 				'id' => $tableName . ':' . $row['uid'],
 				'pageId' => $tableName === 'pages' ? $row['uid'] : $row['pid'],

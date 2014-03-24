@@ -251,7 +251,7 @@ class PageLayoutView extends \TYPO3\CMS\Recordlist\RecordList\AbstractDatabaseRe
 			$row = $GLOBALS['SOBE']->pageinfo;
 		} else {
 			$result = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'uid=' . (int)$id . $delClause);
-			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
+			$row = $GLOBALS['TYPO3_DB']->fetchAssoc($result);
 			BackendUtility::workspaceOL('pages', $row);
 		}
 		// If there was found a page:
@@ -848,7 +848,7 @@ class PageLayoutView extends \TYPO3\CMS\Recordlist\RecordList\AbstractDatabaseRe
 		$out .= $this->addelement(1, '', $theData, ' class="c-headLine"', 15);
 		// Render Items
 		$this->eCounter = $this->firstElementNumber;
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($result)) {
 			BackendUtility::workspaceOL($table, $row);
 			if (is_array($row)) {
 				list($flag, $code) = $this->fwd_rwd_nav();
@@ -998,7 +998,7 @@ class PageLayoutView extends \TYPO3\CMS\Recordlist\RecordList\AbstractDatabaseRe
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'pid=' . (int)$pid . $qWhere, '', 'sorting');
 			$c = 0;
 			$rc = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				BackendUtility::workspaceOL('pages', $row);
 				if (is_array($row)) {
 					$c++;
@@ -1531,7 +1531,7 @@ class PageLayoutView extends \TYPO3\CMS\Recordlist\RecordList\AbstractDatabaseRe
 			$langSelItems = array();
 			$langSelItems[0] = '
 						<option value="0"></option>';
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				if ($GLOBALS['BE_USER']->checkLanguageAccess($row['uid'])) {
 					$langSelItems[$row['uid']] = '
 							<option value="' . $row['uid'] . '">' . htmlspecialchars($row['title']) . '</option>';
@@ -1539,7 +1539,7 @@ class PageLayoutView extends \TYPO3\CMS\Recordlist\RecordList\AbstractDatabaseRe
 			}
 			// Then, subtract the languages which are already on the page:
 			$res = $GLOBALS['SOBE']->exec_languageQuery($id);
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				unset($langSelItems[$row['uid']]);
 			}
 			// Remove disallowed languages
@@ -1590,7 +1590,7 @@ class PageLayoutView extends \TYPO3\CMS\Recordlist\RecordList\AbstractDatabaseRe
 		$c = 0;
 		$output = array();
 		// Traverse the result:
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($result)) {
 			BackendUtility::workspaceOL($table, $row, -99, TRUE);
 			if ($row) {
 				// Add the row to the array:

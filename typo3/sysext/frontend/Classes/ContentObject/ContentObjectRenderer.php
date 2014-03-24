@@ -7832,7 +7832,7 @@ class ContentObjectRenderer {
 			if ($error = $GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 				$GLOBALS['TT']->setTSlogMessage($error . ': ' . $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery, 3);
 			} else {
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$outArr[] = $row['uid'];
 				}
 			}

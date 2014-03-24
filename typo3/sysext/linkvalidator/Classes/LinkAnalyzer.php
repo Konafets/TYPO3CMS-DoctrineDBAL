@@ -167,7 +167,7 @@ class LinkAnalyzer {
 				// TODO: only select rows that have content in at least one of the relevant fields (via OR)
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($selectFields, $table, $where);
 				// Get record rows of table
-				while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) !== FALSE) {
+				while (($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) !== FALSE) {
 					// Analyse each record
 					$this->analyzeRecord($results, $table, $fields, $row);
 				}
@@ -376,7 +376,7 @@ class LinkAnalyzer {
 			'tx_linkvalidator_link',
 			'record_pid in (' . $this->pidList . ')', 'link_type')
 		)) {
-			while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) !== FALSE) {
+			while (($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) !== FALSE) {
 				$markerArray[$row['link_type']] = $row['nbBrokenLinks'];
 				$markerArray['brokenlinkCount'] += $row['nbBrokenLinks'];
 			}
@@ -410,7 +410,7 @@ class LinkAnalyzer {
 				'uid,title,hidden,extendToSubpages',
 				'pages', 'pid=' . $id . ' AND deleted=0 AND ' . $permsClause
 			);
-			while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) !== FALSE) {
+			while (($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) !== FALSE) {
 				if ($begin <= 0 && ($row['hidden'] == 0 || $considerHidden == 1)) {
 					$theList .= $row['uid'] . ',';
 					$this->extPageInTreeInfo[] = array($row['uid'], htmlspecialchars($row['title'], $depth));
@@ -437,7 +437,7 @@ class LinkAnalyzer {
 		} else {
 			if ($pageInfo['pid'] > 0) {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,title,hidden,extendToSubpages', 'pages', 'uid=' . $pageInfo['pid']);
-				while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) !== FALSE) {
+				while (($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) !== FALSE) {
 					$hidden = $this->getRootLineIsHidden($row);
 				}
 				$GLOBALS['TYPO3_DB']->freeResult($res);

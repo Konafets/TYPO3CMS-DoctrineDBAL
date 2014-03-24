@@ -358,7 +358,7 @@ NOW Running --AUTOFIX on result. OK?' . ($this->cli_isArg('--dryrun') ? ' (--dry
 		foreach ($GLOBALS['TCA'] as $tableName => $cfg) {
 			// Select all records belonging to page:
 			$resSub = $GLOBALS['TYPO3_DB']->exec_SELECTquery('count(*)', $tableName, '');
-			$countRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resSub);
+			$countRow = $GLOBALS['TYPO3_DB']->fetchAssoc($resSub);
 			$this->performanceStatistics['MySQL_count'][$tableName] = $countRow['count(*)'];
 			$this->performanceStatistics['CSV'] .= LF . $tableName . ',' . $this->performanceStatistics['genTree_traverse():TraverseTables:']['MySQL'][$tableName] . ',' . $this->performanceStatistics['genTree_traverse():TraverseTables:']['Proc'][$tableName] . ',' . $this->performanceStatistics['MySQL_count'][$tableName];
 		}
@@ -441,7 +441,7 @@ NOW Running --AUTOFIX on result. OK?' . ($this->cli_isArg('--dryrun') ? ' (--dry
 						echo LF . '	\\-' . $tableName . ' (' . $count . ')';
 					}
 				}
-				while ($rowSub = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resSub)) {
+				while ($rowSub = $GLOBALS['TYPO3_DB']->fetchAssoc($resSub)) {
 					if ($echoLevel == 3) {
 						echo LF . '	\\-' . $tableName . ':' . $rowSub['uid'];
 					}
@@ -543,7 +543,7 @@ NOW Running --AUTOFIX on result. OK?' . ($this->cli_isArg('--dryrun') ? ' (--dry
 			if ($depth > 0) {
 				$depth--;
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'pages', 'pid=' . (int)$rootID . ($this->genTree_traverseDeleted ? '' : BackendUtility::deleteClause('pages')), '', 'sorting');
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$this->genTree_traverse($row['uid'], $depth, $echoLevel, $callBack, $versionSwapmode, 0, $accumulatedPath);
 				}
 			}

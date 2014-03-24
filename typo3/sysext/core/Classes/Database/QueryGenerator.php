@@ -827,7 +827,7 @@ class QueryGenerator {
 				if (!$fieldSetup['prepend_tname']) {
 					$checkres = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fN, $table, BackendUtility::deleteClause($table), ($groupBy = ''), ($orderBy = ''), ($limit = ''));
 					if ($checkres) {
-						while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($checkres)) {
+						while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($checkres)) {
 							if (stristr($row[$fN], ',')) {
 								$checkContent = explode(',', $row[$fN]);
 								foreach ($checkContent as $singleValue) {
@@ -917,7 +917,7 @@ class QueryGenerator {
 						$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select_fields, $from_table, $where_clause, ($groupBy = ''), $orderBy, ($limit = ''));
 					}
 					if ($res) {
-						while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+						while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 							$this->tableArray[$from_table][] = $row;
 						}
 						$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -1461,7 +1461,7 @@ class QueryGenerator {
 		}
 		if ($id && $depth > 0) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'pages', 'pid=' . $id . ' ' . BackendUtility::deleteClause('pages') . ' AND ' . $perms_clause);
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				if ($begin <= 0) {
 					$theList .= ',' . $row['uid'];
 				}

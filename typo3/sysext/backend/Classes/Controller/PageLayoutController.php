@@ -297,7 +297,7 @@ class PageLayoutController {
 		}
 		// First, select all pages_language_overlay records on the current page. Each represents a possibility for a language on the page. Add these to language selector.
 		$res = $this->exec_languageQuery($this->id);
-		while ($lrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($lrow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			if ($GLOBALS['BE_USER']->checkLanguageAccess($lrow['uid'])) {
 				$this->MOD_MENU['language'][$lrow['uid']] = $lrow['hidden'] ? '(' . $lrow['title'] . ')' : $lrow['title'];
 			}
@@ -622,7 +622,7 @@ class PageLayoutController {
 		if (substr($edit_record, 0, 9) == '_EDIT_COL') {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tt_content', 'pid=' . (int)$this->id . ' AND colPos=' . (int)substr($edit_record, 10) . ' AND sys_language_uid=' . (int)$this->current_sys_language . ($this->MOD_SETTINGS['tt_content_showHidden'] ? '' : BackendUtility::BEenableFields('tt_content')) . BackendUtility::deleteClause('tt_content') . BackendUtility::versioningPlaceholderClause('tt_content'), '', 'sorting');
 			$idListA = array();
-			while ($cRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($cRow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$idListA[] = $cRow['uid'];
 			}
 			$url = $GLOBALS['BACK_PATH'] . 'alt_doc.php?edit[tt_content][' . implode(',', $idListA) . ']=edit&returnUrl=' . rawurlencode($this->local_linkThisScript(array('edit_record' => '')));
@@ -631,7 +631,7 @@ class PageLayoutController {
 		// If the former record edited was the creation of a NEW record, this will look up the created records uid:
 		if ($this->new_unique_uid) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_log', 'userid=' . (int)$GLOBALS['BE_USER']->user['uid'] . ' AND NEWid=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->new_unique_uid, 'sys_log'));
-			$sys_log_row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$sys_log_row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			if (is_array($sys_log_row)) {
 				$edit_record = $sys_log_row['tablename'] . ':' . $sys_log_row['recuid'];
 			}
@@ -658,7 +658,7 @@ class PageLayoutController {
 		$first = 1;
 		// Page is the pid if no record to put this after.
 		$prev = $this->id;
-		while ($cRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($cRow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			BackendUtility::workspaceOL('tt_content', $cRow);
 			if (is_array($cRow)) {
 				if ($first) {
@@ -697,7 +697,7 @@ class PageLayoutController {
 		// If undo-button should be rendered (depends on available items in sys_history)
 		$this->undoButton = 0;
 		$undoRes = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tstamp', 'sys_history', 'tablename=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->eRParts[0], 'sys_history') . ' AND recuid=' . (int)$this->eRParts[1], '', 'tstamp DESC', '1');
-		if ($this->undoButtonR = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($undoRes)) {
+		if ($this->undoButtonR = $GLOBALS['TYPO3_DB']->fetchAssoc($undoRes)) {
 			$this->undoButton = 1;
 		}
 		// Setting up the Return URL for coming back to THIS script (if links take the user to another script)

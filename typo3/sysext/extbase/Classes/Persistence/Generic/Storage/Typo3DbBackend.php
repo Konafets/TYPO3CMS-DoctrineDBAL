@@ -436,7 +436,7 @@ class Typo3DbBackend implements \TYPO3\CMS\Extbase\Persistence\Generic\Storage\B
 		// debug($statement,-2);
 		$res = $this->databaseHandle->sql_query($statement);
 		$this->checkSqlErrors($statement);
-		$row = $this->databaseHandle->sql_fetch_assoc($res);
+		$row = $this->databaseHandle->fetchAssoc($res);
 		if ($row !== FALSE) {
 			return (int)$row['uid'];
 		} else {
@@ -1098,7 +1098,7 @@ class Typo3DbBackend implements \TYPO3\CMS\Extbase\Persistence\Generic\Storage\B
 	 */
 	protected function getRowsFromResult($result) {
 		$rows = array();
-		while ($row = $this->databaseHandle->sql_fetch_assoc($result)) {
+		while ($row = $this->databaseHandle->fetchAssoc($result)) {
 			if (is_array($row)) {
 				$rows[] = $row;
 			}
@@ -1231,7 +1231,7 @@ class Typo3DbBackend implements \TYPO3\CMS\Extbase\Persistence\Generic\Storage\B
 		$columns = $this->databaseHandle->listFields($tableName);
 		if (array_key_exists('pid', $columns)) {
 			$result = $this->databaseHandle->exec_SELECTquery('pid', $tableName, 'uid=' . (int)$uid);
-			if ($row = $this->databaseHandle->sql_fetch_assoc($result)) {
+			if ($row = $this->databaseHandle->fetchAssoc($result)) {
 				$storagePage = $row['pid'];
 				$pageIdsToClear[] = $storagePage;
 			}

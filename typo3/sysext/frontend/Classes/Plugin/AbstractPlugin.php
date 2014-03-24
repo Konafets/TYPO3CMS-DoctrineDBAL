@@ -709,7 +709,7 @@ class AbstractPlugin {
 		$tRows[] = $this->pi_list_header();
 		// Make list table rows
 		$c = 0;
-		while ($this->internal['currentRow'] = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($this->internal['currentRow'] = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$tRows[] = $this->pi_list_row($c);
 			$c++;
 		}
@@ -1157,7 +1157,7 @@ class AbstractPlugin {
 	public function pi_getCategoryTableContents($table, $pid, $whereClause = '', $groupBy = '', $orderBy = '', $limit = '') {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, 'pid=' . (int)$pid . $this->cObj->enableFields($table) . ' ' . $whereClause, $groupBy, $orderBy, $limit);
 		$outArr = array();
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$outArr[$row['uid']] = $row;
 		}
 		$GLOBALS['TYPO3_DB']->freeResult($res);

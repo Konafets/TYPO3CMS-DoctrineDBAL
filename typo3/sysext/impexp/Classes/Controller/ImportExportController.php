@@ -216,7 +216,7 @@ class ImportExportController extends \TYPO3\CMS\Backend\Module\BaseScriptClass {
 				$rParts = explode(':', $ref);
 				if ($GLOBALS['BE_USER']->check('tables_select', $rParts[0])) {
 					$res = $this->exec_listQueryPid($rParts[0], $rParts[1], \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($inData['listCfg']['maxNumber'], 1));
-					while ($subTrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+					while ($subTrow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 						$this->export->export_addRecord($rParts[0], $subTrow);
 					}
 				}
@@ -393,7 +393,7 @@ class ImportExportController extends \TYPO3\CMS\Backend\Module\BaseScriptClass {
 				if ($table != 'pages' && (in_array($table, $tables) || in_array('_ALL', $tables))) {
 					if ($GLOBALS['BE_USER']->check('tables_select', $table) && !$GLOBALS['TCA'][$table]['ctrl']['is_static']) {
 						$res = $this->exec_listQueryPid($table, $k, \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($maxNumber, 1));
-						while ($subTrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+						while ($subTrow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 							$this->export->export_addRecord($table, $subTrow);
 						}
 					}

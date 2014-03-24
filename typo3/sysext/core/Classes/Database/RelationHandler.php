@@ -429,7 +429,7 @@ class RelationHandler {
 				$this->itemArray = array();
 				$this->tableArray = array();
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', $table, 'uid IN (' . $uidList . ')', '', $sortby);
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$this->itemArray[] = array('id' => $row['uid'], 'table' => $table);
 					$this->tableArray[$table][] = $row['uid'];
 				}
@@ -482,7 +482,7 @@ class RelationHandler {
 		$where = $uidLocal_field . '=' . (int)$uid . $additionalWhere;
 		//TODO: Click on the Extension Manager to test this.
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $tableName, $where, '', $sorting_field);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			// Default
 			if (!$this->MM_is_foreign) {
 				// If tablesnames columns exists and contain a name, then this value is the table, else it's the firstTable...
@@ -563,7 +563,7 @@ class RelationHandler {
 			// This is necessary if the "multiple" feature is used for the MM relations.
 			// $oldMMs is still needed for the in_array() search used to look if an item from $this->itemArray is in $oldMMs
 			$oldMMs_inclUid = array();
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				if (!$this->MM_is_foreign && $prep) {
 					$oldMMs[] = array($row['tablenames'], $row[$uidForeign_field]);
 				} else {
@@ -1007,7 +1007,7 @@ class RelationHandler {
 						}
 					}
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($from, $key, 'uid IN (' . $itemList . ')' . $this->additionalWhere[$key]);
-					while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+					while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 						$this->results[$key][$row['uid']] = $row;
 					}
 					$GLOBALS['TYPO3_DB']->freeResult($res);

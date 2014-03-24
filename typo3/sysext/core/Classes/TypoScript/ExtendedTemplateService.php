@@ -849,7 +849,7 @@ class ExtendedTemplateService extends \TYPO3\CMS\Core\TypoScript\TemplateService
 				$addC = ' AND uid=' . $template_uid;
 			}
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_template', 'pid=' . (int)$id . $addC . ' ' . $this->whereClause, '', 'sorting', '1');
-			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			BackendUtility::workspaceOL('sys_template', $row);
 			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Returns the template row if found.
@@ -869,7 +869,7 @@ class ExtendedTemplateService extends \TYPO3\CMS\Core\TypoScript\TemplateService
 		if ((int)$id) {
 			$outRes = array();
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_template', 'pid=' . (int)$id . ' ' . $this->whereClause, '', 'sorting');
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				BackendUtility::workspaceOL('sys_template', $row);
 				if (is_array($row)) {
 					$outRes[] = $row;

@@ -115,7 +115,7 @@ class ActionToolbarMenu implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemHookInt
 		}
 
 		if ($queryResource) {
-			while ($actionRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($queryResource)) {
+			while ($actionRow = $GLOBALS['TYPO3_DB']->fetchAssoc($queryResource)) {
 				$actions[] = array(
 					$actionRow['title'],
 					BackendUtility::getModuleUrl('user_task') . '&SET[mode]=tasks&SET[function]=sys_action.TYPO3\\CMS\\SysAction\\ActionTask&show=' . $actionRow['uid'],

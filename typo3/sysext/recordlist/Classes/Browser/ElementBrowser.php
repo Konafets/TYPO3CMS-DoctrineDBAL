@@ -1597,7 +1597,7 @@ class ElementBrowser {
 			$cc = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
 			// Traverse list of records:
 			$c = 0;
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$c++;
 				$icon = IconUtility::getSpriteIconForRecord('tt_content', $row);
 				if ($this->curUrlInfo['act'] == 'page' && $this->curUrlInfo['cElement'] == $row['uid']) {

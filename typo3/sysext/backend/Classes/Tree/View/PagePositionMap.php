@@ -392,7 +392,7 @@ class PagePositionMap {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tt_content', 'pid=' . (int)$pid . ($showHidden ? '' : BackendUtility::BEenableFields('tt_content')) . ' AND colPos=' . (int)$vv . ((string)$this->cur_sys_language !== '' ? ' AND sys_language_uid=' . (int)$this->cur_sys_language : '') . BackendUtility::deleteClause('tt_content') . BackendUtility::versioningPlaceholderClause('tt_content'), '', 'sorting');
 			$lines[$vv] = array();
 			$lines[$vv][] = $this->insertPositionIcon('', $vv, $kk, $moveUid, $pid);
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				BackendUtility::workspaceOL('tt_content', $row);
 				if (is_array($row)) {
 					$lines[$vv][] = $this->wrapRecordHeader($this->getRecordHeader($row), $row);

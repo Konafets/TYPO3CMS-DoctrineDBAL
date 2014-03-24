@@ -107,7 +107,7 @@ abstract class AbstractExportTestCase extends \TYPO3\CMS\Core\Tests\FunctionalTe
 						'',
 						$GLOBALS['TYPO3_DB']->stripOrderBy($orderBy)
 					);
-					while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+					while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 						$this->export->export_addRecord($table, $row);
 					}
 				}

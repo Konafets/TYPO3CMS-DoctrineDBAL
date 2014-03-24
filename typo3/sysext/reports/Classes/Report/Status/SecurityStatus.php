@@ -64,7 +64,7 @@ class SecurityStatus implements \TYPO3\CMS\Reports\StatusProviderInterface {
 		$severity = \TYPO3\CMS\Reports\Status::OK;
 		$whereClause = 'username = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr('admin', 'be_users') . \TYPO3\CMS\Backend\Utility\BackendUtility::deleteClause('be_users');
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid, username, password', 'be_users', $whereClause);
-		if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$secure = TRUE;
 			/** @var $saltingObject \TYPO3\CMS\Saltedpasswords\Salt\SaltInterface */
 			$saltingObject = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance($row['password']);

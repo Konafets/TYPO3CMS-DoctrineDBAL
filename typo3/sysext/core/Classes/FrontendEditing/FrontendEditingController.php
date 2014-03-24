@@ -315,7 +315,7 @@ class FrontendEditingController {
 			// Get self
 			$fields = array_unique(\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $GLOBALS['TCA'][$table]['ctrl']['copyAfterDuplFields'] . ',uid,pid,' . $sortField, TRUE));
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(implode(',', $fields), $table, 'uid=' . $uid);
-			if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				// Record before or after
 				if ($GLOBALS['BE_USER']->adminPanel instanceof \TYPO3\CMS\Frontend\View\AdminPanelView && $GLOBALS['BE_USER']->adminPanel->extGetFeAdminValue('preview')) {
 					$ignore = array('starttime' => 1, 'endtime' => 1, 'disabled' => 1, 'fe_group' => 1);
@@ -339,12 +339,12 @@ class FrontendEditingController {
 				}
 				$GLOBALS['TYPO3_DB']->freeResult($res);
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,pid', $table, 'pid=' . (int)$row['pid'] . $sortCheck . $copyAfterFieldsQuery . $GLOBALS['TSFE']->sys_page->enableFields($table, '', $ignore), '', $sortField . ' ' . $order, '2');
-				if ($row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				if ($row2 = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					if ($afterUID) {
 						$cmdData[$table][$uid]['move'] = -$afterUID;
 					} elseif ($direction == 'down') {
 						$cmdData[$table][$uid]['move'] = -$row2['uid'];
-					} elseif ($row3 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+					} elseif ($row3 = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 						// Must take the second record above...
 						$cmdData[$table][$uid]['move'] = -$row3['uid'];
 					} else {

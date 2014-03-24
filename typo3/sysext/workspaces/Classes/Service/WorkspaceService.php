@@ -494,7 +494,7 @@ class WorkspaceService implements \TYPO3\CMS\Core\SingletonInterface {
 			$whereClause .= ' AND t3ver_wsid = ' . (int)$GLOBALS['BE_USER']->workspace;
 			$whereClause .= BackendUtility::deleteClause('pages_language_overlay');
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('t3ver_state', 'pages_language_overlay', $whereClause);
-			if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$isNewPage = VersionState::cast($row['t3ver_state'])->equals(VersionState::NEW_PLACEHOLDER);
 			}
 		} else {

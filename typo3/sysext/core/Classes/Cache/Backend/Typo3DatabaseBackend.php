@@ -298,7 +298,7 @@ class Typo3DatabaseBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBackend
 		// Get identifiers of expired cache entries
 		$tagsEntryIdentifierRowsResource = $GLOBALS['TYPO3_DB']->exec_SELECTquery('identifier', $this->cacheTable, $this->expiredStatement);
 		$tagsEntryIdentifiers = array();
-		while ($tagsEntryIdentifierRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($tagsEntryIdentifierRowsResource)) {
+		while ($tagsEntryIdentifierRow = $GLOBALS['TYPO3_DB']->fetchAssoc($tagsEntryIdentifierRowsResource)) {
 			$tagsEntryIdentifiers[] = $this->db->quote($tagsEntryIdentifierRow['identifier']);
 		}
 		$GLOBALS['TYPO3_DB']->freeResult($tagsEntryIdentifierRowsResource);
@@ -419,7 +419,7 @@ class Typo3DatabaseBackend extends \TYPO3\CMS\Core\Cache\Backend\AbstractBackend
 	protected function deleteCacheTableRowsByTagsTableWhereClause($tagsTableWhereClause) {
 		$cacheEntryIdentifierRowsResource = $GLOBALS['TYPO3_DB']->exec_SELECTquery('DISTINCT identifier', $this->tagsTable, $tagsTableWhereClause);
 		$cacheEntryIdentifiers = array();
-		while ($cacheEntryIdentifierRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($cacheEntryIdentifierRowsResource)) {
+		while ($cacheEntryIdentifierRow = $GLOBALS['TYPO3_DB']->fetchAssoc($cacheEntryIdentifierRowsResource)) {
 			$cacheEntryIdentifiers[] = $this->db->quote($cacheEntryIdentifierRow['identifier']);
 		}
 		$GLOBALS['TYPO3_DB']->freeResult($cacheEntryIdentifierRowsResource);

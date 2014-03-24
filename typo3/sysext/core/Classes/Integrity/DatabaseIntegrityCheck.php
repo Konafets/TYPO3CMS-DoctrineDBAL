@@ -155,7 +155,7 @@ class DatabaseIntegrityCheck {
 		// Traverse the records selected:
 		$a = 0;
 		$c = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			// Prepare the additional label used in the HTML output in case of versions:
 			if ($versions) {
 				$versionLabel = '[v1.' . $row['t3ver_id'] . '; WS#' . $row['t3ver_wsid'] . ']';
@@ -235,7 +235,7 @@ class DatabaseIntegrityCheck {
 		// Traverse selected:
 		$a = 0;
 		$c = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			// Prepare the additional label used in the HTML output in case of versions:
 			if ($versions) {
 				$versionLabel = '[v1.' . $row['t3ver_id'] . '; WS#' . $row['t3ver_wsid'] . ']';
@@ -312,7 +312,7 @@ class DatabaseIntegrityCheck {
 				}
 				$garbage = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,pid,' . $GLOBALS['TCA'][$table]['ctrl']['label'], $table, 'pid NOT IN (' . $pid_list_tmp . ')');
 				$lostIdList = array();
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($garbage)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($garbage)) {
 					$this->lRecords[$table][$row['uid']] = array(
 						'uid' => $row['uid'],
 						'pid' => $row['pid'],
@@ -481,7 +481,7 @@ class DatabaseIntegrityCheck {
 						$cl_fl = implode('<>\'\' OR ', $fieldArr) . '<>\'\'';
 					}
 					$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,' . $field_list, $table, $cl_fl);
-					while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+					while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 						foreach ($fieldArr as $field) {
 							if (trim($row[$field])) {
 								$fieldConf = $GLOBALS['TCA'][$table]['columns'][$field]['config'];
@@ -628,7 +628,7 @@ class DatabaseIntegrityCheck {
 				$theList = implode(',', $idlist);
 				if ($theList) {
 					$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', $table, 'uid IN (' . $theList . ')' . BackendUtility::deleteClause($table));
-					while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+					while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 						if (isset($dbArr[$row['uid']])) {
 							unset($dbArr[$row['uid']]);
 						} else {
@@ -663,7 +663,7 @@ class DatabaseIntegrityCheck {
 			$table = $info[0];
 			$field = $info[1];
 			$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,pid,' . $GLOBALS['TCA'][$table]['ctrl']['label'] . ',' . $field, $table, $field . ' LIKE \'%' . $GLOBALS['TYPO3_DB']->quoteStr($id, $table) . '%\'');
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 				// Now this is the field, where the reference COULD come from. But we're not garanteed, so we must carefully examine the data.
 				$fieldConf = $GLOBALS['TCA'][$table]['columns'][$field]['config'];
 				$allowedTables = $fieldConf['type'] == 'group' ? $fieldConf['allowed'] : $fieldConf['foreign_table'];
@@ -697,7 +697,7 @@ class DatabaseIntegrityCheck {
 			$table = $info[0];
 			$field = $info[1];
 			$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,pid,' . $GLOBALS['TCA'][$table]['ctrl']['label'] . ',' . $field, $table, $field . ' LIKE \'%' . $GLOBALS['TYPO3_DB']->quoteStr($filename, $table) . '%\'');
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 				// Now this is the field, where the reference COULD come from.
 				// But we're not guaranteed, so we must carefully examine the data.
 				$tempArr = explode(',', trim($row[$field]));

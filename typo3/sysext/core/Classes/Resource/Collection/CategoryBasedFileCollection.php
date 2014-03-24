@@ -71,7 +71,7 @@ class CategoryBasedFileCollection extends \TYPO3\CMS\Core\Resource\Collection\Ab
 
 		$resourceFactory = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance();
 		if ($resource) {
-			while (($record = $this->getDatabase()->sql_fetch_assoc($resource)) !== FALSE) {
+			while (($record = $this->getDatabase()->fetchAssoc($resource)) !== FALSE) {
 				$this->add($resourceFactory->getFileObject((int)$record['file']));
 			}
 			$this->getDatabase()->freeResult($resource);

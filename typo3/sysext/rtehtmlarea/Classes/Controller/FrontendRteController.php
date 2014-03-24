@@ -184,7 +184,7 @@ class FrontendRteController extends \TYPO3\CMS\Rtehtmlarea\RteHtmlAreaBase {
 				$whereClause .= \TYPO3\CMS\Backend\Utility\BackendUtility::BEenableFields($tableA);
 				$whereClause .= \TYPO3\CMS\Backend\Utility\BackendUtility::deleteClause($tableA);
 				$res = $TYPO3_DB->exec_SELECTquery($selectFields, $tableAB, $whereClause);
-				while ($languageRow = $TYPO3_DB->sql_fetch_assoc($res)) {
+				while ($languageRow = $TYPO3_DB->fetchAssoc($res)) {
 					$this->contentISOLanguage = strtolower(trim($languageRow['lg_iso_2']) . (trim($languageRow['lg_country_iso_2']) ? '_' . trim($languageRow['lg_country_iso_2']) : ''));
 					$this->contentTypo3Language = strtolower(trim($languageRow['lg_typo3']));
 				}
@@ -194,7 +194,7 @@ class FrontendRteController extends \TYPO3\CMS\Rtehtmlarea\RteHtmlAreaBase {
 				$tableAB = 'static_languages';
 				$whereClause = 'lg_iso_2 = ' . $TYPO3_DB->fullQuoteStr(strtoupper($this->contentISOLanguage), $tableAB);
 				$res = $TYPO3_DB->exec_SELECTquery($selectFields, $tableAB, $whereClause);
-				while ($languageRow = $TYPO3_DB->sql_fetch_assoc($res)) {
+				while ($languageRow = $TYPO3_DB->fetchAssoc($res)) {
 					$this->contentTypo3Language = strtolower(trim($languageRow['lg_typo3']));
 				}
 			}

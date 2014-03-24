@@ -169,7 +169,7 @@ class IndexSearchRepository {
 			// Now, traverse result and put the rows to be displayed into an array
 			// Each row should contain the fields from 'ISEC.*, IP.*' combined
 			// + artificial fields "show_resume" (boolean) and "result_number" (counter)
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				// Set first row
 				if (!$c) {
 					$firstRow = $row;
@@ -322,7 +322,7 @@ class IndexSearchRepository {
 			if ($res) {
 				// Get phash list by searching for it:
 				$phashList = array();
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$phashList[] = $row['phash'];
 				}
 				$GLOBALS['TYPO3_DB']->freeResult($res);

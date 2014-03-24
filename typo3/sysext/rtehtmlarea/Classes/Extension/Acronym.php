@@ -179,7 +179,7 @@ class Acronym extends \TYPO3\CMS\Rtehtmlarea\RteHtmlAreaApi {
 		$whereClause .= BackendUtility::BEenableFields($tableB);
 		$whereClause .= BackendUtility::deleteClause($tableB);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $tableAB, $whereClause);
-		while ($acronymRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($acronymRow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$item = array('term' => $acronymRow['term'], 'abbr' => $acronymRow['acronym'], 'language' => strtolower($acronymRow['lg_iso_2']) . ($acronymRow['lg_country_iso_2'] ? '-' . $acronymRow['lg_country_iso_2'] : ''));
 			if ($acronymRow['type'] == 1) {
 				$acronymArray[] = $item;

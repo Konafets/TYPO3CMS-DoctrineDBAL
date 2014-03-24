@@ -270,7 +270,7 @@ class SearchResultContentObject extends \TYPO3\CMS\Frontend\ContentObject\Abstra
 				$cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
 				$cObj->setParent($this->cObj->data, $this->cObj->currentRecord);
 				$renderCode = '';
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($this->result)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($this->result)) {
 					// versionOL() here? This is search result displays, is that possible to preview anyway?
 					// Or are records selected here already future versions?
 					$cObj->start($row);

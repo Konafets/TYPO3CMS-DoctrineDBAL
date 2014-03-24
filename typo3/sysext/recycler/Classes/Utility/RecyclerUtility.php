@@ -91,7 +91,7 @@ class RecyclerUtility {
 			$loopCheck--;
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,pid,title,deleted,t3ver_oid,t3ver_wsid', 'pages', 'uid=' . (int)$uid . (strlen(trim($clause)) ? ' AND ' . $clause : ''));
 			if (is_resource($res)) {
-				$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+				$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 				$GLOBALS['TYPO3_DB']->freeResult($res);
 				BackendUtility::workspaceOL('pages', $row);
 				if (is_array($row)) {

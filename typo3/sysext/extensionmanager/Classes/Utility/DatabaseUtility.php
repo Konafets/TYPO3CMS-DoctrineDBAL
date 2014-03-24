@@ -129,7 +129,7 @@ class DatabaseUtility implements \TYPO3\CMS\Core\SingletonInterface {
 		// Select all rows from the table:
 		$result = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, '');
 		// Traverse the selected rows and dump each row as a line in the file:
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($result)) {
 			$values = array();
 			foreach ($fieldStructure as $field => $structure) {
 				$values[] = isset($row[$field]) ? '\'' . str_replace($search, $replace, $row[$field]) . '\'' : 'NULL';

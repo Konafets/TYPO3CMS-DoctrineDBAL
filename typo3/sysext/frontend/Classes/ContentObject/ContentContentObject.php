@@ -85,7 +85,7 @@ class ContentContentObject extends \TYPO3\CMS\Frontend\ContentObject\AbstractCon
 				$cObj->setParent($this->cObj->data, $this->cObj->currentRecord);
 				$this->cObj->currentRecordNumber = 0;
 				$cobjValue = '';
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					// Versioning preview:
 					$GLOBALS['TSFE']->sys_page->versionOL($conf['table'], $row, TRUE);
 					// Language overlay:

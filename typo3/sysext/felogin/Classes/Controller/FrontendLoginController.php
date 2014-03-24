@@ -239,7 +239,7 @@ class FrontendLoginController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin 
 					'(email=' . $data . ' OR username=' . $data . ') AND pid IN (' . $GLOBALS['TYPO3_DB']->cleanIntList($this->spid) . ') ' . $this->cObj->enableFields('fe_users')
 				);
 				if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
-					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+					$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 				}
 				$error = NULL;
 				if ($row) {

@@ -564,7 +564,7 @@ class TemplateService {
 			if ($this->nextLevel) {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_template', 'uid=' . (int)$this->nextLevel . ' ' . $this->whereClause);
 				$this->nextLevel = 0;
-				if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$this->versionOL($row);
 					if (is_array($row)) {
 						$this->processTemplate($row, 'sys_' . $row['uid'], $this->absoluteRootLine[$a]['uid'], 'sys_' . $row['uid']);
@@ -579,7 +579,7 @@ class TemplateService {
 				$addC = ' AND uid=' . (int)$start_template_uid;
 			}
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_template', 'pid=' . (int)$this->absoluteRootLine[$a]['uid'] . $addC . ' ' . $this->whereClause, '', 'sorting', 1);
-			if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$this->versionOL($row);
 				if (is_array($row)) {
 					$this->processTemplate($row, 'sys_' . $row['uid'], $this->absoluteRootLine[$a]['uid'], 'sys_' . $row['uid']);
@@ -649,7 +649,7 @@ class TemplateService {
 				if ($id && !GeneralUtility::inList($idList, ('sys_' . $id))) {
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_template', 'uid=' . $id . ' ' . $this->whereClause);
 					// there was a template, then we fetch that
-					if ($subrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+					if ($subrow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 						$this->versionOL($subrow);
 						if (is_array($subrow)) {
 							$this->processTemplate($subrow, $idList . ',sys_' . $id, $pid, 'sys_' . $id, $templateID);
@@ -1597,7 +1597,7 @@ class TemplateService {
 			$nextLevelAcc = array();
 			// Select and traverse current level pages:
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,pid,doktype,mount_pid,mount_pid_ol', 'pages', 'pid=' . (int)$id . ' AND deleted=0 AND doktype<>' . \TYPO3\CMS\Frontend\Page\PageRepository::DOKTYPE_RECYCLER . ' AND doktype<>' . \TYPO3\CMS\Frontend\Page\PageRepository::DOKTYPE_BE_USER_SECTION);
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				// Find mount point if any:
 				$next_id = $row['uid'];
 				$next_MP_array = $MP_array;

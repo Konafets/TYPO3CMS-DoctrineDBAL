@@ -376,7 +376,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 		$this->templateCode = $this->cObj->fileResource($this->conf['templateFile']);
 		// Add search languages:
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_language', '1=1' . $this->cObj->enableFields('sys_language'));
-		while (FALSE !== ($data = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
+		while (FALSE !== ($data = $GLOBALS['TYPO3_DB']->fetchAssoc($res))) {
 			$this->optValues['lang'][$data['uid']] = $data['title'];
 		}
 		$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -580,7 +580,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 			$lastResultNumberToAnalyze = ($currentPageNumber + 1) * $this->piVars['results'] + $this->piVars['results'];
 			// Now, traverse result and put the rows to be displayed into an array
 			// Each row should contain the fields from 'ISEC.*, IP.*' combined + artificial fields "show_resume" (boolean) and "result_number" (counter)
-			while (FALSE !== ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
+			while (FALSE !== ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res))) {
 				if (!$this->checkExistance($row)) {
 					// Check if the record is still available or if it has been deleted meanwhile.
 					// Currently this works for files only, since extending it to content elements would cause a lot of overhead...
@@ -867,7 +867,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 			if ($res) {
 				// Get phash list by searching for it:
 				$phashList = array();
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$phashList[] = $row['phash'];
 				}
 				$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -1916,7 +1916,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 					$res = FALSE;
 				}
 				if ($res) {
-					if ($ftdrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+					if ($ftdrow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 						// Cut HTTP references after some length
 						$content = preg_replace('/(http:\\/\\/[^ ]{60})([^ ]+)/i', '$1...', $ftdrow['fulltextdata']);
 						$markedSW = $this->markupSWpartsOfString($content);
@@ -2206,7 +2206,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 	 */
 	public function getFirstSysDomainRecordForPage($id) {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('domainName', 'sys_domain', 'pid=' . (int)$id . $this->cObj->enableFields('sys_domain'), '', 'sorting');
-		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+		$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 		return rtrim($row['domainName'], '/');
 	}
 
@@ -2268,7 +2268,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 		if ($this->conf['show.']['LxALLtypes']) {
 			$output = array();
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('title,uid', 'pages', 'pid=' . (int)$id . $this->cObj->enableFields('pages'), '', 'sorting');
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$output[$row['uid']] = $GLOBALS['TSFE']->sys_page->getPageOverlay($row);
 			}
 			$GLOBALS['TYPO3_DB']->freeResult($res);

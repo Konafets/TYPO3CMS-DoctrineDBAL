@@ -3182,7 +3182,7 @@ class DataHandler {
 				// All records under the page is copied.
 				if ($table && is_array($GLOBALS['TCA'][$table]) && $table != 'pages') {
 					$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', $table, 'pid=' . (int)$uid . $this->deleteClause($table), '', $GLOBALS['TCA'][$table]['ctrl']['sortby'] ? $GLOBALS['TCA'][$table]['ctrl']['sortby'] . ' DESC' : '');
-					while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+					while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 						// Copying each of the underlying records...
 						$this->copyRecord($table, $row['uid'], $theNewRootID);
 					}
@@ -4320,7 +4320,7 @@ class DataHandler {
 						$fileFieldArr = $this->extFileFields($table);
 						if (count($fileFieldArr)) {
 							$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery(implode(',', $fileFieldArr), $table, 'uid=' . (int)$uid);
-							if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+							if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 								$fArray = $fileFieldArr;
 								// MISSING: Support for MM file relations!
 								foreach ($fArray as $theField) {
@@ -4443,7 +4443,7 @@ class DataHandler {
 			foreach (array_keys($GLOBALS['TCA']) as $table) {
 				if ($table != 'pages') {
 					$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', $table, 'pid=' . (int)$uid . $this->deleteClause($table));
-					while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+					while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 						$this->copyMovedRecordToNewLocation($table, $row['uid']);
 						$this->deleteVersionsForRecord($table, $row['uid'], $forceHardDelete);
 						$this->deleteRecord($table, $row['uid'], TRUE, $forceHardDelete);
@@ -5546,13 +5546,13 @@ class DataHandler {
 				// Find record without checking page:
 				$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,pid', $table, 'uid=' . (int)$id . $this->deleteClause($table));
 				// THIS SHOULD CHECK FOR editlock I think!
-				$output = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres);
+				$output = $GLOBALS['TYPO3_DB']->fetchAssoc($mres);
 				BackendUtility::fixVersioningPid($table, $output, TRUE);
 				// If record found, check page as well:
 				if (is_array($output)) {
 					// Looking up the page for record:
 					$mres = $this->doesRecordExist_pageLookUp($output['pid'], $perms);
-					$pageRec = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres);
+					$pageRec = $GLOBALS['TYPO3_DB']->fetchAssoc($mres);
 					// Return TRUE if either a page was found OR if the PID is zero AND the user is ADMIN (in which case the record is at root-level):
 					$isRootLevelRestrictionIgnored = BackendUtility::isRootLevelRestrictionIgnored($table);
 					if (is_array($pageRec) || !$output['pid'] && ($isRootLevelRestrictionIgnored || $this->admin)) {
@@ -5601,7 +5601,7 @@ class DataHandler {
 		$perms = (int)$perms;
 		if ($pid >= 0) {
 			$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid, perms_userid, perms_groupid, perms_user, perms_group, perms_everybody', 'pages', 'pid=' . (int)$pid . $this->deleteClause('pages'), '', 'sorting');
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 				// IF admin, then it's OK
 				if ($this->admin || $this->BE_USER->doesUserHaveAccess($row, $perms)) {
 					$inList .= $row['uid'] . ',';
@@ -5665,7 +5665,7 @@ class DataHandler {
 		while ($dest != 0 && $loopCheck > 0) {
 			$loopCheck--;
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid, uid, t3ver_oid,t3ver_wsid', 'pages', 'uid=' . (int)$dest . $this->deleteClause('pages'));
-			if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				BackendUtility::fixVersioningPid('pages', $row);
 				if ($row['pid'] == $id) {
 					return FALSE;
@@ -5753,7 +5753,7 @@ class DataHandler {
 		if (!isset($this->pageCache[$id])) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'uid=' . (int)$id);
 			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
-				$this->pageCache[$id] = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+				$this->pageCache[$id] = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			}
 			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
@@ -5774,7 +5774,7 @@ class DataHandler {
 		if (is_array($GLOBALS['TCA'][$table])) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fieldList, $table, 'uid=' . (int)$id);
 			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
-				$result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+				$result = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 				$GLOBALS['TYPO3_DB']->freeResult($res);
 				return $result;
 			}
@@ -5966,7 +5966,7 @@ class DataHandler {
 		$id = (int)$id;
 		if (is_array($GLOBALS['TCA'][$table]) && $id) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, 'uid=' . (int)$id);
-			if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				// Traverse array of values that was inserted into the database and compare with the actually stored value:
 				$errorString = array();
 				foreach ($fieldArray as $key => $value) {
@@ -6047,7 +6047,7 @@ class DataHandler {
 				// Fetches the first record under this pid
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($sortRow . ',pid,uid', $table, 'pid=' . (int)$pid . $this->deleteClause($table), '', $sortRow . ' ASC', '1');
 				// There was an element
-				if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					// The top record was the record it self, so we return its current sortnumber
 					if ($row['uid'] == $uid) {
 						return $row[$sortRow];
@@ -6071,7 +6071,7 @@ class DataHandler {
 				// Fetches the record which is supposed to be the prev record
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($sortRow . ',pid,uid', $table, 'uid=' . abs($pid) . $this->deleteClause($table));
 				// There was a record
-				if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					// Look, if the record UID happens to be an offline record. If so, find its live version. Offline uids will be used when a page is versionized as "branch" so this is when we must correct - otherwise a pid of "-1" and a wrong sort-row number is returned which we don't want.
 					if ($lookForLiveVersion = BackendUtility::getLiveVersionOfRecord($table, $row['uid'], $sortRow . ',pid,uid')) {
 						$row = $lookForLiveVersion;
@@ -6089,9 +6089,9 @@ class DataHandler {
 						// There was a record afterwards
 						if ($GLOBALS['TYPO3_DB']->sql_num_rows($subres) == 2) {
 							// Forward to the second result...
-							$GLOBALS['TYPO3_DB']->sql_fetch_assoc($subres);
+							$GLOBALS['TYPO3_DB']->fetchAssoc($subres);
 							// There was a record afterwards
-							$subrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($subres);
+							$subrow = $GLOBALS['TYPO3_DB']->fetchAssoc($subres);
 							// The sortNumber is found in between these values
 							$sortNumber = $row[$sortRow] + floor(($subrow[$sortRow] - $row[$sortRow]) / 2);
 							// The sortNumber happend NOT to be between the two surrounding numbers, so we'll have to resort the list
@@ -6136,7 +6136,7 @@ class DataHandler {
 			$intervals = $this->sortIntervals;
 			$i = $intervals * 2;
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', $table, 'pid=' . (int)$pid . $this->deleteClause($table), '', $sortRow . ' ASC');
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$uid = (int)$row['uid'];
 				if ($uid) {
 					$GLOBALS['TYPO3_DB']->executeUpdateQuery($table, array('uid' => (int)$uid), array($sortRow => $i));
@@ -6185,7 +6185,7 @@ class DataHandler {
 				}
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select, $table, $where . $this->deleteClause($table), '', $sortRow . ' DESC', '1');
 				// If there is an element, find its localized record in specified localization language
-				if ($previousRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				if ($previousRow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$previousLocalizedRecord = BackendUtility::getRecordLocalization($table, $previousRow['uid'], $language);
 					if (is_array($previousLocalizedRecord[0])) {
 						$previousLocalizedRecordUid = $previousLocalizedRecord[0]['uid'];
@@ -6307,9 +6307,10 @@ class DataHandler {
 	public function compareFieldArrayWithCurrentAndUnset($table, $id, $fieldArray) {
 		// Fetch the original record:
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, 'uid=' . (int)$id);
-		$currentRecord = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+		$currentRecord = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 		// If the current record exists (which it should...), begin comparison:
 		if (is_array($currentRecord)) {
+
 			// Read all field types:
 			$c = 0;
 			$cRecTypes = array();
@@ -6317,6 +6318,7 @@ class DataHandler {
 				$cRecTypes[$col] = $GLOBALS['TYPO3_DB']->getSqlFieldType($res, $c);
 				$c++;
 			}
+
 			// Free result:
 			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Unset the fields which are similar:
@@ -6511,7 +6513,7 @@ class DataHandler {
 	 */
 	public function getPID($table, $uid) {
 		$res_tmp = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid', $table, 'uid=' . (int)$uid);
-		if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res_tmp)) {
+		if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res_tmp)) {
 			return $row['pid'];
 		}
 	}
@@ -6559,7 +6561,7 @@ class DataHandler {
 		if ($counter) {
 			$addW = !$this->admin ? ' AND ' . $this->BE_USER->getPagePermsClause($this->pMap['show']) : '';
 			$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'pages', 'pid=' . (int)$pid . $this->deleteClause('pages') . $addW, '', 'sorting DESC');
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 				if ($row['uid'] != $rootID) {
 					$CPtable[$row['uid']] = $pid;
 					// If the uid is NOT the rootID of the copyaction and if we are supposed to walk further down
@@ -6777,7 +6779,7 @@ class DataHandler {
 		$pid = (int)$pid;
 		if ($pid < 0) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid', $table, 'uid=' . abs($pid));
-			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Look, if the record UID happens to be an offline record. If so, find its live version.
 			// Offline uids will be used when a page is versionized as "branch" so this is when we
@@ -6909,13 +6911,13 @@ class DataHandler {
 						// Builds list of pages on the SAME level as this page (siblings)
 						$res_tmp = $GLOBALS['TYPO3_DB']->exec_SELECTquery('A.pid AS pid, B.uid AS uid', 'pages A, pages B', 'A.uid=' . (int)$pageUid . ' AND B.pid=A.pid AND B.deleted=0');
 						$pid_tmp = 0;
-						while ($row_tmp = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res_tmp)) {
+						while ($row_tmp = $GLOBALS['TYPO3_DB']->fetchAssoc($res_tmp)) {
 							$list_cache[] = $row_tmp['uid'];
 							$pid_tmp = $row_tmp['pid'];
 							// Add children as well:
 							if ($TSConfig['clearCache_pageSiblingChildren']) {
 								$res_tmp2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'pages', 'pid=' . (int)$row_tmp['uid'] . ' AND deleted=0');
-								while ($row_tmp2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res_tmp2)) {
+								while ($row_tmp2 = $GLOBALS['TYPO3_DB']->fetchAssoc($res_tmp2)) {
 									$list_cache[] = $row_tmp2['uid'];
 								}
 								$GLOBALS['TYPO3_DB']->freeResult($res_tmp2);
@@ -6927,7 +6929,7 @@ class DataHandler {
 						// Add grand-parent as well:
 						if ($TSConfig['clearCache_pageGrandParent']) {
 							$res_tmp = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid', 'pages', 'uid=' . (int)$pid_tmp);
-							if ($row_tmp = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res_tmp)) {
+							if ($row_tmp = $GLOBALS['TYPO3_DB']->fetchAssoc($res_tmp)) {
 								$list_cache[] = $row_tmp['pid'];
 							}
 							$GLOBALS['TYPO3_DB']->freeResult($res_tmp);
@@ -7181,7 +7183,7 @@ class DataHandler {
 	 */
 	public function printLogErrorMessages($redirect) {
 		$res_log = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_log', 'type=1 AND userid=' . (int)$this->BE_USER->user['uid'] . ' AND tstamp=' . (int)$GLOBALS['EXEC_TIME'] . '	AND error<>0');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res_log)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res_log)) {
 			$log_data = unserialize($row['log_data']);
 			$msg = $row['error'] . ': ' . sprintf($row['details'], $log_data[0], $log_data[1], $log_data[2], $log_data[3], $log_data[4]);
 			$flashMessage = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Messaging\\FlashMessage', htmlspecialchars($msg), '', \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR, TRUE);

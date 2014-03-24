@@ -239,7 +239,7 @@ class FrontendBackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\B
 		$theList = '';
 		if ($id && $depth > 0) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,title', 'pages', 'pid=' . $id . ' AND doktype IN (' . $GLOBALS['TYPO3_CONF_VARS']['FE']['content_doktypes'] . ') AND deleted=0 AND ' . $perms_clause);
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				if ($begin <= 0) {
 					$theList .= $row['uid'] . ',';
 					$this->extPageInTreeInfo[] = array($row['uid'], htmlspecialchars($row['title'], $depth));

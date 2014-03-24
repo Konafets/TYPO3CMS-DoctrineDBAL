@@ -244,7 +244,7 @@ class TtContentUploadsUpdateWizard extends AbstractUpdate {
 		$resultSet = $GLOBALS['TYPO3_DB']->sql_query($sql);
 		$records = array();
 		if (!$GLOBALS['TYPO3_DB']->sql_error()) {
-			while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resultSet)) !== FALSE) {
+			while (($row = $GLOBALS['TYPO3_DB']->fetchAssoc($resultSet)) !== FALSE) {
 				// Mapping back column names to native TYPO3 names
 				$record = array();
 				foreach ($reverseFieldMapping as $columnName => $finalColumnName) {

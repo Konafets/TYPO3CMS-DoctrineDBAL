@@ -266,7 +266,7 @@ class ModuleController {
 		);
 		// TYPO3 pages, unique
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('count(*) AS pcount,index_phash.*', 'index_phash', 'data_page_id<>0', 'phash_grouping,phash,cHashParams,data_filename,data_page_id,data_page_reg1,data_page_type,data_page_mp,gr_list,item_type,item_title,item_description,item_mtime,tstamp,item_size,contentHash,crdate,parsetime,sys_language_uid,item_crdate,externalUrl,recordUid,freeIndexUid,freeIndexSetId', 'data_page_id');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$cHash = count(unserialize($row['cHashParams'])) ? $this->formatCHash(unserialize($row['cHashParams'])) : '';
 			$grListRec = $this->getGrlistRecord($row['phash']);
 			$recList[] = array(
@@ -286,7 +286,7 @@ class ModuleController {
 			);
 			if ($row['pcount'] > 1) {
 				$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('index_phash.*', 'index_phash', 'phash_grouping=' . (int)$row['phash_grouping'] . ' AND phash<>' . (int)$row['phash']);
-				while ($row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res2)) {
+				while ($row2 = $GLOBALS['TYPO3_DB']->fetchAssoc($res2)) {
 					$grListRec = $this->getGrlistRecord($row2['phash']);
 					$recList[] = array(
 						'',
@@ -332,7 +332,7 @@ class ModuleController {
 		);
 		// TYPO3 pages, unique
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('count(*) AS pcount,index_phash.*', 'index_phash', 'item_type<>\'0\'', 'phash_grouping,phash,cHashParams,data_filename,data_page_id,data_page_reg1,data_page_type,data_page_mp,gr_list,item_type,item_title,item_description,item_mtime,tstamp,item_size,contentHash,crdate,parsetime,sys_language_uid,item_crdate,externalUrl,recordUid,freeIndexUid,freeIndexSetId', 'item_type');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$cHash = count(unserialize($row['cHashParams'])) ? $this->formatCHash(unserialize($row['cHashParams'])) : '';
 			$grListRec = $this->getGrlistRecord($row['phash']);
 			$recList[] = array(
@@ -351,7 +351,7 @@ class ModuleController {
 			);
 			if ($row['pcount'] > 1) {
 				$res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('index_phash.*', 'index_phash', 'phash_grouping=' . (int)$row['phash_grouping'] . ' AND phash<>' . (int)$row['phash']);
-				while ($row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res2)) {
+				while ($row2 = $GLOBALS['TYPO3_DB']->fetchAssoc($res2)) {
 					$cHash = count(unserialize($row2['cHashParams'])) ? $this->formatCHash(unserialize($row2['cHashParams'])) : '';
 					$grListRec = $this->getGrlistRecord($row2['phash']);
 					$recList[] = array(
@@ -439,7 +439,7 @@ class ModuleController {
 	public function getGrlistRecord($phash) {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('index_grlist.*', 'index_grlist', 'phash=' . (int)$phash);
 		$allRows = array();
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$row['pcount'] = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
 			$allRows[] = $row;
 		}

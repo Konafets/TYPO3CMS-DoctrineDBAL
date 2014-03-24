@@ -256,7 +256,7 @@ class TranslationStatusController extends \TYPO3\CMS\Backend\Module\AbstractFunc
 		}
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_language', '1=1' . BackendUtility::deleteClause('sys_language'));
 		$outputArray = array();
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			if (is_array($allowed_languages) && count($allowed_languages)) {
 				if (isset($allowed_languages[$row['uid']])) {
 					$outputArray[] = $row;
@@ -285,7 +285,7 @@ class TranslationStatusController extends \TYPO3\CMS\Backend\Module\AbstractFunc
 				BackendUtility::deleteClause('pages_language_overlay') .
 				BackendUtility::versioningPlaceholderClause('pages_language_overlay')
 		);
-		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+		$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 		BackendUtility::workspaceOL('pages_language_overlay', $row);
 		if (is_array($row)) {
 			$row['_COUNT'] = $GLOBALS['TYPO3_DB']->sql_num_rows($res);

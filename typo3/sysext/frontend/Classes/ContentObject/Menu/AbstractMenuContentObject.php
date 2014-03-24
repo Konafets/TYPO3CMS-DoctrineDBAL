@@ -447,7 +447,7 @@ class AbstractMenuContentObject {
 							}
 							// Get sub-pages:
 							$res = $this->parent_cObj->exec_getQuery('pages', array('pidInList' => $id, 'orderBy' => $altSortField));
-							while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+							while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 								$GLOBALS['TSFE']->sys_page->versionOL('pages', $row, TRUE);
 								if (is_array($row)) {
 									// Keep mount point?
@@ -586,7 +586,7 @@ class AbstractMenuContentObject {
 							'orderBy' => $altSortFieldValue ? $altSortFieldValue : $sortField . ' desc',
 							'max' => $limit
 						));
-						while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+						while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 							$GLOBALS['TSFE']->sys_page->versionOL('pages', $row, TRUE);
 							if (is_array($row)) {
 								$temp[$row['uid']] = $this->sys_page->getPageOverlay($row);
@@ -659,7 +659,7 @@ class AbstractMenuContentObject {
 								}
 							}
 							$res = $this->parent_cObj->exec_getQuery('pages', array('pidInList' => '0', 'uidInList' => $id_list, 'where' => '(' . implode(' OR ', $keyWordsWhereArr) . ')' . $extraWhere, 'orderBy' => $altSortFieldValue ? $altSortFieldValue : $sortField . ' desc', 'max' => $limit));
-							while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+							while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 								$GLOBALS['TSFE']->sys_page->versionOL('pages', $row, TRUE);
 								if (is_array($row)) {
 									$temp[$row['uid']] = $this->sys_page->getPageOverlay($row);
@@ -1813,7 +1813,7 @@ class AbstractMenuContentObject {
 			throw new \UnexpectedValueException($message, 1337334849);
 		}
 		$result = array();
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resource)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($resource)) {
 			$this->sys_page->versionOL('tt_content', $row);
 			if ($GLOBALS['TSFE']->sys_language_contentOL && $basePageRow['_PAGES_OVERLAY_LANGUAGE']) {
 				$row = $this->sys_page->getRecordOverlay('tt_content', $row, $basePageRow['_PAGES_OVERLAY_LANGUAGE'], $GLOBALS['TSFE']->sys_language_contentOL);

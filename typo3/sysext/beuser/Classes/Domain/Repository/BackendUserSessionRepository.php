@@ -49,7 +49,7 @@ class BackendUserSessionRepository extends \TYPO3\CMS\Extbase\Persistence\Reposi
 			'',
 			'ses_tstamp ASC'
 		);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$sessions[] = array(
 				'id' => $row['id'],
 				'ip' => $row['ip'],

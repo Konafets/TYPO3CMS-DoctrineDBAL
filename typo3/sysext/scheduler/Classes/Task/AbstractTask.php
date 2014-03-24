@@ -364,7 +364,7 @@ abstract class AbstractTask {
 			'LIMIT' => 1
 		);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($queryArr);
-		if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			if (strlen($row['serialized_executions']) > 0) {
 				$isRunning = TRUE;
 			}
@@ -388,7 +388,7 @@ abstract class AbstractTask {
 		);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($queryArr);
 		$runningExecutions = array();
-		if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			if (strlen($row['serialized_executions']) > 0) {
 				$runningExecutions = unserialize($row['serialized_executions']);
 			}
@@ -431,7 +431,7 @@ abstract class AbstractTask {
 			'LIMIT' => 1
 		);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($queryArr);
-		if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			if (strlen($row['serialized_executions']) > 0) {
 				$runningExecutions = unserialize($row['serialized_executions']);
 				// Remove the selected execution

@@ -551,7 +551,7 @@ class StagesService {
 		$whereSQL = 'deleted=0 AND hidden=0 AND pid=0 AND uid IN (' . implode(',', $groups) . ') ';
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'be_groups', $whereSQL);
 		// The userGroups array is filled
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$this->userGroups[$row['uid']] = $row;
 		}
 	}

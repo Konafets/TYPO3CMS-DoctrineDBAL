@@ -259,7 +259,7 @@ class FlexFormTools {
 			'title' => 'Default language',
 			'ISOcode' => 'DEF'
 		);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$output[$row['uid']] = $row;
 			if ($isL && $row['static_lang_isocode']) {
 				$rr = BackendUtility::getRecord('static_languages', $row['static_lang_isocode'], 'lg_iso_2');

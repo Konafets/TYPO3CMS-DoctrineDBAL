@@ -463,14 +463,14 @@ class DatabaseRecordList extends \TYPO3\CMS\Recordlist\RecordList\AbstractDataba
 				$prevPrevUid = 0;
 				// Get first two rows and initialize prevPrevUid and prevUid if on page > 1
 				if ($this->firstElementNumber > 2 && $this->iLimit > 0) {
-					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
+					$row = $GLOBALS['TYPO3_DB']->fetchAssoc($result);
 					$prevPrevUid = -((int)$row['uid']);
-					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
+					$row = $GLOBALS['TYPO3_DB']->fetchAssoc($result);
 					$prevUid = $row['uid'];
 				}
 				$accRows = array();
 				// Accumulate rows here
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($result)) {
 					if (!$this->isRowListingConditionFulfilled($table, $row)) {
 						continue;
 					}

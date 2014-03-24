@@ -110,7 +110,7 @@ class BackendUserRepository extends \TYPO3\CMS\Extbase\Domain\Repository\Backend
 	public function findOnline() {
 		$uids = array();
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('DISTINCT ses_userid', 'be_sessions', '');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$uids[] = $row['ses_userid'];
 		}
 		$GLOBALS['TYPO3_DB']->freeResult($res);

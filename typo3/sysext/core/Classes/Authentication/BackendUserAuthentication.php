@@ -1343,7 +1343,7 @@ class BackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\AbstractU
 		}
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->usergroup_table, $whereSQL);
 		// The userGroups array is filled
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$this->userGroups[$row['uid']] = $row;
 		}
 		$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -2129,7 +2129,7 @@ class BackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\AbstractU
 			// Get last flag set in the log for sending
 			$theTimeBack = $GLOBALS['EXEC_TIME'] - $secondsBack;
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tstamp', 'sys_log', 'type=255 AND action=4 AND tstamp>' . (int)$theTimeBack, '', 'tstamp DESC', '1');
-			if ($testRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if ($testRow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$theTimeBack = $testRow['tstamp'];
 			}
 			$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -2144,7 +2144,7 @@ site "' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . '" (' . GeneralUtilit
 This is a dump of the failures:
 
 ';
-				while ($testRows = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($testRows = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$theData = unserialize($testRows['log_data']);
 					$email_body .= date(($GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'] . ' ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm']), $testRows['tstamp']) . ':  ' . @sprintf($testRows['details'], ('' . $theData[0]), ('' . $theData[1]), ('' . $theData[2]));
 					$email_body .= LF;

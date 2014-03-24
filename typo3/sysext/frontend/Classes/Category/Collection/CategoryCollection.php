@@ -135,7 +135,7 @@ class CategoryCollection extends \TYPO3\CMS\Core\Category\Collection\CategoryCol
 		);
 
 		if ($resource) {
-			while ($record = $this->getDatabase()->sql_fetch_assoc($resource)) {
+			while ($record = $this->getDatabase()->fetchAssoc($resource)) {
 				// Overlay the record for workspaces
 				$this->getFrontendObject()->sys_page->versionOL(
 					$this->getItemTableName(),

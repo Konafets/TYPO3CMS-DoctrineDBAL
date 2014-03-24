@@ -126,7 +126,7 @@ class IndexingStatisticsController extends \TYPO3\CMS\Backend\Module\AbstractFun
 		$table1 = '';
 		$i = 0;
 		if ($res) {
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$i++;
 				$table1 .= '<tr class="bgColor4"><td>' . $i . '.</td><td>' . htmlspecialchars($row['word']) . '</td><td>&nbsp;&nbsp;' . $row['c'] . '</td></tr>';
 			}

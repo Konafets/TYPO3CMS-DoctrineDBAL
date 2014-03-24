@@ -253,11 +253,11 @@ class SchedulerModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClas
 		$where = 'username = \'_cli_scheduler\' AND admin = 0' . BackendUtility::deleteClause('be_users');
 		// Check if user exists at all
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('1', 'be_users', $where);
-		if ($GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		if ($GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$schedulerUserStatus = 0;
 			// Check if user exists and is enabled
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('1', 'be_users', $where . BackendUtility::BEenableFields('be_users'));
-			if ($GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if ($GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$schedulerUserStatus = 1;
 			}
 		}
@@ -998,7 +998,7 @@ class SchedulerModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClas
 				}
 
 				// Loop on all tasks
-				while ($schedulerRecord = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($schedulerRecord = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					// Define action icons
 					$editAction = '<a href="' . $GLOBALS['MCONF']['_'] . '&CMD=edit&tx_scheduler[uid]=' . $schedulerRecord['uid'] . '" title="' . $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_common.xlf:edit', TRUE) . '" class="icon">' .
 							IconUtility::getSpriteIcon('actions-document-open') . '</a>';
@@ -1481,7 +1481,7 @@ class SchedulerModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClas
 		);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($query);
 
-		while (($groupRecord = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) !== FALSE) {
+		while (($groupRecord = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) !== FALSE) {
 			$list[] = $groupRecord;
 		}
 		$GLOBALS['TYPO3_DB']->freeResult($res);

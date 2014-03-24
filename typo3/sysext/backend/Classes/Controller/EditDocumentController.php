@@ -989,7 +989,7 @@ class EditDocumentController {
 				}
 				// Undo:
 				$undoRes = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tstamp', 'sys_history', 'tablename=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->firstEl['table'], 'sys_history') . ' AND recuid=' . (int)$this->firstEl['uid'], '', 'tstamp DESC', '1');
-				if ($undoButtonR = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($undoRes)) {
+				if ($undoButtonR = $GLOBALS['TYPO3_DB']->fetchAssoc($undoRes)) {
 					$aOnClick = 'window.location.href=\'show_rechis.php?element=' . rawurlencode(($this->firstEl['table'] . ':' . $this->firstEl['uid'])) . '&revert=ALL_FIELDS&sumUp=-1&returnUrl=' . rawurlencode($this->R_URI) . '\'; return false;';
 					$buttons['undo'] = '<a href="#" onclick="' . htmlspecialchars($aOnClick) . '"' . ' title="' . htmlspecialchars(sprintf($GLOBALS['LANG']->getLL('undoLastChange'), BackendUtility::calcAge(($GLOBALS['EXEC_TIME'] - $undoButtonR['tstamp']), $GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.xlf:labels.minutesHoursDaysYears')))) . '">' . IconUtility::getSpriteIcon('actions-edit-undo') . '</a>';
 				}
@@ -1374,7 +1374,7 @@ class EditDocumentController {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'tt_content', 'pid=' . (int)$this->editRegularContentFromId . BackendUtility::deleteClause('tt_content') . BackendUtility::versioningPlaceholderClause('tt_content') . ' AND colPos=0 AND sys_language_uid=0', '', 'sorting');
 			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
 				$ecUids = array();
-				while ($ecRec = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($ecRec = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$ecUids[] = $ecRec['uid'];
 				}
 				$this->editconf['tt_content'][implode(',', $ecUids)] = 'edit';

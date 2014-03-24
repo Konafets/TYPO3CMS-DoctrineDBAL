@@ -1051,7 +1051,7 @@ class DataHandlerHook {
 				// all records under the page is copied.
 				if ($table && is_array($GLOBALS['TCA'][$table]) && $table !== 'pages') {
 					$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', $table, 'pid=' . (int)$oldPageId . $tcemainObj->deleteClause($table));
-					while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+					while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 						// Check, if this record has already been copied by a parent record as relation:
 						if (!$tcemainObj->copyMappingArray[$table][$row['uid']]) {
 							// Copying each of the underlying records (method RAW)

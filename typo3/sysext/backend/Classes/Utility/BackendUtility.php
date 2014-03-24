@@ -101,7 +101,7 @@ class BackendUtility {
 	static public function getRecord($table, $uid, $fields = '*', $where = '', $useDeleteClause = TRUE) {
 		if ($GLOBALS['TCA'][$table]) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, 'uid=' . (int)$uid . ($useDeleteClause ? self::deleteClause($table) : '') . $where);
-			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			$GLOBALS['TYPO3_DB']->freeResult($res);
 			if ($row) {
 				return $row;
@@ -154,7 +154,7 @@ class BackendUtility {
 	static public function getRecordRaw($table, $where = '', $fields = '*') {
 		$row = FALSE;
 		if (FALSE !== ($res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, $where, '', '', '1'))) {
-			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			$GLOBALS['TYPO3_DB']->freeResult($res);
 		}
 		return $row;
@@ -189,7 +189,7 @@ class BackendUtility {
 				$limit
 			);
 			$rows = array();
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$rows[] = $row;
 			}
 			$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -373,7 +373,7 @@ class BackendUtility {
 			$row = $getPageForRootline_cache[$ident];
 		} else {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('pid,uid,title,TSconfig,is_siteroot,storage_pid,t3ver_oid,t3ver_wsid,t3ver_state,t3ver_stage,backend_layout_next_level', 'pages', 'uid=' . (int)$uid . ' ' . self::deleteClause('pages') . ' ' . $clause);
-			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			if ($row) {
 				$newLocation = FALSE;
 				if ($workspaceOL) {
@@ -947,7 +947,7 @@ class BackendUtility {
 				while (!$srcPointer) {
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,' . $ds_pointerField . ',' . $ds_searchParentField . ($subFieldPointer ? ',' . $subFieldPointer : ''), $table, 'uid=' . (int)($newRecordPidValue ?: $rr[$ds_searchParentField]) . self::deleteClause($table));
 					$newRecordPidValue = 0;
-					$rr = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+					$rr = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 					$GLOBALS['TYPO3_DB']->freeResult($res);
 					// Break if no result from SQL db or if looping...
 					if (!is_array($rr) || isset($uidAcc[$rr['uid']])) {
@@ -1268,7 +1268,7 @@ class BackendUtility {
 
 		$result = array();
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, '1=1 ' . $where . self::deleteClause($table));
-		while ($record = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($record = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			// store the uid, because it might be unset if it's not among the requested $fields
 			$recordId = $record['uid'];
 			$record[$titleField] = self::getRecordTitle($table, $record);
@@ -2011,7 +2011,7 @@ class BackendUtility {
 							$selectUids = $dbGroup->tableArray[$theColConf['foreign_table']];
 							if (is_array($selectUids) && count($selectUids) > 0) {
 								$MMres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid, ' . $MMfield, $theColConf['foreign_table'], 'uid IN (' . implode(',', $selectUids) . ')' . self::deleteClause($theColConf['foreign_table']));
-								while ($MMrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($MMres)) {
+								while ($MMrow = $GLOBALS['TYPO3_DB']->fetchAssoc($MMres)) {
 									// Keep sorting of $selectUids
 									$mmlA[array_search($MMrow['uid'], $selectUids)] = $noRecordLookup ?
 										$MMrow['uid'] :
@@ -3076,7 +3076,7 @@ class BackendUtility {
 			$GLOBALS['LOCKED_RECORDS'] = array();
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_lockedrecords', 'sys_lockedrecords.userid<>' . (int)$GLOBALS['BE_USER']->user['uid'] . '
 								AND sys_lockedrecords.tstamp > ' . ($GLOBALS['EXEC_TIME'] - 2 * 3600));
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				// Get the type of the user that locked this record:
 				if ($row['userid']) {
 					$userTypeLabel = 'beUser';
@@ -3379,7 +3379,7 @@ class BackendUtility {
 				pages.uid=sys_domain.pid
 				AND sys_domain.hidden=0
 				AND (sys_domain.domainName=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($domain, 'sys_domain') . ' OR sys_domain.domainName=' . $GLOBALS['TYPO3_DB']->fullQuoteStr(($domain . '/'), 'sys_domain') . ')' . self::deleteClause('pages'), '', '', '1');
-			$result = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$result = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			$GLOBALS['TYPO3_DB']->freeResult($res);
 			return $result;
 		}
@@ -3592,7 +3592,7 @@ class BackendUtility {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, 'uid=' . (int)$uid . ($includeDeletedRecords ? '' : self::deleteClause($table)));
 				// Add rows to output array:
 				if ($res) {
-					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+					$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 					if ($row) {
 						$row['_CURRENT_VERSION'] = TRUE;
 						$realPid = $row['pid'];
@@ -3604,7 +3604,7 @@ class BackendUtility {
 			// Select all offline versions of record:
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields, $table, 'pid=-1 AND uid<>' . (int)$uid . ' AND t3ver_oid=' . (int)$uid . ($workspace != 0 ? ' AND t3ver_wsid=' . (int)$workspace : '') . ($includeDeletedRecords ? '' : self::deleteClause($table)), '', 't3ver_id DESC');
 			// Add rows to output array:
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$outputRows[] = $row;
 			}
 			$GLOBALS['TYPO3_DB']->freeResult($res);

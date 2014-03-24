@@ -583,7 +583,7 @@ class SearchController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			if (!$noMarkup) {
 				$markedSW = '';
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'index_fulltext', 'phash=' . (int)$row['phash']);
-				if ($ftdrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				if ($ftdrow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					// Cut HTTP references after some length
 					$content = preg_replace('/(http:\\/\\/[^ ]{60})([^ ]+)/i', '$1...', $ftdrow['fulltextdata']);
 					$markedSW = $this->markupSWpartsOfString($content);
@@ -947,7 +947,7 @@ class SearchController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 			// Add search languages
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_language', '1=1' . $GLOBALS['TSFE']->cObj->enableFields('sys_language'));
 			if ($res) {
-				while ($lang = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($lang = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$allOptions[$lang['uid']] = $lang['title'];
 				}
 			}
@@ -1197,7 +1197,7 @@ class SearchController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 		if ($this->settings['displayLevelxAllTypes']) {
 			$menu = array();
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('title,uid', 'pages', 'pid=' . (int)$pageUid . $GLOBALS['TSFE']->cObj->enableFields('pages'), '', 'sorting');
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$menu[$row['uid']] = $GLOBALS['TSFE']->sys_page->getPageOverlay($row);
 			}
 			$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -1257,7 +1257,7 @@ class SearchController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
 	 */
 	protected function getFirstSysDomainRecordForPage($id) {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('domainName', 'sys_domain', 'pid=' . (int)$id . $GLOBALS['TSFE']->cObj->enableFields('sys_domain'), '', 'sorting');
-		$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+		$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 		return rtrim($row['domainName'], '/');
 	}
 

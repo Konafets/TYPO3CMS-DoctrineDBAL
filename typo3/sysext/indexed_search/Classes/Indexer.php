@@ -1937,7 +1937,7 @@ class Indexer {
 					AND A.phash_grouping=' . (int)$this->hash['phash_grouping'] . '
 					AND B.hash_gr_list<>' . \TYPO3\CMS\IndexedSearch\Utility\IndexedSearchUtility::md5inthash($this->defaultGrList) . '
 					AND A.contentHash=' . (int)$this->content_md5h);
-			while ($res && FALSE !== ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
+			while ($res && FALSE !== ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res))) {
 				$this->log_setTSlogMessage('The currently indexed page was indexed under no user-login and apparently this page has been indexed under login conditions earlier, but with the SAME content. Therefore the old similar page with phash=\'' . $row['phash'] . '\' are now removed.', 1);
 				$this->removeOldIndexedPages($row['phash']);
 			}
@@ -1979,7 +1979,7 @@ class Indexer {
 				if ($count != count($wordListArray)) {
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('baseword', 'index_words', 'wid IN (' . $cwl . ')');
 					$this->log_setTSlogMessage('Inserting words: ' . (count($wordListArray) - $count), 1);
-					while (FALSE != ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))) {
+					while (FALSE != ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res))) {
 						unset($wordListArray[$row['baseword']]);
 					}
 					$GLOBALS['TYPO3_DB']->freeResult($res);

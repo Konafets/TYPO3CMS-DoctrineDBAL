@@ -159,7 +159,7 @@ class DataPreprocessor {
 						if ($id < 0 && $GLOBALS['TCA'][$table]['ctrl']['useColumnsForDefaultValues']) {
 							// Fetches the previous record:
 							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, 'uid=' . abs($id) . BackendUtility::deleteClause($table));
-							if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+							if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 								// Gets the list of fields to copy from the previous record.
 								$fArr = GeneralUtility::trimExplode(',', $GLOBALS['TCA'][$table]['ctrl']['useColumnsForDefaultValues'], TRUE);
 								foreach ($fArr as $theF) {
@@ -176,7 +176,7 @@ class DataPreprocessor {
 						$id = (int)$id;
 						// Fetch database values
 						$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $table, 'uid=' . $id . BackendUtility::deleteClause($table));
-						if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+						if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 							BackendUtility::fixVersioningPid($table, $row);
 							$this->renderRecord($table, $id, $row['pid'], $row);
 							$contentTable = $GLOBALS['TYPO3_CONF_VARS']['SYS']['contentTable'];
@@ -754,7 +754,7 @@ class DataPreprocessor {
 		$recordList = array();
 		// Foreign_table
 		$subres = BackendUtility::exec_foreign_table_where_query($fieldConfig, $field, $TSconfig);
-		while ($subrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($subres)) {
+		while ($subrow = $GLOBALS['TYPO3_DB']->fetchAssoc($subres)) {
 			// Resolve move-placeholder, to check the right uid against $dataIds
 			BackendUtility::workspaceOL($fieldConfig['config']['foreign_table'], $subrow);
 			$recordList[$subrow['uid']] = BackendUtility::getRecordTitle($fieldConfig['config']['foreign_table'], $subrow);
@@ -763,7 +763,7 @@ class DataPreprocessor {
 		// neg_foreign_table
 		if (is_array($GLOBALS['TCA'][$fieldConfig['config']['neg_foreign_table']])) {
 			$subres = BackendUtility::exec_foreign_table_where_query($fieldConfig, $field, $TSconfig, 'neg_');
-			while ($subrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($subres)) {
+			while ($subrow = $GLOBALS['TYPO3_DB']->fetchAssoc($subres)) {
 				// Resolve move-placeholder, to check the right uid against $dataIds
 				BackendUtility::workspaceOL($fieldConfig['config']['nes_foreign_table'], $subrow);
 				$recordList[-$subrow['uid']] = BackendUtility::getRecordTitle($fieldConfig['config']['neg_foreign_table'], $subrow);

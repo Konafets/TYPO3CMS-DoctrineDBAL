@@ -433,7 +433,7 @@ class VersionModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClass 
 					<tr>
 						<td colspan="4" class="' . ($GLOBALS['TCA'][$tN]['ctrl']['versioning_followPages'] ? 'bgColor6' : ($tN == 'pages' ? 'bgColor5' : 'bgColor-10')) . '"' . (!$GLOBALS['TCA'][$tN]['ctrl']['versioning_followPages'] && $tN !== 'pages' ? ' style="color: #666666; font-style:italic;"' : '') . '>' . $tN . '</td>
 					</tr>';
-				while ($subrow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($mres)) {
+				while ($subrow = $GLOBALS['TYPO3_DB']->fetchAssoc($mres)) {
 					$ownVer = $this->lookForOwnVersions($tN, $subrow['uid']);
 					$content .= '
 						<tr>

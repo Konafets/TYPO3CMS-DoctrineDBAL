@@ -247,7 +247,7 @@ class IndexedPagesController extends \TYPO3\CMS\Backend\Module\AbstractFunctionM
 		// Collecting phash values (to remove local indexing for)
 		$phashAcc[] = 0;
 		// Traverse the result set of phash rows selected:
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			if ($rowCount == $this->maxListPerPage) {
 				$rowCount++;
 				// Increase to the extra warning row will appear as well.
@@ -288,7 +288,7 @@ class IndexedPagesController extends \TYPO3\CMS\Backend\Module\AbstractFunctionM
 		}
 		// Checking for phash-rows which are NOT joined with the section table:
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('IP.*', 'index_phash IP', 'IP.data_page_id = ' . (int)$data['uid'] . ' AND IP.phash NOT IN (' . implode(',', $phashAcc) . ')');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$out .= '
 				<tr class="typo3-red">
 					<td colspan="' . $this->returnNumberOfColumns() . '"><strong>Warning:</strong> phash-row "' . $row['phash'] . '" didn\'t have a representation in the index_section table!</td>
@@ -994,7 +994,7 @@ class IndexedPagesController extends \TYPO3\CMS\Backend\Module\AbstractFunctionM
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('page_id', 'index_section', 'phash=' . (int)$phash);
 					if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
 						$idList = array();
-						while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+						while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 							$idList[] = (int)$row['page_id'];
 						}
 						$pageCache = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager')->getCache('cache_pages');
@@ -1024,7 +1024,7 @@ class IndexedPagesController extends \TYPO3\CMS\Backend\Module\AbstractFunctionM
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'index_grlist', 'phash=' . (int)$phash);
 		$lines = array();
 		$isRemoved = 0;
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			if (!$isRemoved && (string)$row['gr_list'] === (string)$gr_list) {
 				$isRemoved = 1;
 			} else {

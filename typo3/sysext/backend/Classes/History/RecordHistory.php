@@ -141,7 +141,7 @@ class RecordHistory {
 			$this->showSubElements = 0;
 			$element = explode(':', $this->element);
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_history', 'tablename=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($element[0], 'sys_history') . ' AND recuid=' . (int)$element[1], '', 'uid DESC', '1');
-			$record = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$record = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			$this->lastSyslogId = $record['sys_log_uid'];
 			$this->createChangeLog();
 			$completeDiff = $this->createMultipleDiff();
@@ -184,7 +184,7 @@ class RecordHistory {
 	public function toggleHighlight($uid) {
 		$uid = (int)$uid;
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('snapshot', 'sys_history', 'uid=' . $uid);
-		$tmp = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+		$tmp = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 		$GLOBALS['TYPO3_DB']->executeUpdateQuery('sys_history', array('uid' => $uid), array('snapshot' => !$tmp['snapshot']));
 	}
 
@@ -655,7 +655,7 @@ class RecordHistory {
 			foreach ($GLOBALS['TCA'] as $tablename => $value) {
 				// check if there are records on the page
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', $tablename, 'pid=' . (int)$elParts[1]);
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					// if there is history data available, merge it into changelog
 					if ($newChangeLog = $this->getHistoryData($tablename, $row['uid'])) {
 						foreach ($newChangeLog as $key => $value) {
@@ -691,7 +691,7 @@ class RecordHistory {
 							AND sys_history.recuid = ' . (int)$uid, '', 'sys_log.uid DESC', $this->maxSteps);
 			// Traversing the result, building up changesArray / changeLog:
 			$changeLog = array();
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				// Only history until a certain syslog ID needed
 				if ($row['sys_log_uid'] < $this->lastSyslogId && $this->lastSyslogId) {
 					continue;
@@ -720,7 +720,7 @@ class RecordHistory {
 							AND (action=1 OR action=3)
 							AND tablename = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($table, 'sys_log') . '
 							AND recuid = ' . (int)$uid, '', 'uid DESC', $this->maxSteps);
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					if ($row['uid'] < $this->lastSyslogId && $this->lastSyslogId) {
 						continue;
 					}
@@ -853,7 +853,7 @@ class RecordHistory {
 		if ($this->getArgument('sh_uid')) {
 			$sh_uid = $this->getArgument('sh_uid');
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_history', 'uid=' . (int)$sh_uid);
-			$record = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+			$record = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			$this->element = $record['tablename'] . ':' . $record['recuid'];
 			$this->lastSyslogId = $record['sys_log_uid'] - 1;
 		}

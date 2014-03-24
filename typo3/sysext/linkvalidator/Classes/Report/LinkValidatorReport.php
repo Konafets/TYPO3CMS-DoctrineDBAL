@@ -435,7 +435,7 @@ class LinkValidatorReport extends \TYPO3\CMS\Backend\Module\AbstractFunctionModu
 					// Table header
 					$brokenLinksMarker = $this->startTable();
 					// Table rows containing the broken links
-					while (($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) !== FALSE) {
+					while (($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) !== FALSE) {
 						$items[] = $this->renderTableRow($row['table_name'], $row, $brokenLinksItemTemplate);
 					}
 					$brokenLinkItems = implode(chr(10), $items);

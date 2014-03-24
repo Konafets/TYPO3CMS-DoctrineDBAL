@@ -43,7 +43,7 @@ class PageRepositoryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 */
 	public function setUp() {
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
-			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array('exec_SELECTquery', 'sql_fetch_assoc', 'freeResult'));
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array('exec_SELECTquery', 'fetchAssoc', 'freeResult'));
 		} else {
 			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('exec_SELECTquery', 'sql_fetch_assoc', 'sql_free_result'));
 		}

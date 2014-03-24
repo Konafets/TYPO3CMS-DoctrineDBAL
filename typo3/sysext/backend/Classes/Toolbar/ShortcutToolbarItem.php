@@ -261,7 +261,7 @@ class ShortcutToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemHookI
 		// Traverse shortcuts
 		$lastGroup = 0;
 		$shortcuts = array();
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$shortcut = array('raw' => $row);
 
 			list($row['module_name'], $row['M_module_name']) = explode('|', $row['module_name']);
@@ -655,7 +655,7 @@ class ShortcutToolbarItem implements \TYPO3\CMS\Backend\Toolbar\ToolbarItemHookI
 						'WHERE' => 'uid IN (' . $recordid . ') ' . $permissionClause . BackendUtility::deleteClause($table) . BackendUtility::versioningPlaceholderClause($table)
 					);
 					$result = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($sqlQueryParts);
-					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result);
+					$row = $GLOBALS['TYPO3_DB']->fetchAssoc($result);
 					$icon = IconUtility::getIcon($table, $row, $this->backPath);
 				} elseif ($shortcut['type'] == 'new') {
 					$icon = IconUtility::getIcon($table, '', $this->backPath);

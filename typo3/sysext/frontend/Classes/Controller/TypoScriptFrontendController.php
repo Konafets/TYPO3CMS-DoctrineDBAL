@@ -855,7 +855,7 @@ class TypoScriptFrontendController {
 	public function sendRedirect() {
 		if ($this->RDCT) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('params', 'cache_md5params', 'md5hash=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->RDCT, 'cache_md5params'));
-			if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				$this->updateMD5paramsRecord($this->RDCT);
 				header('Location: ' . $row['params']);
 				die;
@@ -4303,7 +4303,7 @@ if (version == "n3") {
 		if ($returnTitle) {
 			if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('workspaces')) {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('title', 'sys_workspace', 'uid=' . (int)$ws);
-				if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				if ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					return $row['title'];
 				}
 			}
@@ -4903,7 +4903,7 @@ if (version == "n3") {
 				'sorting ASC'
 			);
 
-			while (FALSE !== ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result))) {
+			while (FALSE !== ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($result))) {
 				// if there is already an entry for this pid, check if we should overwrite it
 				if (isset($sysDomainData[$row['pid']])) {
 					// there is already a "forced" entry, which must not be overwritten

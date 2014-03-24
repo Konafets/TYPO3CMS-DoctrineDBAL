@@ -101,7 +101,7 @@ class QueryView {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_action', 'type=2', '', 'title');
 			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
 				$opt[] = '<option value="0">__Save to Action:__</option>';
-				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$opt[] = '<option value="-' . $row['uid'] . '">' . htmlspecialchars(($row['title'] . ' [' . $row['uid'] . ']')) . '</option>';
 				}
 			}

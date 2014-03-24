@@ -67,12 +67,14 @@ class ConditionMatcherTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	private function setUpDatabaseMockForDeterminePageId() {
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
-			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array('exec_SELECTquery', 'sql_fetch_assoc', 'freeResult'));
+			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\DoctrineDbal\\Persistence\\Legacy\\DatabaseConnectionLegacy', array('exec_SELECTquery', 'fetchAssoc', 'freeResult'));
+			$GLOBALS['TYPO3_DB']->expects($this->any())->method('exec_SELECTquery')->will($this->returnCallback(array($this, 'determinePageIdByRecordDatabaseExecuteCallback')));
+			$GLOBALS['TYPO3_DB']->expects($this->any())->method('fetchAssoc')->will($this->returnCallback(array($this, 'determinePageIdByRecordDatabaseFetchCallback')));
 		} else {
 			$GLOBALS['TYPO3_DB'] = $this->getMock('TYPO3\\CMS\\Core\\Database\\DatabaseConnection', array('exec_SELECTquery', 'sql_fetch_assoc', 'sql_free_result'));
+			$GLOBALS['TYPO3_DB']->expects($this->any())->method('exec_SELECTquery')->will($this->returnCallback(array($this, 'determinePageIdByRecordDatabaseExecuteCallback')));
+			$GLOBALS['TYPO3_DB']->expects($this->any())->method('sql_fetch_assoc')->will($this->returnCallback(array($this, 'determinePageIdByRecordDatabaseFetchCallback')));
 		}
-		$GLOBALS['TYPO3_DB']->expects($this->any())->method('exec_SELECTquery')->will($this->returnCallback(array($this, 'determinePageIdByRecordDatabaseExecuteCallback')));
-		$GLOBALS['TYPO3_DB']->expects($this->any())->method('sql_fetch_assoc')->will($this->returnCallback(array($this, 'determinePageIdByRecordDatabaseFetchCallback')));
 	}
 
 	/**
@@ -974,7 +976,7 @@ class ConditionMatcherTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
 	 * Callback method for pageIdCanBeDetermined test cases.
-	 * Simulates TYPO3_DB->sql_fetch_assoc().
+	 * Simulates TYPO3_DB->fetchAssoc().
 	 *
 	 * @param 	mixed		$resource
 	 * @return 	mixed

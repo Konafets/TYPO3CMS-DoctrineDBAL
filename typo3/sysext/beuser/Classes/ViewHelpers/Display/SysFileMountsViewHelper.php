@@ -51,7 +51,7 @@ class SysFileMountsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractV
 			'uid IN (' . $GLOBALS['TYPO3_DB']->cleanIntList($uids) . ')',
 			'title ASC'
 		);
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$content .= '<li>' . htmlspecialchars($row['title']) . ' [' . htmlspecialchars($row['uid']) . ']</li>';
 		}
 		$GLOBALS['TYPO3_DB']->freeResult($res);

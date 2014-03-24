@@ -171,7 +171,7 @@ class ActionTask implements \TYPO3\CMS\Taskcenter\TaskInterface {
 			$additionalWhere = 'be_groups.uid IN (' . ($GLOBALS['BE_USER']->groupList ?: 0) . ')';
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECT_mm_query('sys_action.*', 'sys_action', 'sys_action_asgr_mm', 'be_groups', ' AND sys_action.hidden=0 AND ' . $additionalWhere, 'sys_action.uid', 'sys_action.sorting');
 		}
-		while ($actionRow = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($actionRow = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$editActionLink = '';
 			// Admins are allowed to edit sys_action records
 			if ($GLOBALS['BE_USER']->isAdmin()) {
@@ -382,7 +382,7 @@ class ActionTask implements \TYPO3\CMS\Taskcenter\TaskInterface {
 		// List of users
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'be_users', 'cruser_id=' . $GLOBALS['BE_USER']->user['uid'] . ' AND createdByAction=' . (int)$action['uid'] . BackendUtility::deleteClause('be_users'), '', 'username');
 		// Render the user records
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			$icon = \TYPO3\CMS\Backend\Utility\IconUtility::getSpriteIconForRecord('be_users', $row, array('title' => 'uid=' . $row['uid']));
 			$line = $icon . $this->action_linkUserName($row['username'], $row['realName'], $action['uid'], $row['uid']);
 			// Selected user

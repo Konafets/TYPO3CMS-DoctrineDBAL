@@ -409,12 +409,18 @@ class Typo3DbBackendTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$expectedParameters = array('plainPropertyValue');
 		$expectedUid = 52;
 		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
-			$mockDataBaseHandle = $this->getMock('TYPO3\DoctrineDbal\Database\DatabaseConnection', array('sql_query', 'sql_fetch_assoc'), array(), '', FALSE);
+			$mockDataBaseHandle = $this->getMock('TYPO3\DoctrineDbal\Persistence\Legacy\DatabaseConnectionLegacy', array('sql_query', 'fetchAssoc'), array(), '', FALSE);
 		} else {
 			$mockDataBaseHandle = $this->getMock('TYPO3\CMS\Core\Database\DatabaseConnection', array('sql_query', 'sql_fetch_assoc'), array(), '', FALSE);
 		}
 		$mockDataBaseHandle->expects($this->once())->method('sql_query')->will($this->returnValue('resource'));
-		$mockDataBaseHandle->expects($this->any())->method('sql_fetch_assoc')->with('resource')->will($this->returnValue(array('uid' => $expectedUid)));
+
+		if (ExtensionManagementUtility::isLoaded('doctrine_dbal')) {
+			$mockDataBaseHandle->expects($this->any())->method('fetchAssoc')->with('resource')->will($this->returnValue(array('uid' => $expectedUid)));
+		} else {
+			$mockDataBaseHandle->expects($this->any())->method('sql_fetch_assoc')->with('resource')->will($this->returnValue(array('uid' => $expectedUid)));
+		}
+
 		$mockTypo3DbBackend = $this->getAccessibleMock('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Storage\\Typo3DbBackend', array('getPlainValue', 'checkSqlErrors', 'replacePlaceholders', 'addVisibilityConstraintStatement'), array(), '', FALSE);
 		$mockTypo3DbBackend->expects($this->once())->method('getPlainValue')->will($this->returnValue('plainPropertyValue'));
 		$mockTypo3DbBackend->expects($this->once())->method('addVisibilityConstraintStatement')->with($this->isInstanceOf('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\QuerySettingsInterface'), $tableName, $this->isType('array'));
