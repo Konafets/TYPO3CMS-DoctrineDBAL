@@ -22,7 +22,7 @@ $txSchedulerTask->addIndex(array('nextexecution'), 'tx_scheduler_task_index_next
 
 // tx_scheduler_task_group
 $txSchedulerTaskGroup = $schema->createTable('tx_scheduler_task_group');
-$txSchedulerTaskGroup->addColumn('uid', 'integer', array('autoincrement' => TRUE, 'unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
+$txSchedulerTaskGroup->addColumn('uid', 'integer', array('autoincrement' => TRUE, 'unsigned' => TRUE, 'notnull' => TRUE));
 $txSchedulerTaskGroup->addColumn('pid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $txSchedulerTaskGroup->addColumn('tstamp', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $txSchedulerTaskGroup->addColumn('crdate', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
