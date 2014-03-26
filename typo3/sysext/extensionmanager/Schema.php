@@ -2,6 +2,7 @@
 
 $schema = new \Doctrine\DBAL\Schema\Schema();
 
+// tx_extensionmanager_domain_model_repository
 $txExtensionmanagerDomainModelRepository = $schema->createTable('tx_extensionmanager_domain_model_repository');
 $txExtensionmanagerDomainModelRepository->addColumn('uid', 'integer', array('autoincrement' => TRUE, 'unsigned' => TRUE, 'notnull' => TRUE));
 $txExtensionmanagerDomainModelRepository->addColumn('pid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
@@ -13,6 +14,7 @@ $txExtensionmanagerDomainModelRepository->addColumn('last_update', 'integer', ar
 $txExtensionmanagerDomainModelRepository->addColumn('extension_count', 'integer', array('default' => '0', 'notnull' => TRUE));
 $txExtensionmanagerDomainModelRepository->setPrimaryKey(array('uid'));
 
+// tx_extensionmanager_domain_model_extension
 $txExtensionmanagerDomainModelExtension = $schema->createTable('tx_extensionmanager_domain_model_extension');
 $txExtensionmanagerDomainModelExtension->addColumn('uid', 'integer', array('autoincrement' => TRUE, 'unsigned' => TRUE, 'notnull' => TRUE));
 $txExtensionmanagerDomainModelExtension->addColumn('pid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
