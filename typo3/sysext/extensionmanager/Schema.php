@@ -3,7 +3,7 @@
 $schema = new \Doctrine\DBAL\Schema\Schema();
 
 $txExtensionmanagerDomainModelRepository = $schema->createTable('tx_extensionmanager_domain_model_repository');
-$txExtensionmanagerDomainModelRepository->addColumn('uid', 'integer', array('unsigned' => TRUE, 'autoincrement' => TRUE, 'notnull' => TRUE));
+$txExtensionmanagerDomainModelRepository->addColumn('uid', 'integer', array('autoincrement' => TRUE, 'unsigned' => TRUE, 'notnull' => TRUE));
 $txExtensionmanagerDomainModelRepository->addColumn('pid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $txExtensionmanagerDomainModelRepository->addColumn('title', 'string', array('length' => 150, 'default' => '', 'notnull' => TRUE));
 $txExtensionmanagerDomainModelRepository->addColumn('description', 'text', array('length' => 16777215));

@@ -547,7 +547,7 @@ $sysLockedrecords->addIndex(array('userid', 'tstamp'), 'sys_lockedrecords_event'
 
 // sys_log
 $sysLog = $schema->createTable('sys_log');
-$sysLog->addColumn('uid', 'integer', array('unsigned' => TRUE, 'notnull' => TRUE, 'autoincrement' => TRUE));
+$sysLog->addColumn('uid', 'integer', array('autoincrement' => TRUE, 'unsigned' => TRUE, 'notnull' => TRUE));
 $sysLog->addColumn('pid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysLog->addColumn('userid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysLog->addColumn('action', 'boolean', array('default' => '0', 'notnull' => TRUE));
