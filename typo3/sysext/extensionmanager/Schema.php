@@ -43,7 +43,4 @@ $txExtensionmanagerDomainModelExtension->addIndex(array('repository', 'integer_v
 $txExtensionmanagerDomainModelExtension->addIndex(array('review_state', 'current_version'), 'tx_em_domain_model_ext_index_currentversions');
 $txExtensionmanagerDomainModelExtension->addUniqueIndex(array('extension_key', 'version', 'repository'), 'tx_em_domain_model_ext_versionextrepo');
 
-
-//INSERT INTO tx_extensionmanager_domain_model_repository VALUES ('1', '0', 'TYPO3.org Main Repository', 'Main repository on typo3.org. This repository has some mirrors configured which are available with the mirror url.', 'http://typo3.org/wsdl/tx_ter_wsdl.php', 'http://repositories.typo3.org/mirrors.xml.gz', '1346191200', '0');
-
 return $schema;

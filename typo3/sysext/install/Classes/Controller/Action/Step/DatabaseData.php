@@ -129,6 +129,7 @@ class DatabaseData extends AbstractStepAction {
 			$currentSchema = $schemaMigrationService->getCurrentSchemaFromDatabase();
 			$updateStatements = $schemaMigrationService->getDifferenceBetweenDatabaseAndExpectedSchemaAsSql($currentSchema, $expectedSchemas);
 			$schemaMigrationService->performUpdateQueries($updateStatements);
+			$insertStatements = $schemaMigrationService->getDefaultInsertStatements();
 		} else {
 			/** @var \TYPO3\CMS\Install\Service\SqlSchemaMigrationService $schemaMigrationService */
 			$schemaMigrationService = $this->objectManager->get('TYPO3\\CMS\\Install\\Service\\SqlSchemaMigrationService');
