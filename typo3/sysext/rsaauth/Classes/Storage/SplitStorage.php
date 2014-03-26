@@ -32,7 +32,7 @@ namespace TYPO3\CMS\Rsaauth\Storage;
 class SplitStorage extends \TYPO3\CMS\Rsaauth\Storage\AbstractStorage {
 
 	/**
-	 * @var \TYPO3\DoctrineDbal\Database\DatabaseConnection
+	 * @var \TYPO3\DoctrineDbal\Persistence\Legacy\DatabaseConnectionLegacy
 	 */
 	protected $db;
 
