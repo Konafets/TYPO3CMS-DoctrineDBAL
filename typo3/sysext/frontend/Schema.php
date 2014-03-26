@@ -15,7 +15,7 @@ $cacheTypo3tempLog->setPrimaryKey(array('md5hash'));
 $cacheMd5params = $schema->createTable('cache_md5params');
 $cacheMd5params->addColumn('md5hash', 'string', array('length' => 20, 'default' => '', 'notnull' => TRUE));
 $cacheMd5params->addColumn('tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));
-$cacheMd5params->addColumn('type', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$cacheMd5params->addColumn('type', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $cacheMd5params->addColumn('params', 'text', array('length' => 65535));
 $cacheMd5params->setPrimaryKey(array('md5hash'));
 
@@ -121,7 +121,7 @@ $pagesLanguageOverlay->addColumn('t3ver_oid', 'integer', array('default' => '0',
 $pagesLanguageOverlay->addColumn('t3ver_id', 'integer', array('default' => '0', 'notnull' => TRUE));
 $pagesLanguageOverlay->addColumn('t3ver_wsid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $pagesLanguageOverlay->addColumn('t3ver_label', 'string', array('length' => 255, 'default' => '', 'notnull' => TRUE));
-$pagesLanguageOverlay->addColumn('t3ver_state', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$pagesLanguageOverlay->addColumn('t3ver_state', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pagesLanguageOverlay->addColumn('t3ver_stage', 'integer', array('default' => '0', 'notnull' => TRUE));
 $pagesLanguageOverlay->addColumn('t3ver_count', 'integer', array('default' => '0', 'notnull' => TRUE));
 $pagesLanguageOverlay->addColumn('t3ver_tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));
@@ -146,7 +146,7 @@ $pagesLanguageOverlay->addColumn('author_email', 'string', array('length' => 80,
 $pagesLanguageOverlay->addColumn('tx_impexp_origuid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $pagesLanguageOverlay->addColumn('l18n_diffsource', 'blob', array('length' => 16777215));
 $pagesLanguageOverlay->addColumn('url', 'string', array('length' => 255, 'default' => '', 'notnull' => TRUE));
-$pagesLanguageOverlay->addColumn('urltype', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$pagesLanguageOverlay->addColumn('urltype', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pagesLanguageOverlay->addColumn('shortcut', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pagesLanguageOverlay->addColumn('shortcut_mode', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pagesLanguageOverlay->setPrimaryKey(array('uid'));
@@ -181,7 +181,7 @@ $sysTemplate->addColumn('t3ver_oid', 'integer', array('default' => '0', 'notnull
 $sysTemplate->addColumn('t3ver_id', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysTemplate->addColumn('t3ver_wsid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysTemplate->addColumn('t3ver_label', 'string', array('length' => 255, 'default' => '', 'notnull' => TRUE));
-$sysTemplate->addColumn('t3ver_state', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysTemplate->addColumn('t3ver_state', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysTemplate->addColumn('t3ver_stage', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysTemplate->addColumn('t3ver_count', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysTemplate->addColumn('t3ver_tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));
@@ -205,7 +205,7 @@ $sysTemplate->addColumn('description', 'text', array('length' => 65535));
 $sysTemplate->addColumn('basedOn', 'text', array('length' => 255));
 $sysTemplate->addColumn('deleted', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $sysTemplate->addColumn('includeStaticAfterBasedOn', 'boolean', array('default' => '0', 'notnull' => TRUE));
-$sysTemplate->addColumn('static_file_mode', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysTemplate->addColumn('static_file_mode', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysTemplate->addColumn('tx_impexp_origuid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysTemplate->setPrimaryKey(array('uid'));
 $sysTemplate->addIndex(array('t3ver_oid', 't3ver_wsid'), 'sys_template_t3ver_oid');
@@ -220,7 +220,7 @@ $ttContent->addColumn('t3ver_oid', 'integer', array('default' => '0', 'notnull' 
 $ttContent->addColumn('t3ver_id', 'integer', array('default' => '0', 'notnull' => TRUE));
 $ttContent->addColumn('t3ver_wsid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $ttContent->addColumn('t3ver_label', 'string', array('length' => 255, 'default' => '', 'notnull' => TRUE));
-$ttContent->addColumn('t3ver_state', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$ttContent->addColumn('t3ver_state', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $ttContent->addColumn('t3ver_stage', 'integer', array('default' => '0', 'notnull' => TRUE));
 $ttContent->addColumn('t3ver_count', 'integer', array('default' => '0', 'notnull' => TRUE));
 $ttContent->addColumn('t3ver_tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));
@@ -239,7 +239,7 @@ $ttContent->addColumn('bodytext', 'text', array('length' => 16777215));
 // now, it needs to stay "text" for the migration to work
 $ttContent->addColumn('image', 'text', array('length' => 65535));
 $ttContent->addColumn('imagewidth', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
-$ttContent->addColumn('imageorient', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$ttContent->addColumn('imageorient', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $ttContent->addColumn('imagecaption', 'text', array('length' => 65535));
 $ttContent->addColumn('imagecols', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $ttContent->addColumn('imageborder', 'boolean', array('default' => '0', 'notnull' => TRUE));
@@ -277,7 +277,7 @@ $ttContent->addColumn('select_key', 'string', array('length' => 80, 'default' =>
 $ttContent->addColumn('sectionIndex', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $ttContent->addColumn('linkToTop', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $ttContent->addColumn('file_collections', 'text', array('length' => 65535));
-$ttContent->addColumn('filelink_size', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$ttContent->addColumn('filelink_size', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $ttContent->addColumn('filelink_sorting', 'text', array('length' => 255, 'notnull' => TRUE));
 $ttContent->addColumn('target', 'string', array('length' => 30, 'default' => '', 'notnull' => TRUE));
 $ttContent->addColumn('section_frame', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
@@ -311,7 +311,7 @@ $backendLayout->addColumn('t3ver_oid', 'integer', array('default' => '0', 'notnu
 $backendLayout->addColumn('t3ver_id', 'integer', array('default' => '0', 'notnull' => TRUE));
 $backendLayout->addColumn('t3ver_wsid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $backendLayout->addColumn('t3ver_label', 'string', array('length' => 255, 'default' => '', 'notnull' => TRUE));
-$backendLayout->addColumn('t3ver_state', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$backendLayout->addColumn('t3ver_state', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $backendLayout->addColumn('t3ver_stage', 'integer', array('default' => '0', 'notnull' => TRUE));
 $backendLayout->addColumn('t3ver_count', 'integer', array('default' => '0', 'notnull' => TRUE));
 $backendLayout->addColumn('t3ver_tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));

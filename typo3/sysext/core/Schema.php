@@ -66,7 +66,7 @@ $beUsers->addColumn('lang', 'string', array('length' => 2, 'default' => '', 'not
 $beUsers->addColumn('email', 'string', array('length' => 80, 'default' => '', 'notnull' => TRUE));
 // text
 $beUsers->addColumn('db_mountpoints', 'text', array('length' => 65535, 'notnull' => FALSE));
-$beUsers->addColumn('options', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$beUsers->addColumn('options', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $beUsers->addColumn('crdate', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $beUsers->addColumn('cruser_id', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $beUsers->addColumn('realName', 'string', array('length' => 80, 'default' => '', 'notnull' => TRUE));
@@ -79,7 +79,7 @@ $beUsers->addColumn('uc', 'text', array('length' => 16777215, 'notnull' => FALSE
 $beUsers->addColumn('file_mountpoints', 'text', array('length' => 65535, 'notnull' => FALSE));
 // text
 $beUsers->addColumn('file_permissions', 'text', array('length' => 65535, 'notnull' => FALSE));
-$beUsers->addColumn('workspace_perms', 'boolean', array('default' => '1', 'notnull' => TRUE));
+$beUsers->addColumn('workspace_perms', 'smallint', array('unsigned' => TRUE, 'default' => '1', 'notnull' => TRUE));
 $beUsers->addColumn('lockToDomain', 'string', array('length' => 50, 'default' => '', 'notnull' => TRUE));
 $beUsers->addColumn('disableIPlock', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $beUsers->addColumn('deleted', 'boolean', array('default' => '0', 'notnull' => TRUE));
@@ -128,9 +128,9 @@ $pages->addColumn('sorting', 'integer', array('unsigned' => TRUE, 'default' => '
 $pages->addColumn('deleted', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $pages->addColumn('perms_userid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pages->addColumn('perms_groupid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
-$pages->addColumn('perms_user', 'boolean', array('default' => '0', 'notnull' => TRUE));
-$pages->addColumn('perms_group', 'boolean', array('default' => '0', 'notnull' => TRUE));
-$pages->addColumn('perms_everybody', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$pages->addColumn('perms_user', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
+$pages->addColumn('perms_group', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
+$pages->addColumn('perms_everybody', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pages->addColumn('editlock', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $pages->addColumn('crdate', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pages->addColumn('cruser_id', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
@@ -146,14 +146,14 @@ $pages->addColumn('tx_impexp_origuid', 'integer', array('default' => '0', 'notnu
 $pages->addColumn('url', 'string', array('length' => 255, 'default' => '', 'notnull' => TRUE));
 $pages->addColumn('starttime', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pages->addColumn('endtime', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
-$pages->addColumn('urltype', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$pages->addColumn('urltype', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pages->addColumn('shortcut', 'integer', array('default' => '0', 'notnull' => TRUE));
 $pages->addColumn('shortcut_mode', 'integer', array('default' => '0', 'notnull' => TRUE));
 $pages->addColumn('no_cache', 'integer', array('default' => '0', 'notnull' => TRUE));
 $pages->addColumn('fe_group', 'string', array('length' => 100, 'default' => '0', 'notnull' => TRUE));
 $pages->addColumn('subtitle', 'string', array('length' => 255, 'default' => '', 'notnull' => TRUE));
 $pages->addColumn('layout', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
-$pages->addColumn('url_scheme', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$pages->addColumn('url_scheme', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pages->addColumn('target', 'string', array('length' => 80, 'default' => '', 'notnull' => TRUE));
 // text
 $pages->addColumn('media', 'text', array('length' => 65535, 'notnull' => FALSE));
@@ -177,10 +177,10 @@ $pages->addColumn('nav_title', 'string', array('length' => 255, 'default' => '',
 $pages->addColumn('nav_hide', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $pages->addColumn('content_from_pid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $pages->addColumn('mount_pid', 'integer', array('default' => '0', 'notnull' => TRUE));
-$pages->addColumn('mount_pid_ol', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$pages->addColumn('mount_pid_ol', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pages->addColumn('alias', 'string', array('length' => 32, 'default' => '', 'notnull' => TRUE));
-$pages->addColumn('l18n_cfg', 'boolean', array('default' => '0', 'notnull' => TRUE));
-$pages->addColumn('fe_login_mode', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$pages->addColumn('l18n_cfg', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
+$pages->addColumn('fe_login_mode', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $pages->addColumn('backend_layout', 'string', array('length' => 64, 'default' => '', 'notnull' => TRUE));
 $pages->addColumn('backend_layout_next_level', 'string', array('length' => 64, 'default' => '', 'notnull' => TRUE));
 $pages->setPrimaryKey(array('uid'));
@@ -199,7 +199,7 @@ $sysBeShortcuts->addColumn('module_name', 'string', array('length' => 255, 'defa
 $sysBeShortcuts->addColumn('url', 'text', array('length' => 65535, 'notnull' => FALSE));
 $sysBeShortcuts->addColumn('description', 'string', array('length' => 255, 'default' => '', 'notnull' => TRUE));
 $sysBeShortcuts->addColumn('sorting', 'integer', array('default' => '0', 'notnull' => TRUE));
-$sysBeShortcuts->addColumn('sc_group', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysBeShortcuts->addColumn('sc_group', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysBeShortcuts->setPrimaryKey(array('uid'));
 $sysBeShortcuts->addIndex(array('userid'), 'sys_be_shortcuts_event');
 
@@ -231,7 +231,7 @@ $sysCategory->addColumn('t3ver_oid', 'integer', array('default' => '0', 'notnull
 $sysCategory->addColumn('t3ver_id', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysCategory->addColumn('t3ver_wsid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysCategory->addColumn('t3ver_label', 'string', array('length' => 30, 'default' => '', 'notnull' => TRUE));
-$sysCategory->addColumn('t3ver_state', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysCategory->addColumn('t3ver_state', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysCategory->addColumn('t3ver_stage', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysCategory->addColumn('t3ver_count', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysCategory->addColumn('t3ver_tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));
@@ -275,7 +275,7 @@ $sysCollection->addColumn('t3ver_oid', 'integer', array('default' => '0', 'notnu
 $sysCollection->addColumn('t3ver_id', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysCollection->addColumn('t3ver_wsid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysCollection->addColumn('t3ver_label', 'string', array('length' => 30, 'default' => '', 'notnull' => TRUE));
-$sysCollection->addColumn('t3ver_state', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysCollection->addColumn('t3ver_state', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysCollection->addColumn('t3ver_stage', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysCollection->addColumn('t3ver_count', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysCollection->addColumn('t3ver_tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));
@@ -310,7 +310,7 @@ $sysFileCollection->addColumn('t3ver_oid', 'integer', array('default' => '0', 'n
 $sysFileCollection->addColumn('t3ver_id', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileCollection->addColumn('t3ver_wsid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileCollection->addColumn('t3ver_label', 'string', array('length' => 30, 'default' => '', 'notnull' => TRUE));
-$sysFileCollection->addColumn('t3ver_state', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysFileCollection->addColumn('t3ver_state', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysFileCollection->addColumn('t3ver_stage', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileCollection->addColumn('t3ver_count', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileCollection->addColumn('t3ver_tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));
@@ -350,7 +350,7 @@ $sysFileMetadata->addColumn('t3ver_oid', 'integer', array('default' => '0', 'not
 $sysFileMetadata->addColumn('t3ver_id', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileMetadata->addColumn('t3ver_wsid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileMetadata->addColumn('t3ver_label', 'string', array('length' => 30, 'default' => '', 'notnull' => TRUE));
-$sysFileMetadata->addColumn('t3ver_state', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysFileMetadata->addColumn('t3ver_state', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysFileMetadata->addColumn('t3ver_stage', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileMetadata->addColumn('t3ver_count', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileMetadata->addColumn('t3ver_tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));
@@ -375,7 +375,7 @@ $sysFilemounts->addColumn('pid', 'integer', array('unsigned' => TRUE, 'default' 
 $sysFilemounts->addColumn('tstamp', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysFilemounts->addColumn('title', 'string', array('length' => 30, 'default' => '', 'notnull' => TRUE));
 $sysFilemounts->addColumn('path', 'string', array('length' => 120, 'default' => '', 'notnull' => TRUE));
-$sysFilemounts->addColumn('base', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysFilemounts->addColumn('base', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysFilemounts->addColumn('hidden', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $sysFilemounts->addColumn('deleted', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $sysFilemounts->addColumn('sorting', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
@@ -409,7 +409,7 @@ $sysFileReference->addColumn('uid', 'integer', array('notnull' => TRUE, 'autoinc
 $sysFileReference->addColumn('pid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileReference->addColumn('tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileReference->addColumn('crdate', 'integer', array('default' => '0', 'notnull' => TRUE));
-$sysFileReference->addColumn('cruser_id', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysFileReference->addColumn('cruser_id', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysFileReference->addColumn('sorting', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileReference->addColumn('deleted', 'boolean', array('default' => '0', 'notnull' => TRUE));
 $sysFileReference->addColumn('hidden', 'boolean', array('default' => '0', 'notnull' => TRUE));
@@ -417,7 +417,7 @@ $sysFileReference->addColumn('t3ver_oid', 'integer', array('default' => '0', 'no
 $sysFileReference->addColumn('t3ver_id', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileReference->addColumn('t3ver_wsid', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileReference->addColumn('t3ver_label', 'string', array('length' => 30, 'default' => '', 'notnull' => TRUE));
-$sysFileReference->addColumn('t3ver_state', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysFileReference->addColumn('t3ver_state', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysFileReference->addColumn('t3ver_stage', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileReference->addColumn('t3ver_count', 'integer', array('default' => '0', 'notnull' => TRUE));
 $sysFileReference->addColumn('t3ver_tstamp', 'integer', array('default' => '0', 'notnull' => TRUE));
@@ -550,15 +550,15 @@ $sysLog = $schema->createTable('sys_log');
 $sysLog->addColumn('uid', 'integer', array('autoincrement' => TRUE, 'unsigned' => TRUE, 'notnull' => TRUE));
 $sysLog->addColumn('pid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysLog->addColumn('userid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
-$sysLog->addColumn('action', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysLog->addColumn('action', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysLog->addColumn('recuid', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysLog->addColumn('tablename', 'string', array('length' => 255, 'default' => '', 'notnull' => TRUE));
 $sysLog->addColumn('recpid', 'integer', array('default' => '0', 'notnull' => TRUE));
-$sysLog->addColumn('error', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysLog->addColumn('error', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysLog->addColumn('details', 'text', array('length' => 65535, 'notnull' => TRUE));
 $sysLog->addColumn('tstamp', 'integer', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
-$sysLog->addColumn('type', 'boolean', array('default' => '0', 'notnull' => TRUE));
-$sysLog->addColumn('details_nr', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysLog->addColumn('type', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
+$sysLog->addColumn('details_nr', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysLog->addColumn('IP', 'string', array('length' => 39, 'default' => '', 'notnull' => TRUE));
 $sysLog->addColumn('log_data', 'text', array('length' => 65535, 'notnull' => FALSE));
 $sysLog->addColumn('event_pid', 'integer', array('default' => '-1', 'notnull' => TRUE));
@@ -567,7 +567,7 @@ $sysLog->addColumn('NEWid', 'string', array('length' => 20, 'default' => '', 'no
 $sysLog->addColumn('request_id', 'string', array('length' => 13, 'default' => '', 'notnull' => TRUE));
 $sysLog->addColumn('time_micro', 'float', array('default' => '0', 'notnull'));
 $sysLog->addColumn('component', 'string', array('length' => 255, 'default' => '', 'notnull' => TRUE));
-$sysLog->addColumn('level', 'boolean', array('default' => '0', 'notnull' => TRUE));
+$sysLog->addColumn('level', 'smallint', array('unsigned' => TRUE, 'default' => '0', 'notnull' => TRUE));
 $sysLog->addColumn('message', 'text', array('length' => 65535, 'notnull' => FALSE));
 $sysLog->addColumn('data', 'text', array('length' => 65535, 'notnull' => FALSE));
 $sysLog->setPrimaryKey(array('uid'));
