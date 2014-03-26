@@ -1599,7 +1599,7 @@ class TypoScriptFrontendController {
 				if ($this->beUserLogin) {
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'pages', 'uid=' . (int)$this->id . ' AND ' . $GLOBALS['BE_USER']->getPagePermsClause(1));
 					// versionOL()?
-					list($isPage) = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
+					list($isPage) = $GLOBALS['TYPO3_DB']->fetchRow($res);
 					if (!$isPage) {
 						// If there was no page selected, the user apparently did not have read access to the current PAGE (not position in rootline) and we set the remove-flag...
 						$removeTheRestFlag = 1;

@@ -384,7 +384,7 @@ class QueryView {
 		$cPR = array();
 		switch ($mQ) {
 			case 'count':
-				$row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
+				$row = $GLOBALS['TYPO3_DB']->fetchRow($res);
 				$cPR['header'] = 'Count';
 				$cPR['content'] = '<BR><strong>' . $row[0] . '</strong> records selected.';
 				break;

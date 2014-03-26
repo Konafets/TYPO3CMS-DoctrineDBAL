@@ -651,7 +651,7 @@ class FrontendLoginController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin 
 								$GLOBALS['TSFE']->fe_user->usergroup_table,
 								'felogin_redirectPid<>\'\' AND uid IN (' . implode(',', $groupData['uid']) . ')'
 							);
-							if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res)) {
+							if ($row = $GLOBALS['TYPO3_DB']->fetchRow($res)) {
 								// take the first group with a redirect page
 								$redirect_url[] = $this->pi_getPageLink($row[0]);
 							}
@@ -662,7 +662,7 @@ class FrontendLoginController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin 
 								$GLOBALS['TSFE']->fe_user->user_table,
 								$GLOBALS['TSFE']->fe_user->userid_column . '=' . $GLOBALS['TSFE']->fe_user->user['uid'] . ' AND felogin_redirectPid<>\'\''
 							);
-							if ($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res)) {
+							if ($row = $GLOBALS['TYPO3_DB']->fetchRow($res)) {
 								$redirect_url[] = $this->pi_getPageLink($row[0]);
 							}
 							break;

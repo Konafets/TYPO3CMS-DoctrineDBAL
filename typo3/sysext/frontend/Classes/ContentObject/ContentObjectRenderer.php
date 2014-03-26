@@ -3509,7 +3509,7 @@ class ContentObjectRenderer {
 		if ($error = $GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 			$GLOBALS['TT']->setTSlogMessage($error, 3);
 		} else {
-			$row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
+			$row = $GLOBALS['TYPO3_DB']->fetchRow($res);
 			$result = (int)$row[0];
 		}
 		$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -7627,7 +7627,7 @@ class ContentObjectRenderer {
 				if ($error = $GLOBALS['TYPO3_DB']->sqlErrorMessage()) {
 					$GLOBALS['TT']->setTSlogMessage($error);
 				} else {
-					$row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
+					$row = $GLOBALS['TYPO3_DB']->fetchRow($res);
 					$conf['max'] = str_ireplace('total', $row[0], $conf['max']);
 					$conf['begin'] = str_ireplace('total', $row[0], $conf['begin']);
 				}

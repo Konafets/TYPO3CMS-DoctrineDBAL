@@ -4726,7 +4726,7 @@ class DataHandler {
 							if (!$delete || !$this->cannotDeleteRecord($table, $id)) {
 								// Look for next version number:
 								$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('t3ver_id', $table, '((pid=-1 && t3ver_oid=' . $id . ') OR uid=' . $id . ')' . $this->deleteClause($table), '', 't3ver_id DESC', '1');
-								list($highestVerNumber) = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
+								list($highestVerNumber) = $GLOBALS['TYPO3_DB']->fetchRow($res);
 								$GLOBALS['TYPO3_DB']->freeResult($res);
 								// Look for version number of the current:
 								$subVer = $row['t3ver_id'] . '.' . ($highestVerNumber + 1);

@@ -1014,7 +1014,7 @@ abstract class AbstractUserAuthentication {
 		$statement = $GLOBALS['TYPO3_DB']->preparedSelectQuery('COUNT(*)', $this->session_table, 'ses_id = :ses_id');
 		$statement->bindValue(':ses_id', $id);
 		$statement->execute();
-		$row = $statement->fetch(\PDO::FETCH_NUM);
+		$row = $GLOBALS['TYPO3_DB']->fetchRow($statement);
 		$statement->closeCursor();
 
 		return $row[0] ? TRUE : FALSE;

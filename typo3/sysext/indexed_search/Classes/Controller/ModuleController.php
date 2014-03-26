@@ -220,7 +220,7 @@ class ModuleController {
 		// TYPO3 pages, unique
 		$items = array();
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('count(*),phash', 'index_phash', 'data_page_id<>0', 'phash_grouping,pcount,phash');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchRow($res)) {
 			$items[] = $row;
 		}
 		$recList[] = array($this->tableHead('TYPO3 pages'), count($items));
@@ -232,7 +232,7 @@ class ModuleController {
 		// External files, unique
 		$items = array();
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('count(*),phash', 'index_phash', 'data_filename<>\'\'', 'phash_grouping');
-		$row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
+		$row = $GLOBALS['TYPO3_DB']->fetchRow($res);
 		$recList[] = array($this->tableHead('External files'), $row[0]);
 		// External files
 		$recList[] = array(
@@ -425,7 +425,7 @@ class ModuleController {
 	 */
 	public function getNumberOfWords($phash) {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('count(*)', 'index_rel', 'phash=' . (int)$phash);
-		$row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res);
+		$row = $GLOBALS['TYPO3_DB']->fetchRow($res);
 		return $row[0];
 	}
 
@@ -476,7 +476,7 @@ class ModuleController {
 		$revTypes = array_flip($Itypes);
 		$revTypes[0] = 'TYPO3 page';
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('count(*),item_type', 'index_phash', '', 'item_type', 'item_type');
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchRow($res)) {
 			$iT = $row[1];
 			$recList[] = array($this->tableHead($revTypes[$iT] . ' (' . $iT . ')'), $this->countUniqueTypes($iT) . '/' . $row[0]);
 		}
@@ -494,7 +494,7 @@ class ModuleController {
 		// TYPO3 pages, unique
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('count(*)', 'index_phash', 'item_type=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($item_type, 'index_phash'), 'phash_grouping');
 		$items = array();
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res)) {
+		while ($row = $GLOBALS['TYPO3_DB']->fetchRow($res)) {
 			$items[] = $row;
 		}
 		return count($items);

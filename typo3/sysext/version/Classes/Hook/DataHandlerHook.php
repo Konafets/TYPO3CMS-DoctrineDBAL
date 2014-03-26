@@ -1092,7 +1092,7 @@ class DataHandlerHook {
 			foreach ($GLOBALS['TCA'] as $table => $cfg) {
 				if ($GLOBALS['TCA'][$table]['ctrl']['versioningWS'] && $table !== 'pages') {
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('A.uid AS offlineUid, B.uid AS uid', $table . ' A,' . $table . ' B', 'A.pid=-1 AND B.pid=' . $pageId . ' AND A.t3ver_wsid=' . $workspaceId . ' AND B.uid=A.t3ver_oid' . BackendUtility::deleteClause($table, 'A') . BackendUtility::deleteClause($table, 'B'));
-					while (FALSE != ($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res))) {
+					while (FALSE != ($row = $GLOBALS['TYPO3_DB']->fetchRow($res))) {
 						$elementData[$table][] = array($row[1], $row[0]);
 					}
 					$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -1119,7 +1119,7 @@ class DataHandlerHook {
 			foreach ($GLOBALS['TCA'] as $table => $cfg) {
 				if ($GLOBALS['TCA'][$table]['ctrl']['versioningWS'] && $table !== 'pages') {
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('DISTINCT A.uid', $table . ' A,' . $table . ' B', 'A.pid=-1' . ' AND A.t3ver_wsid=' . $workspaceId . ' AND B.pid IN (' . implode(',', $pageIdList) . ') AND A.t3ver_oid=B.uid' . BackendUtility::deleteClause($table, 'A') . BackendUtility::deleteClause($table, 'B'));
-					while (FALSE !== ($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res))) {
+					while (FALSE !== ($row = $GLOBALS['TYPO3_DB']->fetchRow($res))) {
 						$elementList[$table][] = $row[0];
 					}
 					$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -1146,7 +1146,7 @@ class DataHandlerHook {
 	public function findPageIdsForVersionStateChange($table, array $idList, $workspaceId, array &$pageIdList, array &$elementList) {
 		if ($workspaceId != 0) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('DISTINCT B.pid', $table . ' A,' . $table . ' B', 'A.pid=-1' . ' AND A.t3ver_wsid=' . $workspaceId . ' AND A.uid IN (' . implode(',', $idList) . ') AND A.t3ver_oid=B.uid' . BackendUtility::deleteClause($table, 'A') . BackendUtility::deleteClause($table, 'B'));
-			while (FALSE !== ($row = $GLOBALS['TYPO3_DB']->sql_fetch_row($res))) {
+			while (FALSE !== ($row = $GLOBALS['TYPO3_DB']->fetchRow($res))) {
 				$pageIdList[] = $row[0];
 				// Find ws version
 				// Note: cannot use BackendUtility::getRecordWSOL()

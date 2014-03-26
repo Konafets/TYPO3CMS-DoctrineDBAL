@@ -109,7 +109,7 @@ class TtContentUploadsUpdateWizard extends AbstractUpdate {
 		$resultSet = $GLOBALS['TYPO3_DB']->sql_query($sql);
 		$notMigratedRowsCount = 0;
 		if ($resultSet !== FALSE) {
-			list($notMigratedRowsCount) = $GLOBALS['TYPO3_DB']->sql_fetch_row($resultSet);
+			list($notMigratedRowsCount) = $GLOBALS['TYPO3_DB']->fetchRow($resultSet);
 			$notMigratedRowsCount = (int)$notMigratedRowsCount;
 			$GLOBALS['TYPO3_DB']->sql_free_result($resultSet);
 		}
