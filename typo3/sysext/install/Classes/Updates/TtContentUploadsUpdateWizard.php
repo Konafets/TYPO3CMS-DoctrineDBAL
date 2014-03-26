@@ -163,7 +163,7 @@ class TtContentUploadsUpdateWizard extends AbstractUpdate {
 				'storage' => $this->storage->getUid(),
 				'folder' => ltrim('fileadmin/', $record['select_key'])
 			));
-			$collections[] = $GLOBALS['TYPO3_DB']->getLastInsertId();
+			$collections[] = $GLOBALS['TYPO3_DB']->getLastInsertId('sys_file_collection');
 		}
 		$files = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $record['media'], TRUE);
 		$descriptions = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode('

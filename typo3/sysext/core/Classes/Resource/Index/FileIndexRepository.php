@@ -234,7 +234,7 @@ class FileIndexRepository implements SingletonInterface {
 		$data = array_intersect_key($data, array_flip($this->fields));
 		$data['tstamp'] = time();
 		$this->getDatabase()->executeInsertQuery($this->table, $data);
-		$data['uid'] = $this->getDatabase()->getLastInsertId();
+		$data['uid'] = $this->getDatabase()->getLastInsertId($this->table);
 		$this->emitRecordCreated($data);
 		return $data['uid'];
 	}

@@ -285,6 +285,6 @@ class CategoryCollectionTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase {
 			'is_dummy_record' => 1
 		);
 		$this->database->exec_INSERTquery('sys_category', $values);
-		$this->categoryUid = $this->database->getLastInsertId();
+		$this->categoryUid = $this->database->getLastInsertId('sys_category');
 	}
 }

@@ -125,7 +125,7 @@ class Typo3DbBackend implements \TYPO3\CMS\Extbase\Persistence\Generic\Storage\B
 
 		$this->databaseHandle->exec_INSERTquery($tableName, $fieldValues);
 		$this->checkSqlErrors();
-		$uid = $this->databaseHandle->getLastInsertId();
+		$uid = $this->databaseHandle->getLastInsertId($tableName);
 
 		if (!$isRelation) {
 			$this->clearPageCache($tableName, $uid);

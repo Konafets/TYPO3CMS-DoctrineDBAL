@@ -75,7 +75,7 @@ class Scheduler implements \TYPO3\CMS\Core\SingletonInterface {
 			);
 			$result = $GLOBALS['TYPO3_DB']->executeInsertQuery('tx_scheduler_task', $fields);
 			if ($result) {
-				$task->setTaskUid($GLOBALS['TYPO3_DB']->getLastInsertId());
+				$task->setTaskUid($GLOBALS['TYPO3_DB']->getLastInsertId('tx_scheduler_task'));
 				$task->save();
 				$result = TRUE;
 			} else {

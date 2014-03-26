@@ -5922,7 +5922,7 @@ class DataHandler {
 					// Set mapping for NEW... -> real uid:
 					// the NEW_id now holds the 'NEW....' -id
 					$NEW_id = $id;
-					$id = $GLOBALS['TYPO3_DB']->getLastInsertId();
+					$id = $GLOBALS['TYPO3_DB']->getLastInsertId($table);
 					if (!$dontSetNewIdIndex) {
 						$this->substNEWwithIDs[$NEW_id] = $id;
 						$this->substNEWwithIDs_table[$NEW_id] = $table;

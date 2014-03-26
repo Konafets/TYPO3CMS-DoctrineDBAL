@@ -313,7 +313,7 @@ abstract class FunctionalTestCase extends BaseTestCase {
 			}
 			if (isset($table['id'])) {
 				$elementId = (string) $table['id'];
-				$foreignKeys[$tableName][$elementId] = $database->getLastInsertId();
+				$foreignKeys[$tableName][$elementId] = $database->getLastInsertId($tableName);
 			}
 		}
 	}
