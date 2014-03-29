@@ -1486,7 +1486,9 @@ class QueryGenerator {
 		if (!$qString) {
 			$qString = $this->getQuery($this->queryConfig);
 		}
+
 		$qString = '(' . $qString . ')';
+
 		if (!$GLOBALS['BE_USER']->isAdmin() && $GLOBALS['TYPO3_CONF_VARS']['BE']['lockBeUserToDBmounts']) {
 			$webMounts = $GLOBALS['BE_USER']->returnWebmounts();
 			$perms_clause = $GLOBALS['BE_USER']->getPagePermsClause(1);
@@ -1503,6 +1505,7 @@ class QueryGenerator {
 				$qString .= ' AND pid IN (' . $webMountPageTree . ')';
 			}
 		}
+
 		$fieldlist = $this->extFieldLists['queryFields'] . ',pid' . ($GLOBALS['TCA'][$this->table]['ctrl']['delete'] ? ',' . $GLOBALS['TCA'][$this->table]['ctrl']['delete'] : '');
 		if (!$GLOBALS['SOBE']->MOD_SETTINGS['show_deleted']) {
 			$qString .= BackendUtility::deleteClause($this->table);
