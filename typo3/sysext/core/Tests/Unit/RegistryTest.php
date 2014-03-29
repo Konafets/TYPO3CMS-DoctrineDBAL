@@ -156,7 +156,7 @@ class RegistryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 */
 	public function setUpdatesExistingKeys() {
 		$GLOBALS['TYPO3_DB']->expects($this->once())->method('exec_SELECTquery')->with('uid', 'sys_registry', 'entry_namespace = \'tx_phpunit\' AND entry_key = \'someKey\'')->will($this->returnValue('DBResource'));
-		$GLOBALS['TYPO3_DB']->expects($this->once())->method('sql_num_rows')->with('DBResource')->will($this->returnValue(1));
+		$GLOBALS['TYPO3_DB']->expects($this->once())->method('getResultRowCount')->with('DBResource')->will($this->returnValue(1));
 		$GLOBALS['TYPO3_DB']->expects($this->once())->method('executeUpdateQuery')->with(
 				'sys_registry',
 				array(

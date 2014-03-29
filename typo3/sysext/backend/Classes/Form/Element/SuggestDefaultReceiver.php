@@ -161,7 +161,7 @@ class SuggestDefaultReceiver {
 		$this->prepareSelectStatement();
 		$this->prepareOrderByStatement();
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->table, $this->selectClause, '', $this->orderByStatement, $start . ', 50');
-		$allRowsCount = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+		$allRowsCount = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 		if ($allRowsCount) {
 			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				// check if we already have collected the maximum number of records

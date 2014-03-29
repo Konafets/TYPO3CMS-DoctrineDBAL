@@ -556,7 +556,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 		// Organize and process result:
 		$result = FALSE;
 		if ($res) {
-			$totalSearchResultCount = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+			$totalSearchResultCount = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 			// Total search-result count
 			$currentPageNumber = \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($this->piVars['pointer'], 0, floor($totalSearchResultCount / $this->piVars['results']));
 			// The pointer is set to the result page that is currently being viewed
@@ -1228,7 +1228,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 			} else {
 				$res = FALSE;
 			}
-			if ($res && $GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+			if ($res && $GLOBALS['TYPO3_DB']->getResultRowCount($res)) {
 				return TRUE;
 			} else {
 				return FALSE;
@@ -1242,7 +1242,7 @@ class SearchFormController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 				} else {
 					$res = FALSE;
 				}
-				if ($res && $GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+				if ($res && $GLOBALS['TYPO3_DB']->getResultRowCount($res)) {
 					return TRUE;
 				} else {
 					return FALSE;

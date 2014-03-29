@@ -719,7 +719,7 @@ class PageRepository {
 				if (is_array($row)) {
 					if ($checkPage) {
 						$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'pages', 'uid=' . (int)$row['pid'] . $this->enableFields('pages'));
-						$numRows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+						$numRows = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 						$GLOBALS['TYPO3_DB']->freeResult($res);
 						if ($numRows > 0) {
 							return $row;

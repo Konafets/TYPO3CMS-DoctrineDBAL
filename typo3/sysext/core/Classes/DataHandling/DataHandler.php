@@ -2386,7 +2386,7 @@ class DataHandler {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', $table, $field . '=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($value, $table) . ' AND uid<>' . (int)$id . $whereAdd);
 			$counter = 0;
 			// For as long as records with the test-value existing, try again (with incremented numbers appended).
-			while ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+			while ($GLOBALS['TYPO3_DB']->getResultRowCount($res)) {
 				$newValue = $value . $counter;
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', $table, $field . '=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($newValue, $table) . ' AND uid<>' . (int)$id . $whereAdd);
 				$counter++;
@@ -5562,7 +5562,7 @@ class DataHandler {
 				return FALSE;
 			} else {
 				$mres = $this->doesRecordExist_pageLookUp($id, $perms);
-				return $GLOBALS['TYPO3_DB']->sql_num_rows($mres);
+				return $GLOBALS['TYPO3_DB']->getResultRowCount($mres);
 			}
 		}
 	}
@@ -5752,7 +5752,7 @@ class DataHandler {
 	public function pageInfo($id, $field) {
 		if (!isset($this->pageCache[$id])) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'uid=' . (int)$id);
-			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+			if ($GLOBALS['TYPO3_DB']->getResultRowCount($res)) {
 				$this->pageCache[$id] = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 			}
 			$GLOBALS['TYPO3_DB']->freeResult($res);
@@ -5773,7 +5773,7 @@ class DataHandler {
 	public function recordInfo($table, $id, $fieldList) {
 		if (is_array($GLOBALS['TCA'][$table])) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fieldList, $table, 'uid=' . (int)$id);
-			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+			if ($GLOBALS['TYPO3_DB']->getResultRowCount($res)) {
 				$result = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 				$GLOBALS['TYPO3_DB']->freeResult($res);
 				return $result;
@@ -6087,7 +6087,7 @@ class DataHandler {
 						$subres = $GLOBALS['TYPO3_DB']->exec_SELECTquery($sortRow . ',pid,uid', $table, 'pid=' . (int)$row['pid'] . ' AND ' . $sortRow . '>=' . (int)$row[$sortRow] . $this->deleteClause($table), '', $sortRow . ' ASC', '2');
 						// Fetches the next record in order to calculate the in-between sortNumber
 						// There was a record afterwards
-						if ($GLOBALS['TYPO3_DB']->sql_num_rows($subres) == 2) {
+						if ($GLOBALS['TYPO3_DB']->getResultRowCount($subres) == 2) {
 							// Forward to the second result...
 							$GLOBALS['TYPO3_DB']->fetchAssoc($subres);
 							// There was a record afterwards

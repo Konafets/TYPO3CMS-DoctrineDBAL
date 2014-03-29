@@ -227,7 +227,7 @@ class SearchResultContentObject extends \TYPO3\CMS\Frontend\ContentObject\Abstra
 			$this->queryParts['LIMIT'] = $spointer . ',' . $theRange;
 			// Search...
 			$this->execute_query();
-			if ($GLOBALS['TYPO3_DB']->sql_num_rows($this->result)) {
+			if ($GLOBALS['TYPO3_DB']->getResultRowCount($this->result)) {
 				$GLOBALS['TSFE']->register['SWORD_PARAMS'] = $this->get_searchwords();
 				$total = $this->res_count;
 				$rangeLow = \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($spointer + 1, 1, $total);
@@ -612,7 +612,7 @@ class SearchResultContentObject extends \TYPO3\CMS\Frontend\ContentObject\Abstra
 	public function count_query() {
 		if (is_array($this->queryParts)) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($this->queryParts['SELECT'], $this->queryParts['FROM'], $this->queryParts['WHERE'], $this->queryParts['GROUPBY']);
-			$this->res_count = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+			$this->res_count = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 			return TRUE;
 		}
 	}

@@ -152,7 +152,7 @@ class IndexSearchRepository {
 		// Organize and process result:
 		if ($res) {
 			// Total search-result count
-			$count = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+			$count = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 			// The pointer is set to the result page that is currently being viewed
 			$pointer = \TYPO3\CMS\Core\Utility\MathUtility::forceIntegerInRange($this->resultpagePointer, 0, floor($count / $this->numberOfResults));
 			// Initialize result accumulation variables:
@@ -669,7 +669,7 @@ class IndexSearchRepository {
 			} else {
 				$res = FALSE;
 			}
-			if ($res && $GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+			if ($res && $GLOBALS['TYPO3_DB']->getResultRowCount($res)) {
 				return TRUE;
 			} else {
 				return FALSE;
@@ -683,7 +683,7 @@ class IndexSearchRepository {
 				} else {
 					$res = FALSE;
 				}
-				if ($res && $GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+				if ($res && $GLOBALS['TYPO3_DB']->getResultRowCount($res)) {
 					return TRUE;
 				} else {
 					return FALSE;

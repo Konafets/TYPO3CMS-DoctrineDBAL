@@ -222,7 +222,7 @@ class LiveSearch {
 			'LIMIT' => $limit
 		);
 		$result = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($queryParts);
-		$dbCount = $GLOBALS['TYPO3_DB']->sql_num_rows($result);
+		$dbCount = $GLOBALS['TYPO3_DB']->getResultRowCount($result);
 		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($result)) {
 			$collect[] = array(
 				'id' => $tableName . ':' . $row['uid'],

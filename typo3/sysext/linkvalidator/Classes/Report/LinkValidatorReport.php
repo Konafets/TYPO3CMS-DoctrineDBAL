@@ -429,7 +429,7 @@ class LinkValidatorReport extends \TYPO3\CMS\Backend\Module\AbstractFunctionModu
 				'record_uid ASC, uid ASC')
 			)) {
 				// Display table with broken links
-				if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > 0) {
+				if ($GLOBALS['TYPO3_DB']->getResultRowCount($res) > 0) {
 					$brokenLinksTemplate = \TYPO3\CMS\Core\Html\HtmlParser::getSubpart($this->doc->moduleTemplate, '###BROKENLINKS_CONTENT###');
 					$brokenLinksItemTemplate = \TYPO3\CMS\Core\Html\HtmlParser::getSubpart($this->doc->moduleTemplate, '###BROKENLINKS_ITEM###');
 					// Table header

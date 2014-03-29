@@ -992,7 +992,7 @@ class IndexedPagesController extends \TYPO3\CMS\Backend\Module\AbstractFunctionM
 				if ($clearPageCache) {
 					// Clearing page cache:
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('page_id', 'index_section', 'phash=' . (int)$phash);
-					if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+					if ($GLOBALS['TYPO3_DB']->getResultRowCount($res)) {
 						$idList = array();
 						while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 							$idList[] = (int)$row['page_id'];

@@ -827,7 +827,7 @@ class PageLayoutView extends \TYPO3\CMS\Recordlist\RecordList\AbstractDatabaseRe
 		// Make query for records if there were any records found in the count operation
 		if ($this->totalItems) {
 			$result = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($queryParts);
-			$dbCount = $GLOBALS['TYPO3_DB']->sql_num_rows($result);
+			$dbCount = $GLOBALS['TYPO3_DB']->getResultRowCount($result);
 		}
 		// If records were found, render the list
 		if ($dbCount == 0) {
@@ -997,7 +997,7 @@ class PageLayoutView extends \TYPO3\CMS\Recordlist\RecordList\AbstractDatabaseRe
 		if ($depth >= 0) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'pid=' . (int)$pid . $qWhere, '', 'sorting');
 			$c = 0;
-			$rc = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+			$rc = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 				BackendUtility::workspaceOL('pages', $row);
 				if (is_array($row)) {

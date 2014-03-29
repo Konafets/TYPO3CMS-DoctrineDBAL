@@ -435,7 +435,7 @@ NOW Running --AUTOFIX on result. OK?' . ($this->cli_isArg('--dryrun') ? ' (--dry
 				$this->performanceStatistics['genTree_traverse():TraverseTables:']['MySQL']['(ALL)'] += GeneralUtility::milliseconds() - $pt4;
 				$this->performanceStatistics['genTree_traverse():TraverseTables:']['MySQL'][$tableName] += GeneralUtility::milliseconds() - $pt4;
 				$pt5 = GeneralUtility::milliseconds();
-				$count = $GLOBALS['TYPO3_DB']->sql_num_rows($resSub);
+				$count = $GLOBALS['TYPO3_DB']->getResultRowCount($resSub);
 				if ($count) {
 					if ($echoLevel == 2) {
 						echo LF . '	\\-' . $tableName . ' (' . $count . ')';

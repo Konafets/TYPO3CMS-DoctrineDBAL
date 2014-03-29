@@ -108,7 +108,7 @@ class IndexingStatisticsController extends \TYPO3\CMS\Backend\Module\AbstractFun
 		$queryParts['LIMIT'] = $conf['words'];
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($queryParts['SELECT'], $queryParts['FROM'], $queryParts['WHERE'], $queryParts['GROUPBY'], $queryParts['ORDERBY'], $queryParts['LIMIT']);
 		if ($res) {
-			$count = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+			$count = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 		} else {
 			$count = 0;
 		}

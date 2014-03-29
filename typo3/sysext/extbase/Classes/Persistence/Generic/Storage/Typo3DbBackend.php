@@ -325,7 +325,7 @@ class Typo3DbBackend implements \TYPO3\CMS\Extbase\Persistence\Generic\Storage\B
 			$this->replacePlaceholders($statement, $parameters, current($statementParts['tables']));
 			$result = $this->databaseHandle->sql_query($statement);
 			$this->checkSqlErrors($statement);
-			$count = $this->databaseHandle->sql_num_rows($result);
+			$count = $this->databaseHandle->getResultRowCount($result);
 		} else {
 			$statementParts['fields'] = array('COUNT(*)');
 			// having orderings without grouping is not compatible with non-MySQL DBMS

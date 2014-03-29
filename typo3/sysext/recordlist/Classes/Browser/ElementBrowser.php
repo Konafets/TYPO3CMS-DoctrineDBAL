@@ -1594,7 +1594,7 @@ class ElementBrowser {
 				'',
 				'colPos,sorting'
 			);
-			$cc = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+			$cc = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 			// Traverse list of records:
 			$c = 0;
 			while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {

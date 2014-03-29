@@ -1372,7 +1372,7 @@ class EditDocumentController {
 	public function editRegularContentFromId() {
 		if (ExtensionManagementUtility::isLoaded('cms')) {
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'tt_content', 'pid=' . (int)$this->editRegularContentFromId . BackendUtility::deleteClause('tt_content') . BackendUtility::versioningPlaceholderClause('tt_content') . ' AND colPos=0 AND sys_language_uid=0', '', 'sorting');
-			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res)) {
+			if ($GLOBALS['TYPO3_DB']->getResultRowCount($res)) {
 				$ecUids = array();
 				while ($ecRec = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 					$ecUids[] = $ecRec['uid'];

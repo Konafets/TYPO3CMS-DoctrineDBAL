@@ -288,7 +288,7 @@ class TranslationStatusController extends \TYPO3\CMS\Backend\Module\AbstractFunc
 		$row = $GLOBALS['TYPO3_DB']->fetchAssoc($res);
 		BackendUtility::workspaceOL('pages_language_overlay', $row);
 		if (is_array($row)) {
-			$row['_COUNT'] = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+			$row['_COUNT'] = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 			$row['_HIDDEN'] = $row['hidden'] || (int)$row['endtime'] > 0 && (int)$row['endtime'] < $GLOBALS['EXEC_TIME'] || $GLOBALS['EXEC_TIME'] < (int)$row['starttime'];
 		}
 		return $row;

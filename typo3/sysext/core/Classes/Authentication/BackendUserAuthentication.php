@@ -2135,10 +2135,10 @@ class BackendUserAuthentication extends \TYPO3\CMS\Core\Authentication\AbstractU
 			$GLOBALS['TYPO3_DB']->freeResult($res);
 			// Check for more than $max number of error failures with the last period.
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_log', 'type=255 AND action=3 AND error<>0 AND tstamp>' . (int)$theTimeBack, '', 'tstamp');
-			if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > $max) {
+			if ($GLOBALS['TYPO3_DB']->getResultRowCount($res) > $max) {
 				// OK, so there were more than the max allowed number of login failures - so we will send an email then.
 				$subject = 'TYPO3 Login Failure Warning (at ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . ')';
-				$email_body = 'There have been some attempts (' . $GLOBALS['TYPO3_DB']->sql_num_rows($res) . ') to login at the TYPO3
+				$email_body = 'There have been some attempts (' . $GLOBALS['TYPO3_DB']->getResultRowCount($res) . ') to login at the TYPO3
 site "' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . '" (' . GeneralUtility::getIndpEnv('HTTP_HOST') . ').
 
 This is a dump of the failures:
@@ -2155,7 +2155,7 @@ This is a dump of the failures:
 				$mail->setTo($email)->setFrom($from)->setSubject($subject)->setBody($email_body);
 				$mail->send();
 				// Logout written to log
-				$this->writelog(255, 4, 0, 3, 'Failure warning (%s failures within %s seconds) sent by email to %s', array($GLOBALS['TYPO3_DB']->sql_num_rows($res), $secondsBack, $email));
+				$this->writelog(255, 4, 0, 3, 'Failure warning (%s failures within %s seconds) sent by email to %s', array($GLOBALS['TYPO3_DB']->getResultRowCount($res), $secondsBack, $email));
 				$GLOBALS['TYPO3_DB']->freeResult($res);
 			}
 		}

@@ -154,7 +154,7 @@ class DatabaseIntegrityCheck {
 		}
 		// Traverse the records selected:
 		$a = 0;
-		$c = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+		$c = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			// Prepare the additional label used in the HTML output in case of versions:
 			if ($versions) {
@@ -234,7 +234,7 @@ class DatabaseIntegrityCheck {
 		}
 		// Traverse selected:
 		$a = 0;
-		$c = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+		$c = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
 			// Prepare the additional label used in the HTML output in case of versions:
 			if ($versions) {

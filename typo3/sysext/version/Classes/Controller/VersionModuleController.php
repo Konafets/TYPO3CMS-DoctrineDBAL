@@ -428,7 +428,7 @@ class VersionModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClass 
 		foreach ($tableNames as $tN) {
 			// Basically list ALL tables - not only those being copied might be found!
 			$mres = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $tN, 'pid=' . (int)$pid . BackendUtility::deleteClause($tN), '', $GLOBALS['TCA'][$tN]['ctrl']['sortby'] ? $GLOBALS['TCA'][$tN]['ctrl']['sortby'] : '');
-			if ($GLOBALS['TYPO3_DB']->sql_num_rows($mres)) {
+			if ($GLOBALS['TYPO3_DB']->getResultRowCount($mres)) {
 				$content .= '
 					<tr>
 						<td colspan="4" class="' . ($GLOBALS['TCA'][$tN]['ctrl']['versioning_followPages'] ? 'bgColor6' : ($tN == 'pages' ? 'bgColor5' : 'bgColor-10')) . '"' . (!$GLOBALS['TCA'][$tN]['ctrl']['versioning_followPages'] && $tN !== 'pages' ? ' style="color: #666666; font-style:italic;"' : '') . '>' . $tN . '</td>

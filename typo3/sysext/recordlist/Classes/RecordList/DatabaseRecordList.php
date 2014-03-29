@@ -410,7 +410,7 @@ class DatabaseRecordList extends \TYPO3\CMS\Recordlist\RecordList\AbstractDataba
 					$this->iLimit = $this->totalItems;
 				}
 				$result = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($queryParts);
-				$dbCount = $GLOBALS['TYPO3_DB']->sql_num_rows($result);
+				$dbCount = $GLOBALS['TYPO3_DB']->getResultRowCount($result);
 			}
 		}
 		// If any records was selected, render the list:

@@ -909,7 +909,7 @@ class SchedulerModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClas
 			'ORDERBY' => ''
 		);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($query);
-		$numRows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+		$numRows = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 		$GLOBALS['TYPO3_DB']->freeResult($res);
 
 		// No tasks defined, display information message
@@ -981,7 +981,7 @@ class SchedulerModuleController extends \TYPO3\CMS\Backend\Module\BaseScriptClas
 				);
 
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECT_queryArray($query);
-				$numRows = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+				$numRows = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 
 				if ($numRows === 0) {
 					continue;

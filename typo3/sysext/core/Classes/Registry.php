@@ -84,7 +84,7 @@ class Registry implements \TYPO3\CMS\Core\SingletonInterface {
 		$this->validateNamespace($namespace);
 		$serializedValue = serialize($value);
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid', 'sys_registry', 'entry_namespace = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($namespace, 'sys_registry') . ' AND entry_key = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($key, 'sys_registry'));
-		if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) < 1) {
+		if ($GLOBALS['TYPO3_DB']->getResultRowCount($res) < 1) {
 			$GLOBALS['TYPO3_DB']->executeInsertQuery('sys_registry', array(
 				'entry_namespace' => $namespace,
 				'entry_key' => $key,

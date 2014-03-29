@@ -939,7 +939,7 @@ abstract class AbstractTreeView {
 		if (is_array($this->data)) {
 			return count($this->dataLookup[$res][$this->subLevelID]);
 		} else {
-			$c = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+			$c = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 			return $c;
 		}
 	}

@@ -422,7 +422,7 @@ class ImportExportController extends \TYPO3\CMS\Backend\Module\BaseScriptClass {
 			$limit
 		);
 		// Warning about hitting limit:
-		if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) == $limit) {
+		if ($GLOBALS['TYPO3_DB']->getResultRowCount($res) == $limit) {
 			$this->content .= $this->doc->section($GLOBALS['LANG']->getLL('execlistqu_maxNumberLimit'), sprintf($GLOBALS['LANG']->getLL('makeconfig_anSqlQueryReturned', TRUE), $limit), 0, 1, 2);
 		}
 		return $res;

@@ -440,7 +440,7 @@ class ModuleController {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('index_grlist.*', 'index_grlist', 'phash=' . (int)$phash);
 		$allRows = array();
 		while ($row = $GLOBALS['TYPO3_DB']->fetchAssoc($res)) {
-			$row['pcount'] = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+			$row['pcount'] = $GLOBALS['TYPO3_DB']->getResultRowCount($res);
 			$allRows[] = $row;
 		}
 		return $allRows;
